@@ -1,0 +1,937 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aula Taller · RA1 Mecanizado y Soldadura</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root,[data-theme="light"]{
+      --bg:#f7f6f2;--surface:#f9f8f5;--surface2:#fbfbf9;--surface3:#f0ece6;
+      --border:#d4d1ca;--text:#28251d;--muted:#6f6d67;--inv:#faf8f5;
+      --primary:#01696f;--success:#437a22;--danger:#b13b82;--gold:#d19900;
+      --radius:18px;--shadow:0 18px 40px rgba(35,28,18,.09);
+      --font-display:'Instrument Serif',Georgia,serif;
+      --font-body:'Inter',system-ui,sans-serif
+    }
+    [data-theme="dark"]{
+      --bg:#171614;--surface:#1c1b19;--surface2:#201f1d;--surface3:#262422;
+      --border:#393836;--text:#e2dfd9;--muted:#a5a19b;--inv:#191816;
+      --primary:#4f98a3;--success:#76b14c;--danger:#db77b2;--gold:#e4b843;
+      --shadow:0 18px 40px rgba(0,0,0,.35)
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:var(--font-body);background:var(--bg);color:var(--text);line-height:1.6;min-height:100vh}
+    .wrap{max-width:1100px;margin:0 auto;padding:0 20px}
+    header{background:var(--surface);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(0,0,0,.06)}
+    .topbar{display:flex;align-items:center;justify-content:space-between;padding:14px 20px;gap:12px}
+    .brand{display:flex;align-items:center;gap:12px}
+    .logo{width:38px;height:38px;background:var(--primary);border-radius:10px;display:flex;align-items:center;justify-content:center}
+    .logo svg{width:22px;height:22px;fill:none;stroke:#fff;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+    .brand small{display:block;font-size:.7rem;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
+    .brand strong{font-size:.95rem;font-weight:700}
+    .nav{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+    .nav a{font-size:.8rem;font-weight:600;color:var(--muted);text-decoration:none;padding:5px 11px;border-radius:20px;border:1px solid transparent;transition:.2s}
+    .nav a:hover{color:var(--primary);border-color:var(--primary)}
+    .theme-btn{background:none;border:1px solid var(--border);border-radius:20px;padding:5px 10px;cursor:pointer;font-size:.9rem;color:var(--muted);transition:.2s}
+    .theme-btn:hover{color:var(--primary)}
+    .hero{padding:56px 20px 40px;max-width:1100px;margin:0 auto}
+    .hero-grid{display:grid;grid-template-columns:1fr 320px;gap:40px;align-items:start}
+    @media(max-width:800px){.hero-grid{grid-template-columns:1fr}}
+    .eyebrow{display:inline-block;font-size:.75rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--primary);margin-bottom:10px}
+    h1{font-family:var(--font-display);font-size:clamp(2rem,5vw,3rem);font-weight:400;line-height:1.15;margin-bottom:16px}
+    .lead{font-size:1rem;color:var(--muted);max-width:520px;margin-bottom:24px;line-height:1.7}
+    .chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:28px}
+    .chip{font-size:.75rem;font-weight:600;padding:5px 12px;border-radius:20px;background:var(--surface3);border:1px solid var(--border);color:var(--muted)}
+    .student-form{display:flex;gap:10px;margin-bottom:14px;flex-wrap:wrap}
+    .student-form input{flex:1;min-width:200px;padding:10px 14px;border-radius:10px;border:1px solid var(--border);background:var(--surface2);color:var(--text);font-family:var(--font-body);font-size:.95rem}
+    .student-form input:focus{outline:none;border-color:var(--primary)}
+    .save-box{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+    .save-status{font-size:.82rem;color:var(--muted)}
+    .btn{padding:9px 18px;border-radius:10px;border:none;cursor:pointer;font-family:var(--font-body);font-size:.9rem;font-weight:600;transition:.2s}
+    .btn-primary{background:var(--primary);color:#fff}.btn-primary:hover{opacity:.88}
+    .btn-secondary{background:var(--surface3);color:var(--text);border:1px solid var(--border)}.btn-secondary:hover{border-color:var(--primary);color:var(--primary)}
+    .panel{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:24px;box-shadow:var(--shadow)}
+    .panel h3{font-size:1rem;font-weight:700;margin-bottom:18px}
+    .hero-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+    .stat{text-align:center;background:var(--surface3);border-radius:12px;padding:12px 8px}
+    .stat strong{display:block;font-size:1.4rem;font-weight:800;color:var(--primary)}
+    .stat span{font-size:.72rem;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.06em}
+    .section{max-width:1100px;margin:0 auto;padding:40px 20px}
+    .section-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:28px}
+    .section-head h2{font-family:var(--font-display);font-size:1.7rem;font-weight:400}
+    .muted{color:var(--muted);font-size:.9rem}
+    .cards2{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+    @media(max-width:600px){.cards2{grid-template-columns:1fr}}
+    .badgebox{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:22px;text-align:center;transition:.3s}
+    .badgebox h3{font-size:1rem;font-weight:700;margin-bottom:6px}
+    .badgebox p{font-size:.82rem;color:var(--muted)}
+    .badge-lock{opacity:.45;filter:grayscale(1)}
+    .badge-unlock{border-color:var(--success);background:color-mix(in srgb,var(--success) 6%,var(--surface))}
+    .quiz-layout{display:grid;grid-template-columns:260px 1fr;gap:24px;align-items:start}
+    @media(max-width:800px){.quiz-layout{grid-template-columns:1fr}}
+    .status-box{position:sticky;top:80px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:22px;box-shadow:var(--shadow)}
+    .status-box h3{font-size:.95rem;font-weight:700;margin-bottom:16px}
+    .progress-bar-wrap{background:var(--surface3);border-radius:99px;height:8px;margin-bottom:16px;overflow:hidden}
+    .progress-bar-fill{height:8px;border-radius:99px;background:var(--primary);transition:.4s}
+    .stat-row{display:flex;justify-content:space-between;font-size:.82rem;margin-bottom:8px}
+    .stat-row span:last-child{font-weight:700;color:var(--primary)}
+    .reset-btn{width:100%;padding:8px;border-radius:8px;border:1px solid var(--border);background:none;cursor:pointer;font-size:.82rem;color:var(--muted);margin-top:12px;transition:.2s}
+    .reset-btn:hover{border-color:var(--danger);color:var(--danger)}
+    .quiz-box{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:28px;box-shadow:var(--shadow)}
+    .level-tag{display:inline-flex;align-items:center;gap:6px;font-size:.75rem;font-weight:700;padding:4px 12px;border-radius:20px;margin-bottom:16px;text-transform:uppercase;letter-spacing:.07em}
+    .tag-b{background:color-mix(in srgb,var(--success) 12%,var(--surface));color:var(--success)}
+    .tag-m{background:color-mix(in srgb,var(--gold) 12%,var(--surface));color:var(--gold)}
+    .tag-a{background:color-mix(in srgb,var(--danger) 12%,var(--surface));color:var(--danger)}
+    .q-text{font-size:1.05rem;font-weight:600;margin-bottom:20px;line-height:1.5}
+    .options{display:flex;flex-direction:column;gap:10px;margin-bottom:20px}
+    .opt-btn{text-align:left;padding:12px 16px;border-radius:12px;border:1.5px solid var(--border);background:var(--surface2);cursor:pointer;font-family:var(--font-body);font-size:.93rem;color:var(--text);transition:.2s}
+    .opt-btn:hover:not(:disabled){border-color:var(--primary);background:color-mix(in srgb,var(--primary) 6%,var(--surface))}
+    .opt-btn.correct{border-color:var(--success);background:color-mix(in srgb,var(--success) 10%,var(--surface));color:var(--success);font-weight:700}
+    .opt-btn.wrong{border-color:var(--danger);background:color-mix(in srgb,var(--danger) 8%,var(--surface));color:var(--danger)}
+    .feedback{padding:14px;border-radius:10px;font-size:.88rem;margin-bottom:14px;line-height:1.5;display:none}
+    .feedback.show{display:block}
+    .feedback.ok{background:color-mix(in srgb,var(--success) 10%,var(--surface));border:1px solid var(--success);color:var(--success)}
+    .feedback.ko{background:color-mix(in srgb,var(--danger) 8%,var(--surface));border:1px solid var(--danger);color:var(--danger)}
+    .reward{font-size:1.5rem;text-align:center;margin-bottom:10px;min-height:2rem}
+    .gate-note{display:none;padding:16px;border-radius:12px;border:1px solid var(--border);background:var(--surface3);font-size:.88rem;color:var(--muted);margin-top:16px;line-height:1.6}
+    .gate-note.show{display:block}
+    .gate-note.pass{border-color:var(--success);background:color-mix(in srgb,var(--success) 8%,var(--surface));color:var(--success)}
+    .gate-note.fail{border-color:var(--danger);background:color-mix(in srgb,var(--danger) 6%,var(--surface));color:var(--danger)}
+    .review-box{display:none;padding:16px;border-radius:12px;background:color-mix(in srgb,var(--gold) 8%,var(--surface));border:1px solid var(--gold);font-size:.85rem;color:var(--text);margin-top:14px;line-height:1.7}
+    .review-box.show{display:block}
+    .review-box strong{color:var(--gold)}
+    .next-btn{width:100%;padding:11px;border-radius:10px;background:var(--primary);color:#fff;border:none;cursor:pointer;font-family:var(--font-body);font-weight:700;font-size:.95rem;transition:.2s}
+    .next-btn:hover{opacity:.88}
+    .lock-screen{text-align:center;padding:40px;color:var(--muted)}
+    .lock-screen .lock-icon{font-size:2.5rem;margin-bottom:12px}
+    .lock-screen p{font-size:.9rem;line-height:1.6;max-width:380px;margin:0 auto}
+    .report-box{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:28px;box-shadow:var(--shadow)}
+    .table{width:100%;border-collapse:collapse;font-size:.88rem;margin-top:16px}
+    .table th{text-align:left;padding:10px 12px;border-bottom:2px solid var(--border);font-weight:700;color:var(--muted);text-transform:uppercase;font-size:.75rem;letter-spacing:.07em}
+    .table td{padding:10px 12px;border-bottom:1px solid var(--border)}
+    .table tr:last-child td{border-bottom:none}
+    .level-badge{display:inline-flex;padding:3px 10px;border-radius:20px;font-size:.75rem;font-weight:700}
+    .l-init{background:var(--surface3);color:var(--muted)}
+    .l-basic{background:color-mix(in srgb,var(--success) 12%,var(--surface));color:var(--success)}
+    .l-med{background:color-mix(in srgb,var(--gold) 12%,var(--surface));color:var(--gold)}
+    .l-adv{background:color-mix(in srgb,var(--primary) 12%,var(--surface));color:var(--primary)}
+    .l-exp{background:color-mix(in srgb,var(--danger) 12%,var(--surface));color:var(--danger)}
+    .diag-box{padding:16px;border-radius:12px;background:var(--surface3);border:1px solid var(--border);font-size:.88rem;line-height:1.7;margin-top:16px}
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="wrap topbar">
+    <div class="brand">
+      <div class="logo">
+        <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </div>
+      <div>
+        <small>RA1 · Mecanizado y Soldadura</small>
+        <strong>Aula Taller</strong>
+      </div>
+    </div>
+    <nav class="nav">
+      <a href="#ud1">UD1 Planos</a>
+      <a href="#final">Final RA1</a>
+      <a href="#informe">Informe</a>
+      <button class="theme-btn" data-theme-toggle>◐</button>
+    </nav>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-grid">
+    <div>
+      <span class="eyebrow">RA1 · Mecanizado y Soldadura</span>
+      <h1>Aula Taller</h1>
+      <p class="lead">Interpreta y reproduce planos sencillos de diferentes elementos y piezas, aplicando procesos normalizados de representación, acotación y especificación superficial.</p>
+      <div class="chips">
+        <span class="chip">40 preguntas en banco</span>
+        <span class="chip">Se extraen 20 por intento</span>
+        <span class="chip">Sin repetición en el intento</span>
+        <span class="chip">Guardado local</span>
+      </div>
+      <div class="student-form">
+        <input id="student-name" type="text" placeholder="Escribe el nombre del alumno">
+        <button class="btn btn-primary" id="save-student">Guardar nombre</button>
+      </div>
+      <div class="save-box">
+        <div class="save-status" id="save-status">Sin perfil cargado</div>
+        <button class="btn btn-secondary" id="resume-student">Cargar progreso</button>
+        <button class="btn btn-secondary" id="clear-student">Reiniciar perfil</button>
+      </div>
+    </div>
+    <aside class="panel hero-side">
+      <h3>Panel del alumno</h3>
+      <div class="hero-stats">
+        <div class="stat"><strong id="global-points">0</strong><br><span class="muted">Puntos</span></div>
+        <div class="stat"><strong id="global-stars">0</strong><br><span class="muted">Estrellas</span></div>
+        <div class="stat"><strong id="global-streak">0</strong><br><span class="muted">Mejor racha</span></div>
+        <div class="stat"><strong id="global-units">0/1</strong><br><span class="muted">UD completadas</span></div>
+        <div class="stat"><strong id="global-saves">0</strong><br><span class="muted">Guardados</span></div>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<!-- INSIGNIAS -->
+<section class="section">
+  <div class="section-head">
+    <div>
+      <h2>Insignias del recorrido</h2>
+      <p class="muted">Supera cada bloque para desbloquear el siguiente.</p>
+    </div>
+  </div>
+  <div class="cards2">
+    <div class="badgebox badge-lock" id="badge-ud1">
+      <h3>📐 UD1</h3>
+      <p>Interpretación de Planos y Normalización</p>
+    </div>
+    <div class="badgebox badge-lock" id="badge-final">
+      <h3>🏁 Final RA1</h3>
+      <p>Prueba final integradora</p>
+    </div>
+  </div>
+</section>
+
+<!-- QUIZZES (inyectados por JS) -->
+<div id="quizzes"></div>
+
+<!-- INFORME -->
+<section class="section" id="informe">
+  <div class="section-head">
+    <div><h2>Informe del alumno</h2><p class="muted">Resumen de resultados por bloque.</p></div>
+  </div>
+  <div class="report-box" id="report-box">
+    <p><strong>Alumno:</strong> <span id="report-name">Sin nombre</span></p>
+    <table class="table">
+      <thead><tr><th>Bloque</th><th>Mejor resultado</th><th>Intentos</th><th>Último</th><th>Nivel</th></tr></thead>
+      <tbody id="report-table"></tbody>
+    </table>
+    <div class="diag-box" id="global-diagnosis">
+      <strong>Diagnóstico global:</strong> Completa al menos un bloque para ver el diagnóstico.
+    </div>
+  </div>
+</section>
+
+<script>
+// ─── TEMA ────────────────────────────────────────────────────
+(function(){
+  const root=document.documentElement,btn=document.querySelector('[data-theme-toggle]');
+  let t=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
+  root.setAttribute('data-theme',t);
+  btn.addEventListener('click',()=>{t=t==='dark'?'light':'dark';root.setAttribute('data-theme',t);});
+})();
+
+// ─── CONFIG ──────────────────────────────────────────────────
+const storagePrefix='aula-taller-mec-ra1-v1';
+const maxAttemptsPerBlock=3;
+const student={name:'Sin nombre'};
+const globalState={points:0,stars:0,bestStreak:0,completedUnits:new Set(),results:{},saveCount:0};
+
+const unitIds=['ud1'];
+const unlockOrder=[...unitIds,'final'];
+
+const unlockRules={
+  ud1:null,
+  final:{prev:'ud1',score:7,label:'Necesitas al menos 70% en UD1 o acertar todas las preguntas básicas.'}
+};
+
+const unitMeta={
+  ud1:['Evaluación UD1 · Planos y Normalización','Banco de 40 preguntas; se extraen 20 con dificultad progresiva.'],
+  final:['Prueba Final · RA1','10 preguntas integradoras tras superar la UD1.']
+};
+
+// ─── REVIEW MESSAGES ─────────────────────────────────────────
+const reviewMessages={
+  ud1:{
+    utiles:'Repasa los útiles de dibujo técnico (compás, escuadra, cartabón, portaminas) y su uso correcto.',
+    planos:'Repasa la interpretación de planos: tipos de líneas, simbología y lectura normalizada.',
+    vistas:'Repasa las vistas normalizadas (alzado, planta, perfil) y el sistema europeo de proyección.',
+    acotacion:'Repasa las reglas de acotación: líneas de cota, auxiliares, referencias y normas ISO.',
+    tolerancias:'Repasa las tolerancias dimensionales y geométricas, grados IT y ajustes normalizados.',
+    croquizado:'Repasa el proceso de croquizado: proporción, vistas, cotas y verificación final.'
+  },
+  final:{
+    integracion:'Repasa la relación entre planos, cotas, tolerancias y el proceso de mecanizado.',
+    seguridad:'Refuerza el trabajo ordenado, preciso y seguro en la interpretación y ejecución de planos.',
+    verificacion:'Repasa la comprobación de piezas respecto al plano: cotas, acabado y tolerancias.'
+  }
+};
+
+// ─── BANCO DE PREGUNTAS ───────────────────────────────────────
+const questionPools={
+
+// ══════════════════════════════════════════════════════════════
+// UD1 · PLANOS Y NORMALIZACIÓN  (8b + 16m + 16a = 40)
+// ══════════════════════════════════════════════════════════════
+ud1:[
+  // ── BÁSICO (8) ──────────────────────────────────────────────
+  {band:'b',tag:'utiles',level:'Básico',points:10,
+   q:'¿Cuál es la función principal del compás en el dibujo técnico?',
+   options:['Trazar arcos y circunferencias con radio exacto','Medir ángulos en grados sexagesimales','Unir rectas a distancia fija','Establecer la escala del dibujo'],
+   correct:0,explanation:'El compás permite trazar arcos y circunferencias de radio preciso, elemento esencial en la representación técnica normalizada.'},
+
+  {band:'b',tag:'planos',level:'Básico',points:10,
+   q:'¿Qué representa una línea continua gruesa en un plano técnico?',
+   options:['Los contornos y aristas visibles de la pieza','El eje de simetría','Una cota o dimensión','Una arista oculta'],
+   correct:0,explanation:'Las líneas continuas gruesas representan los contornos y aristas que son visibles desde el punto de vista elegido.'},
+
+  {band:'b',tag:'vistas',level:'Básico',points:10,
+   q:'¿Cuántas vistas principales puede generar el sistema diédrico normalizado?',
+   options:['6','3','4','8'],
+   correct:0,explanation:'El sistema diédrico puede generar hasta 6 vistas: alzado, planta, perfil izquierdo, perfil derecho, superior e inferior.'},
+
+  {band:'b',tag:'acotacion',level:'Básico',points:10,
+   q:'¿Qué es una cota en un plano técnico?',
+   options:['El valor numérico que indica la dimensión real de un elemento','El tipo de línea usada en el contorno','El símbolo del material empleado','La escala de reducción del dibujo'],
+   correct:0,explanation:'Una cota es el valor numérico que expresa la medida real de un elemento de la pieza, independientemente de la escala del plano.'},
+
+  {band:'b',tag:'planos',level:'Básico',points:10,
+   q:'¿Con qué tipo de línea se representan las aristas ocultas en un plano?',
+   options:['Línea de trazos discontinuos','Línea continua fina','Línea mixta gruesa','Línea de puntos y rayas'],
+   correct:0,explanation:'Las aristas no visibles desde el punto de vista elegido se dibujan con líneas de trazos discontinuos.'},
+
+  {band:'b',tag:'utiles',level:'Básico',points:10,
+   q:'¿Para qué sirve la escuadra en el dibujo técnico?',
+   options:['Trazar ángulos de 45° y 90° con precisión','Medir longitudes en milímetros','Trazar circunferencias de diámetro conocido','Copiar perfiles curvos de piezas'],
+   correct:0,explanation:'La escuadra permite trazar ángulos de 90° y 45° con exactitud, combinándola con el cartabón para obtener otros ángulos.'},
+
+  {band:'b',tag:'vistas',level:'Básico',points:10,
+   q:'En el sistema europeo (primer diedro), ¿dónde se coloca la vista de planta respecto al alzado?',
+   options:['Debajo del alzado','Encima del alzado','A la derecha del alzado','A la izquierda del alzado'],
+   correct:0,explanation:'En el sistema europeo de proyección (E), la planta se sitúa debajo del alzado y los perfiles a los lados.'},
+
+  {band:'b',tag:'croquizado',level:'Básico',points:10,
+   q:'¿Qué es un croquis en el ámbito del taller mecánico?',
+   options:['Un dibujo a mano alzada con cotas y proporciones aproximadas','Un plano CAD a escala exacta','Una fotografía técnica de la pieza','Un esquema eléctrico del componente'],
+   correct:0,explanation:'El croquis es un dibujo rápido a mano alzada, con las vistas y cotas necesarias para identificar la pieza, sin escala exacta.'},
+
+  // ── MEDIO (16) ──────────────────────────────────────────────
+  {band:'m',tag:'acotacion',level:'Medio',points:15,
+   q:'¿Qué indica el símbolo "⌀" delante de una cota?',
+   options:['El diámetro de un elemento cilíndrico o agujero','El radio de la curva','Una tolerancia de posición','La rugosidad superficial requerida'],
+   correct:0,explanation:'El símbolo ⌀ antes de una cifra indica que la medida es el diámetro de un elemento de revolución (eje, agujero, etc.).'},
+
+  {band:'m',tag:'tolerancias',level:'Medio',points:15,
+   q:'¿Qué expresa la tolerancia de fabricación en un plano?',
+   options:['El margen admisible entre la medida máxima y mínima de una cota','La dureza superficial del material','El acabado superficial requerido','El tipo de herramienta a utilizar'],
+   correct:0,explanation:'La tolerancia es la diferencia entre los límites máximo y mínimo admitidos para una dimensión; determina la precisión de fabricación exigida.'},
+
+  {band:'m',tag:'planos',level:'Medio',points:15,
+   q:'Un plano indica escala 1:2. Si la pieza real mide 80 mm, ¿cuánto ocupa en el dibujo?',
+   options:['40 mm','160 mm','80 mm','20 mm'],
+   correct:0,explanation:'Escala 1:2 significa que el dibujo es la mitad del tamaño real: 80 ÷ 2 = 40 mm.'},
+
+  {band:'m',tag:'vistas',level:'Medio',points:15,
+   q:'¿Qué vista se obtiene al mirar la pieza desde arriba?',
+   options:['Planta o vista superior','Alzado o vista frontal','Perfil derecho','Perfil izquierdo'],
+   correct:0,explanation:'La vista obtenida desde arriba se denomina planta o vista superior; muestra la anchura y la profundidad de la pieza.'},
+
+  {band:'m',tag:'acotacion',level:'Medio',points:15,
+   q:'¿Qué es una línea de cota en un dibujo técnico?',
+   options:['Línea paralela al elemento acotado, terminada en flechas, sobre la que se escribe el valor','Línea que separa dos materiales','Línea que marca el eje de simetría','Línea de referencia del acabado superficial'],
+   correct:0,explanation:'La línea de cota es paralela al elemento medido, termina en flechas que tocan las líneas auxiliares y lleva el valor numérico encima.'},
+
+  {band:'m',tag:'tolerancias',level:'Medio',points:15,
+   q:'Una cota es 25 +0,2/−0,1. ¿Cuál es la medida mínima admitida?',
+   options:['24,9 mm','25,2 mm','25,1 mm','24,8 mm'],
+   correct:0,explanation:'Medida mínima = nominal − tolerancia inferior: 25 − 0,1 = 24,9 mm.'},
+
+  {band:'m',tag:'planos',level:'Medio',points:15,
+   q:'¿Cuál es la diferencia entre un plano de conjunto y uno de detalle?',
+   options:['El de conjunto muestra el montaje completo; el de detalle amplía una zona concreta','El de detalle muestra todo; el de conjunto solo una pieza','Son iguales pero a distinta escala','El de conjunto omite todas las cotas'],
+   correct:0,explanation:'El plano de conjunto representa el ensamblaje completo de piezas; el de detalle amplía elementos concretos para mayor claridad y cotación.'},
+
+  {band:'m',tag:'vistas',level:'Medio',points:15,
+   q:'¿Para qué se utiliza un corte o sección en un plano técnico?',
+   options:['Para mostrar el interior de la pieza eliminando virtualmente material','Para indicar la dureza del material','Para marcar zonas de soldadura','Para señalar el punto de sujeción en tornillo de banco'],
+   correct:0,explanation:'Los cortes y secciones convierten las aristas interiores ocultas en visibles, facilitando la comprensión de la geometría interior.'},
+
+  {band:'m',tag:'utiles',level:'Medio',points:15,
+   q:'¿En qué se diferencia el cartabón de la escuadra?',
+   options:['El cartabón tiene ángulos 30°-60°-90°; la escuadra tiene 45°-45°-90°','El cartabón solo traza ángulos rectos','La escuadra traza ángulos de 30° y 60°','Son instrumentos idénticos con distinto nombre'],
+   correct:0,explanation:'El cartabón tiene ángulos 30°, 60° y 90°; la escuadra tiene 45°, 45° y 90°. Combinados permiten trazar la mayoría de ángulos normalizados.'},
+
+  {band:'m',tag:'croquizado',level:'Medio',points:15,
+   q:'¿Qué información mínima debe incluir un croquis de taller?',
+   options:['Vistas necesarias, cotas, material y denominación de la pieza','Solo el alzado sin cotas','Fotografía lateral y descripción textual','Lista de herramientas necesarias'],
+   correct:0,explanation:'Un croquis de taller válido incluye las vistas suficientes para definir la geometría, todas las cotas, material y nombre o referencia de la pieza.'},
+
+  {band:'m',tag:'tolerancias',level:'Medio',points:15,
+   q:'¿Qué indica el símbolo Ra en un plano técnico?',
+   options:['La rugosidad media aritmética de la superficie','El radio de acuerdo entre dos superficies','La resistencia al arranque del material','El recubrimiento superficial aplicado'],
+   correct:0,explanation:'Ra es el parámetro de rugosidad media aritmética; cuanto menor sea Ra, más liso es el acabado exigido y más costoso el proceso.'},
+
+  {band:'m',tag:'planos',level:'Medio',points:15,
+   q:'¿Cuál es la normativa internacional que regula el dibujo técnico industrial?',
+   options:['Normas ISO (International Organization for Standardization)','Norma SAE americana exclusivamente','Norma DIN alemana exclusivamente','Norma ASTM de materiales'],
+   correct:0,explanation:'Las normas ISO son el referente internacional para el dibujo técnico, garantizando que los planos sean interpretables en cualquier país.'},
+
+  {band:'m',tag:'acotacion',level:'Medio',points:15,
+   q:'¿Qué es la línea auxiliar o de referencia en una acotación?',
+   options:['Línea perpendicular al elemento acotado que delimita los extremos de la cota','Línea que indica el material de la pieza','Línea de eje central de la pieza','Línea que señala la zona de corte'],
+   correct:0,explanation:'Las líneas auxiliares salen perpendiculares al elemento medido y delimitan ambos extremos de la línea de cota.'},
+
+  {band:'m',tag:'vistas',level:'Medio',points:15,
+   q:'¿Cuántas vistas mínimas se necesitan para definir completamente un cilindro simple?',
+   options:['2 (alzado y planta)','1 (solo el alzado con símbolo ⌀)','3 (alzado, planta y perfil)','4 vistas como mínimo'],
+   correct:0,explanation:'Para un cilindro simple bastan 2 vistas: alzado (longitud) y planta (diámetro con ⌀). A veces con el símbolo ⌀ en el alzado es suficiente con 1.'},
+
+  {band:'m',tag:'utiles',level:'Medio',points:15,
+   q:'¿Para qué se utiliza el portaminas en el dibujo técnico?',
+   options:['Trazar líneas finas y uniformes de grosor preciso','Borrar trazos erróneos','Medir ángulos entre líneas','Copiar la forma de piezas curvas'],
+   correct:0,explanation:'El portaminas con mina de dureza adecuada permite trazar líneas uniformes y precisas, diferenciando los tipos de líneas normalizadas.'},
+
+  {band:'m',tag:'croquizado',level:'Medio',points:15,
+   q:'¿Qué escala se usa en un croquis de taller?',
+   options:['No tiene escala fija; las proporciones son aproximadas','Siempre 1:1 (tamaño real)','Siempre 2:1 (doble del real)','Siempre 1:10 para facilitar la lectura'],
+   correct:0,explanation:'El croquis se realiza a mano alzada, sin escala exacta, pero guardando proporciones razonables para que sea comprensible.'},
+
+  // ── ALTO (16) ───────────────────────────────────────────────
+  {band:'a',tag:'tolerancias',level:'Alto',points:20,
+   q:'Un eje está acotado como "30 h6". ¿Qué significa "h6" en la norma ISO de tolerancias?',
+   options:['Campo h (desviación superior en cero) con grado de tolerancia 6','Dureza Rockwell 6 del material','Altura de rugosidad 6 micras','Rosca métrica paso 6'],
+   correct:0,explanation:'En la notación ISO, "h" indica que la desviación superior es cero (eje en el límite nominal); "6" es el grado IT de precisión.'},
+
+  {band:'a',tag:'planos',level:'Alto',points:20,
+   q:'¿Cómo se indica en un plano que una superficie requiere Ra = 0,8 μm?',
+   options:['Con el símbolo normalizado de acabado superficial (√) y el valor Ra=0,8 junto a la superficie','Escribiendo "RECTIFICADO" en el cajetín','Con una doble línea gruesa en el contorno','Con trama de rayas en la sección correspondiente'],
+   correct:0,explanation:'El acabado superficial se indica mediante el símbolo √ (con o sin barra) junto al valor de Ra, colocado sobre o señalando la superficie afectada.'},
+
+  {band:'a',tag:'acotacion',level:'Alto',points:20,
+   q:'¿Qué problema genera la sobreacotación de un plano?',
+   options:['Crea dependencias contradictorias que pueden hacer la pieza imposible de fabricar','Solo dificulta la lectura visual','Añade información útil sin consecuencias negativas','No tiene consecuencias si las cotas son coherentes'],
+   correct:0,explanation:'La sobreacotación introduce cotas redundantes; al aplicar tolerancias, las medidas pueden volverse incompatibles entre sí.'},
+
+  {band:'a',tag:'vistas',level:'Alto',points:20,
+   q:'¿En qué se diferencia un corte parcial de un corte total?',
+   options:['El corte parcial muestra solo una zona delimitada por rotura; el total corta el sólido por completo','El total siempre va por eje de simetría; el parcial solo en soldaduras','Son equivalentes y se usan indistintamente','El parcial no necesita indicación; el total requiere línea de rotura'],
+   correct:0,explanation:'El corte total divide completamente el sólido; el corte parcial o rotura muestra solo una porción, delimitada por una línea de rotura irregular.'},
+
+  {band:'a',tag:'tolerancias',level:'Alto',points:20,
+   q:'El ajuste indicado en un plano es H7/f6 (agujero/eje). ¿Qué tipo de ajuste es?',
+   options:['Ajuste con juego (el eje siempre es menor que el agujero)','Ajuste fijo (siempre hay interferencia)','Ajuste indeterminado (puede haber juego o aprieto)','Ajuste de precisión sin tolerancias'],
+   correct:0,explanation:'H7/f6 es un ajuste con juego: el campo "f" del eje queda por debajo del nominal, garantizando siempre holgura entre las piezas.'},
+
+  {band:'a',tag:'planos',level:'Alto',points:20,
+   q:'¿Qué significa escala 2:1 en un plano y cuándo se usa?',
+   options:['El dibujo es el doble del tamaño real; se usa para representar piezas muy pequeñas','El dibujo es la mitad del real; para piezas grandes','Indica que hay dos copias del plano','La pieza se fabrica con el doble de material'],
+   correct:0,explanation:'La escala 2:1 amplía el dibujo al doble del tamaño real para facilitar la lectura de piezas muy pequeñas con detalles finos.'},
+
+  {band:'a',tag:'acotacion',level:'Alto',points:20,
+   q:'¿Qué son las tolerancias geométricas y cómo se representan en un plano?',
+   options:['Controlan forma, posición u orientación de superficies; se indican en marcos normalizados con símbolo, valor y referencia','Son iguales a las dimensionales pero con otro nombre','Se incluyen solo en la nota general del plano','Se aplican exclusivamente a piezas de plástico'],
+   correct:0,explanation:'Las tolerancias geométricas (planitud, perpendicularidad, coaxialidad…) se especifican en recuadros normalizados según ISO 1101.'},
+
+  {band:'a',tag:'croquizado',level:'Alto',points:20,
+   q:'Al croquizar una pieza dañada para solicitar su reposición, ¿cuál es el orden correcto?',
+   options:['Limpiar la pieza → identificar vistas → esbozar proporciones → medir → acotar → añadir observaciones','Medir con calibre directamente → dibujar en CAD → imprimir','Fotografiar y enviar foto al proveedor sin dibujo','Describir verbalmente al jefe de taller'],
+   correct:0,explanation:'El proceso correcto comienza limpiando la pieza, continúa identificando las vistas necesarias, esbozo proporcional, medición sistemática y acotación.'},
+
+  {band:'a',tag:'vistas',level:'Alto',points:20,
+   q:'Una pieza simétrica con cavidad interior: ¿qué recurso elimina las líneas discontinuas interiores?',
+   options:['Un corte o sección por el eje de simetría','Un plano auxiliar en perspectiva isométrica','Aumentar la escala del dibujo','Añadir una nota textual describiendo la cavidad'],
+   correct:0,explanation:'Seccionar por el eje de simetría convierte las aristas internas ocultas en visibles, eliminando la necesidad de líneas discontinuas.'},
+
+  {band:'a',tag:'tolerancias',level:'Alto',points:20,
+   q:'¿Qué consecuencia tiene elegir grado IT3 frente a IT11 en la fabricación?',
+   options:['IT3 exige mayor precisión (rectificado) y mayor coste; IT11 es económico pero menos exacto','IT3 es más económico porque requiere menos material','IT11 exige procesos de ultraalta precisión','Ambos implican el mismo proceso de fabricación'],
+   correct:0,explanation:'Los grados IT bajos requieren procesos de alta precisión (rectificado, bruñido); los altos se consiguen con mecanizado ordinario a menor coste.'},
+
+  {band:'a',tag:'utiles',level:'Alto',points:20,
+   q:'¿Cómo se elige la escala más adecuada para un plano de taller?',
+   options:['La que permite representar la pieza con todas las cotas legibles en el formato de papel disponible','Siempre 1:1 independientemente del tamaño','La más grande posible aunque no quepan todas las cotas','La escala la decide el proveedor del material'],
+   correct:0,explanation:'La escala debe garantizar que la pieza y sus cotas sean perfectamente legibles en el formato normalizado (A4, A3…) elegido para el plano.'},
+
+  {band:'a',tag:'planos',level:'Alto',points:20,
+   q:'¿Qué información contiene el cajetín de un plano técnico normalizado?',
+   options:['Nombre de la pieza, número de plano, escala, material, tipo de proyección, autor y fecha','Solo la escala y el nombre del dibujante','Únicamente las cotas generales','La lista de herramientas de fabricación'],
+   correct:0,explanation:'El cajetín normalizado recoge: denominación, número de plano, escala, material, sistema de proyección, firma y fecha de creación.'},
+
+  {band:'a',tag:'acotacion',level:'Alto',points:20,
+   q:'¿Cuándo se usa la acotación en cadena y qué inconveniente presenta?',
+   options:['Cuando hay cotas consecutivas; el inconveniente es que los errores de tolerancia se acumulan','En piezas cilíndricas sin inconvenientes','Solo en soldadura para facilitar el montaje','En piezas muy pequeñas para reducir líneas'],
+   correct:0,explanation:'La acotación en cadena enlaza cotas sucesivas, pero las tolerancias se suman, aumentando el error total acumulado en el conjunto.'},
+
+  {band:'a',tag:'croquizado',level:'Alto',points:20,
+   q:'Un operario debe replicar una pieza sin plano original. ¿Qué proceso de ingeniería inversa aplicaría?',
+   options:['Desmontar si es posible → medir cotas con instrumentos adecuados → croquizar con vistas suficientes → verificar montando','Pedir el plano al fabricante y esperar','Fabricar a ojo sin medir','Fotografiar y usar software CAD automático'],
+   correct:0,explanation:'La ingeniería inversa en taller requiere desmontaje, medición sistemática, croquizado con vistas y cotas, y verificación final montando la pieza.'},
+
+  {band:'a',tag:'vistas',level:'Alto',points:20,
+   q:'¿En qué situación es preferible usar una perspectiva isométrica en un plano?',
+   options:['Cuando se necesita mostrar la forma global de forma intuitiva, especialmente en instrucciones de montaje','Para sustituir siempre a las vistas ortogonales','Solo en piezas de gran tamaño','Para indicar la dureza superficial'],
+   correct:0,explanation:'La perspectiva isométrica facilita la comprensión espacial y es muy usada en catálogos e instrucciones de montaje, complementando las vistas ortogonales.'},
+
+  {band:'a',tag:'tolerancias',level:'Alto',points:20,
+   q:'¿Cómo afecta la rugosidad superficial Ra al funcionamiento de piezas en contacto deslizante?',
+   options:['Una Ra elevada aumenta rozamiento y desgaste; Ra baja mejora el deslizamiento pero encarece el proceso','Ra alta mejora el engrase por mayor superficie de contacto','La rugosidad no influye en el desgaste','Solo importa en piezas de precisión óptica'],
+   correct:0,explanation:'En superficies deslizantes, mayor rugosidad (Ra alta) implica mayor desgaste y calor; se requieren valores bajos de Ra aunque el acabado sea más costoso.'}
+],
+
+// ══════════════════════════════════════════════════════════════
+// FINAL · 10 preguntas integradoras (niveles 1–10)
+// ══════════════════════════════════════════════════════════════
+final:[
+  {band:'b',tag:'integracion',level:'Nivel 1',points:10,
+   q:'¿Qué tipo de línea se usa para representar los contornos visibles en un plano técnico?',
+   options:['Línea continua gruesa','Línea de trazos discontinuos','Línea de puntos y rayas','Línea continua fina'],
+   correct:0,explanation:'Los contornos y aristas visibles se trazan siempre con línea continua gruesa.'},
+
+  {band:'b',tag:'integracion',level:'Nivel 2',points:10,
+   q:'¿Qué indica el símbolo ⌀ delante de una cota?',
+   options:['El diámetro de un elemento cilíndrico','El radio de curvatura','Una tolerancia de posición','La rugosidad media'],
+   correct:0,explanation:'El símbolo ⌀ precede a cotas de diámetro en elementos de revolución como ejes o agujeros.'},
+
+  {band:'b',tag:'verificacion',level:'Nivel 3',points:10,
+   q:'¿Qué es la apreciación de un instrumento de medida?',
+   options:['El valor mínimo que puede leerse directamente en la escala','El error máximo admitido','El rango total del instrumento','La temperatura de trabajo admitida'],
+   correct:0,explanation:'La apreciación es la mínima división que el instrumento puede leer directamente sin interpolación.'},
+
+  {band:'m',tag:'integracion',level:'Nivel 4',points:15,
+   q:'Un plano indica escala 1:5. Si el dibujo mide 30 mm, ¿cuánto mide la pieza real?',
+   options:['150 mm','6 mm','30 mm','50 mm'],
+   correct:0,explanation:'Escala 1:5 significa que la pieza real es 5 veces mayor que el dibujo: 30 × 5 = 150 mm.'},
+
+  {band:'m',tag:'integracion',level:'Nivel 5',points:15,
+   q:'¿Qué permite ver un corte por el eje de simetría de una pieza?',
+   options:['La geometría interior que de otro modo quedaría oculta','La resistencia del material','El tipo de ajuste utilizado','El proceso de mecanizado empleado'],
+   correct:0,explanation:'El corte por el eje de simetría convierte aristas ocultas interiores en visibles, eliminando líneas discontinuas confusas.'},
+
+  {band:'m',tag:'integracion',level:'Nivel 6',points:15,
+   q:'Una cota es 50 +0,1/−0,2. ¿Cuál es el valor máximo admitido?',
+   options:['50,1 mm','49,8 mm','50,2 mm','49,9 mm'],
+   correct:0,explanation:'Valor máximo = nominal + tolerancia superior: 50 + 0,1 = 50,1 mm.'},
+
+  {band:'m',tag:'verificacion',level:'Nivel 7',points:15,
+   q:'Al verificar una pieza recién mecanizada con el plano, ¿qué se comprueba en primer lugar?',
+   options:['Que las dimensiones principales estén dentro de las tolerancias indicadas','Que el acabado superficial sea brillante','Que el peso coincida con el estimado','Que no tenga suciedad de refrigerante'],
+   correct:0,explanation:'La comprobación dimensional primaria consiste en verificar que las cotas cumplen las tolerancias del plano.'},
+
+  {band:'a',tag:'integracion',level:'Nivel 8',points:20,
+   q:'¿Por qué la sobreacotación de un plano puede originar piezas defectuosas?',
+   options:['Porque las tolerancias de cotas redundantes pueden ser contradictorias entre sí','Porque el operario tarda más en leer el plano','Porque el software CAD no admite cotas duplicadas','Porque aumenta el número de operaciones de mecanizado'],
+   correct:0,explanation:'La sobreacotación introduce dependencias redundantes; si sus tolerancias no son compatibles, la pieza puede cumplir una cota pero no otra.'},
+
+  {band:'a',tag:'seguridad',level:'Nivel 9',points:20,
+   q:'Al ejecutar una pieza según plano, ¿cuál es la consecuencia de ignorar la tolerancia de rugosidad Ra?',
+   options:['En piezas de contacto deslizante, un acabado rugoso aumenta el desgaste y puede causar fallos prematuros','No tiene consecuencias funcionales, solo estéticas','Mejora el agarre del lubricante sin efectos negativos','Solo afecta a piezas de precisión óptica, no de taller'],
+   correct:0,explanation:'La rugosidad superficial afecta directamente al desgaste, la fricción y la vida útil de piezas en contacto; ignorarla puede provocar fallos tempranos.'},
+
+  {band:'a',tag:'verificacion',level:'Nivel 10',points:20,
+   q:'Un operario detecta que una pieza mecanizada cumple todas las cotas del plano pero no encaja en el montaje. ¿Cuál es la causa más probable?',
+   options:['Las tolerancias geométricas (planitud, perpendicularidad o posición) no se han respetado','El material es incorrecto','El operario montó la pieza al revés','El plano tiene un error de escala'],
+   correct:0,explanation:'Las tolerancias geométricas controlan la forma y posición; una pieza puede tener las cotas correctas pero fallar el montaje si hay defecto geométrico.'}
+]
+};// fin questionPools
+
+// ════════════════════════════════════════════════════════════
+// MOTOR (no modificar)
+// ════════════════════════════════════════════════════════════
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+
+function buildSelection(pool){
+  const b=shuffle(pool.filter(q=>q.band==='b')).slice(0,6);
+  const m=shuffle(pool.filter(q=>q.band==='m')).slice(0,8);
+  const a=shuffle(pool.filter(q=>q.band==='a')).slice(0,6);
+  return [...b,...m,...a];
+}
+
+function passesUnlock(id){
+  const r=globalState.results[id];
+  if(!r||r.attempts===0)return false;
+  const total=r.lastTotal||20;
+  const basicTotal=r.lastBasicTotal||6;
+  return(r.bestScore/total)>=0.7||(r.lastBasicCorrect>=basicTotal);
+}
+
+function isQuizUnlocked(id){
+  const rule=unlockRules[id];
+  if(!rule)return true;
+  const idx=unlockOrder.indexOf(id);
+  for(let i=0;i<idx;i++){
+    if(!passesUnlock(unlockOrder[i]))return false;
+  }
+  return passesUnlock(rule.prev);
+}
+
+function attemptsLeft(id){
+  const r=globalState.results[id];
+  const used=r?r.attempts:0;
+  return maxAttemptsPerBlock-used;
+}
+
+function defaultResult(){return{bestScore:0,attempts:0,lastScore:0,lastTotal:20,lastBasicCorrect:0,lastBasicTotal:6,stars:0};}
+
+const profileKey=(name)=>`${storagePrefix}::${name}`;
+
+function hydrateResults(raw){
+  const out={};
+  unlockOrder.forEach(id=>{out[id]=raw[id]?{...defaultResult(),...raw[id]}:defaultResult();});
+  return out;
+}
+
+function serializableState(){
+  return{
+    name:student.name,
+    points:globalState.points,
+    stars:globalState.stars,
+    bestStreak:globalState.bestStreak,
+    completedUnits:[...globalState.completedUnits],
+    results:globalState.results,
+    saveCount:globalState.saveCount
+  };
+}
+
+function saveProfile(){
+  try{
+    globalState.saveCount++;
+    localStorage.setItem(profileKey(student.name),JSON.stringify(serializableState()));
+    document.getElementById('save-status').textContent=`✓ Guardado (${globalState.saveCount}× · ${new Date().toLocaleTimeString()})`;
+    document.getElementById('global-saves').textContent=globalState.saveCount;
+  }catch(e){document.getElementById('save-status').textContent='Error al guardar.';}
+}
+
+function loadProfileByName(name){
+  try{
+    const raw=localStorage.getItem(profileKey(name));
+    if(!raw)return false;
+    const data=JSON.parse(raw);
+    student.name=data.name||name;
+    globalState.points=data.points||0;
+    globalState.stars=data.stars||0;
+    globalState.bestStreak=data.bestStreak||0;
+    globalState.completedUnits=new Set(data.completedUnits||[]);
+    globalState.results=hydrateResults(data.results||{});
+    globalState.saveCount=data.saveCount||0;
+    return true;
+  }catch(e){return false;}
+}
+
+function resetProfile(){
+  student.name='Sin nombre';
+  globalState.points=0;globalState.stars=0;globalState.bestStreak=0;
+  globalState.completedUnits=new Set();globalState.results={};globalState.saveCount=0;
+  unlockOrder.forEach(id=>{globalState.results[id]=defaultResult();});
+}
+
+// BOTONES HERO
+document.getElementById('save-student').addEventListener('click',()=>{
+  const v=document.getElementById('student-name').value.trim();
+  if(!v)return;
+  student.name=v;
+  document.getElementById('save-status').textContent=`Perfil: ${v}`;
+  document.getElementById('report-name').textContent=v;
+  saveProfile();
+  refreshAll();
+});
+
+document.getElementById('resume-student').addEventListener('click',()=>{
+  const v=document.getElementById('student-name').value.trim();
+  if(!v){alert('Escribe primero el nombre del alumno.');return;}
+  if(loadProfileByName(v)){
+    document.getElementById('student-name').value=student.name;
+    document.getElementById('save-status').textContent=`✓ Perfil cargado: ${student.name}`;
+    document.getElementById('report-name').textContent=student.name;
+    updateGlobalPanel();updateReport();refreshAll();
+  }else{
+    document.getElementById('save-status').textContent='No se encontró perfil guardado.';
+  }
+});
+
+document.getElementById('clear-student').addEventListener('click',()=>{
+  if(!confirm('¿Reiniciar el perfil? Se perderá todo el progreso.'))return;
+  const name=document.getElementById('student-name').value.trim();
+  if(name)localStorage.removeItem(profileKey(name));
+  resetProfile();
+  document.getElementById('save-status').textContent='Perfil reiniciado.';
+  document.getElementById('report-name').textContent='Sin nombre';
+  updateGlobalPanel();updateReport();refreshAll();
+});
+
+// HELPERS
+function levelLabel(score,total){
+  const p=score/total;
+  if(p>=0.9)return['Experto','l-exp'];
+  if(p>=0.7)return['Avanzado','l-adv'];
+  if(p>=0.5)return['Medio','l-med'];
+  if(p>0)return['Básico','l-basic'];
+  return['Sin iniciar','l-init'];
+}
+
+function updateGlobalPanel(){
+  document.getElementById('global-points').textContent=globalState.points;
+  document.getElementById('global-stars').textContent=globalState.stars;
+  document.getElementById('global-streak').textContent=globalState.bestStreak;
+  document.getElementById('global-units').textContent=`${globalState.completedUnits.size}/1`;
+  document.getElementById('global-saves').textContent=globalState.saveCount;
+}
+
+function unlockBadge(id){
+  const el=document.getElementById(`badge-${id}`);
+  if(!el)return;
+  const r=globalState.results[id];
+  const pct=r&&r.lastTotal?Math.round(r.bestScore/r.lastTotal*100):0;
+  el.classList.remove('badge-lock');
+  el.classList.add('badge-unlock');
+  el.querySelector('h3').textContent=(pct>=80?'🏆':'✅')+' '+(id==='ud1'?'UD1':'Final RA1');
+}
+
+function updateReport(){
+  const tb=document.getElementById('report-table');
+  const names={ud1:'UD1 · Planos y Normalización',final:'Prueba Final RA1'};
+  tb.innerHTML='';
+  unlockOrder.forEach(id=>{
+    const r=globalState.results[id]||defaultResult();
+    const total=r.lastTotal||20;
+    const[lbl,cls]=levelLabel(r.bestScore,total);
+    const pct=r.attempts>0?Math.round(r.bestScore/total*100)+'%':'—';
+    const last=r.attempts>0?Math.round(r.lastScore/(r.lastTotal||20)*100)+'%':'—';
+    tb.innerHTML+=`<tr>
+      <td>${names[id]}</td>
+      <td>${r.attempts>0?r.bestScore+'/'+total+' ('+pct+')':'—'}</td>
+      <td>${r.attempts}/${maxAttemptsPerBlock}</td>
+      <td>${last}</td>
+      <td><span class="level-badge ${cls}">${lbl}</span></td>
+    </tr>`;
+  });
+  // Diagnóstico global
+  const diag=document.getElementById('global-diagnosis');
+  const attempted=unlockOrder.filter(id=>globalState.results[id]&&globalState.results[id].attempts>0);
+  if(attempted.length===0){diag.innerHTML='<strong>Diagnóstico global:</strong> Completa al menos un bloque para ver el diagnóstico.';return;}
+  const avg=attempted.reduce((s,id)=>{
+    const r=globalState.results[id];return s+(r.bestScore/(r.lastTotal||20));
+  },0)/attempted.length;
+  let msg='';
+  if(avg>=0.9)msg='Rendimiento excelente. Dominas los contenidos del RA1.';
+  else if(avg>=0.7)msg='Buen nivel. Repasa los temas con feedback de repaso para consolidar.';
+  else if(avg>=0.5)msg='Nivel básico alcanzado. Revisa los temas marcados en rojo y vuelve a intentarlo.';
+  else msg='Necesitas reforzar los contenidos. Lee el material de UD1 y vuelve a intentarlo.';
+  diag.innerHTML=`<strong>Diagnóstico global (promedio ${Math.round(avg*100)}%):</strong> ${msg}`;
+}
+
+function buildReview(id,tagErrors){
+  const msgs=reviewMessages[id];
+  if(!msgs||tagErrors.length===0)return'';
+  const unique=[...new Set(tagErrors)];
+  const lines=unique.map(t=>msgs[t]||null).filter(Boolean);
+  if(lines.length===0)return'';
+  return'<strong>📚 Repasa:</strong><br>'+lines.map(l=>`• ${l}`).join('<br>');
+}
+
+function buildGateSummary(id,score,total,basicCorrect,basicTotal,stars,tagErrors){
+  const pct=Math.round(score/total*100);
+  const passes=passesUnlock(id);
+  const left=attemptsLeft(id);
+  let html='';
+  if(passes){
+    const nextIdx=unlockOrder.indexOf(id)+1;
+    const nextId=unlockOrder[nextIdx];
+    const nextName=nextId?unitMeta[nextId][0]:'';
+    html+=`<p>✅ <strong>Bloque superado</strong> · ${pct}% · ${stars}⭐</p>`;
+    if(nextName)html+=`<p style="margin-top:6px">🔓 <em>${nextName}</em> desbloqueada.</p>`;
+  }else{
+    html+=`<p>❌ <strong>No superado</strong> · ${pct}% · Intentos restantes: ${left}</p>`;
+    if(left>0)html+=`<p style="margin-top:4px">${unlockRules[id]?.label||''}</p>`;
+    else html+=`<p style="margin-top:4px">Has agotado los intentos en este bloque.</p>`;
+  }
+  const rev=buildReview(id,tagErrors);
+  if(rev)html+=`<div class="review-box show" style="margin-top:10px">${rev}</div>`;
+  return{html,passes};
+}
+
+// RENDER QUIZZES
+function renderQuizSections(){
+  const container=document.getElementById('quizzes');
+  container.innerHTML='';
+  ['ud1','final'].forEach(id=>{
+    const[title,desc]=unitMeta[id];
+    const sec=document.createElement('section');
+    sec.className='section';sec.id=id;
+    sec.innerHTML=`<div class="section-head"><div><h2>${title}</h2><p class="muted">${desc}</p></div></div>
+    <div class="quiz-layout">
+      <div class="status-box" id="status-${id}">
+        <h3>Progreso</h3>
+        <div class="progress-bar-wrap"><div class="progress-bar-fill" id="pb-${id}" style="width:0%"></div></div>
+        <div class="stat-row"><span>Pregunta</span><span id="qnum-${id}">0/20</span></div>
+        <div class="stat-row"><span>Correctas</span><span id="score-${id}">0</span></div>
+        <div class="stat-row"><span>Racha</span><span id="streak-${id}">0</span></div>
+        <div class="stat-row"><span>Puntos</span><span id="pts-${id}">0</span></div>
+        <div class="stat-row"><span>Intentos</span><span id="att-${id}">0/${maxAttemptsPerBlock}</span></div>
+        <button class="reset-btn" id="reset-${id}">↺ Nuevo intento</button>
+      </div>
+      <div class="quiz-box" id="qbox-${id}"></div>
+    </div>`;
+    container.appendChild(sec);
+  });
+}
+
+function createQuiz(id){
+  const box=document.getElementById(`qbox-${id}`);
+  if(!box)return;
+
+  if(!globalState.results[id])globalState.results[id]=defaultResult();
+
+  function render(){
+    const unlocked=isQuizUnlocked(id);
+    const left=attemptsLeft(id);
+
+    if(!unlocked){
+      box.innerHTML=`<div class="lock-screen"><div class="lock-icon">🔒</div>
+        <p><strong>Bloque bloqueado</strong><br>${unlockRules[id]?.label||'Supera el bloque anterior para desbloquear.'}</p></div>`;
+      return;
+    }
+    if(left<=0&&!passesUnlock(id)){
+      box.innerHTML=`<div class="lock-screen"><div class="lock-icon">⛔</div>
+        <p><strong>Sin intentos disponibles</strong><br>Has agotado los ${maxAttemptsPerBlock} intentos. Habla con tu profesor.</p></div>`;
+      return;
+    }
+
+    // Construir selección de preguntas
+    const isFinal=id==='final';
+    const pool=isFinal?[...questionPools.final]:buildSelection(questionPools[id]);
+    const total=pool.length;
+    const basicTotal=isFinal?0:pool.filter(q=>q.band==='b').length;
+
+    let qi=0,score=0,pts=0,streak=0,bestStreak=0,basicCorrect=0;
+    const tagErrors=[];
+
+    // Actualizar barra de estado
+    function updateStatus(){
+      document.getElementById(`pb-${id}`).style.width=`${Math.round(qi/total*100)}%`;
+      document.getElementById(`qnum-${id}`).textContent=`${qi}/${total}`;
+      document.getElementById(`score-${id}`).textContent=score;
+      document.getElementById(`streak-${id}`).textContent=streak;
+      document.getElementById(`pts-${id}`).textContent=pts;
+      const r=globalState.results[id];
+      document.getElementById(`att-${id}`).textContent=`${r.attempts}/${maxAttemptsPerBlock}`;
+    }
+
+    function showQ(){
+      if(qi>=total){finish();return;}
+      const q=pool[qi];
+      // Barajar opciones manteniendo la correcta
+      const idxArr=q.options.map((_,i)=>i);
+      const corrOpt=q.options[0];
+      shuffle(idxArr);
+      const shuffled=idxArr.map(i=>q.options[i]);
+      const corrIdx=shuffled.indexOf(corrOpt);
+
+      const tagClass={b:'tag-b',m:'tag-m',a:'tag-a'}[q.band]||'tag-b';
+      box.innerHTML=`
+        <span class="level-tag ${tagClass}">${q.level}</span>
+        <p class="q-text">${q.q}</p>
+        <div class="options" id="opts-${id}">
+          ${shuffled.map((o,i)=>`<button class="opt-btn" data-idx="${i}">${o}</button>`).join('')}
+        </div>
+        <div class="reward" id="reward-${id}"></div>
+        <div class="feedback" id="fb-${id}"></div>
+        <button class="next-btn" id="next-${id}" style="display:none">${qi+1<total?'Siguiente →':'Ver resultado'}</button>
+        <div class="gate-note" id="gate-${id}"></div>
+        <div class="review-box" id="rev-${id}"></div>`;
+
+      document.querySelectorAll(`#opts-${id} .opt-btn`).forEach(btn=>{
+        btn.addEventListener('click',()=>{
+          if(btn.disabled)return;
+          document.querySelectorAll(`#opts-${id} .opt-btn`).forEach(b=>b.disabled=true);
+          const chosen=parseInt(btn.dataset.idx);
+          const ok=chosen===corrIdx;
+          btn.classList.add(ok?'correct':'wrong');
+          if(!ok)document.querySelectorAll(`#opts-${id} .opt-btn`)[corrIdx].classList.add('correct');
+          const fb=document.getElementById(`fb-${id}`);
+          fb.textContent=(ok?'✓ Correcto: ':'✗ Incorrecto: ')+q.explanation;
+          fb.className=`feedback show ${ok?'ok':'ko'}`;
+          if(ok){
+            score++;pts+=q.points;streak++;
+            if(streak>bestStreak)bestStreak=streak;
+            if(q.band==='b')basicCorrect++;
+            document.getElementById(`reward-${id}`).textContent=streak>=5?'🔥 ¡Racha!':streak>=3?'⚡':'';
+          }else{
+            streak=0;tagErrors.push(q.tag);
+            document.getElementById(`reward-${id}`).textContent='';
+          }
+          qi++;
+          updateStatus();
+          document.getElementById(`next-${id}`).style.display='block';
+        });
+      });
+
+      document.getElementById(`next-${id}`).addEventListener('click',()=>{
+        if(qi>=total)finish();else showQ();
+      });
+    }
+
+    function finish(){
+      // Actualizar resultados
+      const r=globalState.results[id];
+      r.attempts++;
+      r.lastScore=score;r.lastTotal=total;
+      r.lastBasicCorrect=basicCorrect;r.lastBasicTotal=basicTotal;
+      if(score>r.bestScore)r.bestScore=score;
+      const stars=score/total>=0.9?3:score/total>=0.7?2:score/total>=0.5?1:0;
+      if(stars>r.stars)r.stars=stars;
+      globalState.points+=pts;
+      globalState.stars+=stars;
+      if(bestStreak>globalState.bestStreak)globalState.bestStreak=bestStreak;
+      if(passesUnlock(id)){
+        globalState.completedUnits.add(id);
+        unlockBadge(id);
+      }
+      updateGlobalPanel();updateReport();saveProfile();
+
+      const{html,passes}=buildGateSummary(id,score,total,basicCorrect,basicTotal,stars,tagErrors);
+      box.innerHTML=`
+        <div style="text-align:center;margin-bottom:20px">
+          <div style="font-size:2.5rem;margin-bottom:8px">${stars===3?'🏆':stars===2?'🥈':stars===1?'🥉':'📋'}</div>
+          <h3 style="font-size:1.3rem;margin-bottom:6px">${score}/${total} correctas</h3>
+          <p class="muted">${pts} puntos · ${Math.round(score/total*100)}%</p>
+        </div>
+        <div class="gate-note show ${passes?'pass':'fail'}">${html}</div>`;
+
+      // Desbloquear siguiente si procede
+      if(passes){
+        const nextIdx=unlockOrder.indexOf(id)+1;
+        if(nextIdx<unlockOrder.length){
+          const nextId=unlockOrder[nextIdx];
+          const nextBox=document.getElementById(`qbox-${nextId}`);
+          if(nextBox)createQuiz(nextId);
+        }
+      }
+    }
+
+    // Inicio del intento
+    updateStatus();
+    showQ();
+  }
+
+  // Botón nuevo intento
+  document.getElementById(`reset-${id}`).addEventListener('click',()=>{
+    if(attemptsLeft(id)<=0){alert('Sin intentos disponibles.');return;}
+    render();
+  });
+
+  render();
+}
+
+function refreshAll(){
+  unlockOrder.forEach(id=>createQuiz(id));
+  // Actualizar insignias según estado actual
+  unlockOrder.forEach(id=>{if(passesUnlock(id))unlockBadge(id);});
+}
+
+// INICIALIZACIÓN
+unlockOrder.forEach(id=>{if(!globalState.results[id])globalState.results[id]=defaultResult();});
+renderQuizSections();
+refreshAll();
+updateGlobalPanel();
+updateReport();
+</script>
+</body>
+</html>

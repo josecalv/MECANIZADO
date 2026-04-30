@@ -1,0 +1,1322 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aula Taller · RA2 Mecanizado y Soldadura</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root,[data-theme="light"]{
+      --bg:#f7f6f2;--surface:#f9f8f5;--surface2:#fbfbf9;--surface3:#f0ece6;
+      --border:#d4d1ca;--text:#28251d;--muted:#6f6d67;--inv:#faf8f5;
+      --primary:#01696f;--success:#437a22;--danger:#b13b82;--gold:#d19900;
+      --radius:18px;--shadow:0 18px 40px rgba(35,28,18,.09);
+      --font-display:'Instrument Serif',Georgia,serif;
+      --font-body:'Inter',system-ui,sans-serif
+    }
+    [data-theme="dark"]{
+      --bg:#171614;--surface:#1c1b19;--surface2:#201f1d;--surface3:#262422;
+      --border:#393836;--text:#e2dfd9;--muted:#a5a19b;--inv:#191816;
+      --primary:#4f98a3;--success:#76b14c;--danger:#db77b2;--gold:#e4b843;
+      --shadow:0 18px 40px rgba(0,0,0,.35)
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:var(--font-body);background:var(--bg);color:var(--text);line-height:1.6;min-height:100vh}
+    .wrap{max-width:1100px;margin:0 auto;padding:0 20px}
+    header{background:var(--surface);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(0,0,0,.06)}
+    .topbar{display:flex;align-items:center;justify-content:space-between;padding:14px 20px;gap:12px}
+    .brand{display:flex;align-items:center;gap:12px}
+    .logo{width:38px;height:38px;background:var(--primary);border-radius:10px;display:flex;align-items:center;justify-content:center}
+    .logo svg{width:22px;height:22px;fill:none;stroke:#fff;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+    .brand small{display:block;font-size:.7rem;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
+    .brand strong{font-size:.95rem;font-weight:700}
+    .nav{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+    .nav a{font-size:.8rem;font-weight:600;color:var(--muted);text-decoration:none;padding:5px 11px;border-radius:20px;border:1px solid transparent;transition:.2s}
+    .nav a:hover{color:var(--primary);border-color:var(--primary)}
+    .theme-btn{background:none;border:1px solid var(--border);border-radius:20px;padding:5px 10px;cursor:pointer;font-size:.9rem;color:var(--muted);transition:.2s}
+    .theme-btn:hover{color:var(--primary)}
+    .hero{padding:56px 20px 40px;max-width:1100px;margin:0 auto}
+    .hero-grid{display:grid;grid-template-columns:1fr 320px;gap:40px;align-items:start}
+    @media(max-width:800px){.hero-grid{grid-template-columns:1fr}}
+    .eyebrow{display:inline-block;font-size:.75rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--primary);margin-bottom:10px}
+    h1{font-family:var(--font-display);font-size:clamp(2rem,5vw,3rem);font-weight:400;line-height:1.15;margin-bottom:16px}
+    .lead{font-size:1rem;color:var(--muted);max-width:520px;margin-bottom:24px;line-height:1.7}
+    .chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:28px}
+    .chip{font-size:.75rem;font-weight:600;padding:5px 12px;border-radius:20px;background:var(--surface3);border:1px solid var(--border);color:var(--muted)}
+    .student-form{display:flex;gap:10px;margin-bottom:14px;flex-wrap:wrap}
+    .student-form input{flex:1;min-width:200px;padding:10px 14px;border-radius:10px;border:1px solid var(--border);background:var(--surface2);color:var(--text);font-family:var(--font-body);font-size:.95rem}
+    .student-form input:focus{outline:none;border-color:var(--primary)}
+    .save-box{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+    .save-status{font-size:.82rem;color:var(--muted)}
+    .btn{padding:9px 18px;border-radius:10px;border:none;cursor:pointer;font-family:var(--font-body);font-size:.9rem;font-weight:600;transition:.2s}
+    .btn-primary{background:var(--primary);color:#fff}.btn-primary:hover{opacity:.88}
+    .btn-secondary{background:var(--surface3);color:var(--text);border:1px solid var(--border)}.btn-secondary:hover{border-color:var(--primary);color:var(--primary)}
+    .panel{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:24px;box-shadow:var(--shadow)}
+    .panel h3{font-size:1rem;font-weight:700;margin-bottom:18px}
+    .hero-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+    .stat{text-align:center;background:var(--surface3);border-radius:12px;padding:12px 8px}
+    .stat strong{display:block;font-size:1.4rem;font-weight:800;color:var(--primary)}
+    .stat span{font-size:.72rem;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.06em}
+    .section{max-width:1100px;margin:0 auto;padding:40px 20px}
+    .section-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:28px}
+    .section-head h2{font-family:var(--font-display);font-size:1.7rem;font-weight:400}
+    .muted{color:var(--muted);font-size:.9rem}
+    .cards4{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+    @media(max-width:900px){.cards4{grid-template-columns:repeat(2,1fr)}}
+    @media(max-width:500px){.cards4{grid-template-columns:1fr}}
+    .badgebox{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:22px;text-align:center;transition:.3s}
+    .badgebox h3{font-size:1rem;font-weight:700;margin-bottom:6px}
+    .badgebox p{font-size:.82rem;color:var(--muted)}
+    .badge-lock{opacity:.45;filter:grayscale(1)}
+    .badge-unlock{border-color:var(--success);background:color-mix(in srgb,var(--success) 6%,var(--surface))}
+    .quiz-layout{display:grid;grid-template-columns:260px 1fr;gap:24px;align-items:start}
+    @media(max-width:800px){.quiz-layout{grid-template-columns:1fr}}
+    .status-box{position:sticky;top:80px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:22px;box-shadow:var(--shadow)}
+    .status-box h3{font-size:.95rem;font-weight:700;margin-bottom:16px}
+    .progress-bar-wrap{background:var(--surface3);border-radius:99px;height:8px;margin-bottom:16px;overflow:hidden}
+    .progress-bar-fill{height:8px;border-radius:99px;background:var(--primary);transition:.4s}
+    .stat-row{display:flex;justify-content:space-between;font-size:.82rem;margin-bottom:8px}
+    .stat-row span:last-child{font-weight:700;color:var(--primary)}
+    .reset-btn{width:100%;padding:8px;border-radius:8px;border:1px solid var(--border);background:none;cursor:pointer;font-size:.82rem;color:var(--muted);margin-top:12px;transition:.2s}
+    .reset-btn:hover{border-color:var(--danger);color:var(--danger)}
+    .quiz-box{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:28px;box-shadow:var(--shadow)}
+    .level-tag{display:inline-flex;align-items:center;gap:6px;font-size:.75rem;font-weight:700;padding:4px 12px;border-radius:20px;margin-bottom:16px;text-transform:uppercase;letter-spacing:.07em}
+    .tag-b{background:color-mix(in srgb,var(--success) 12%,var(--surface));color:var(--success)}
+    .tag-m{background:color-mix(in srgb,var(--gold) 12%,var(--surface));color:var(--gold)}
+    .tag-a{background:color-mix(in srgb,var(--danger) 12%,var(--surface));color:var(--danger)}
+    .q-text{font-size:1.05rem;font-weight:600;margin-bottom:20px;line-height:1.5}
+    .options{display:flex;flex-direction:column;gap:10px;margin-bottom:20px}
+    .opt-btn{text-align:left;padding:12px 16px;border-radius:12px;border:1.5px solid var(--border);background:var(--surface2);cursor:pointer;font-family:var(--font-body);font-size:.93rem;color:var(--text);transition:.2s}
+    .opt-btn:hover:not(:disabled){border-color:var(--primary);background:color-mix(in srgb,var(--primary) 6%,var(--surface))}
+    .opt-btn.correct{border-color:var(--success);background:color-mix(in srgb,var(--success) 10%,var(--surface));color:var(--success);font-weight:700}
+    .opt-btn.wrong{border-color:var(--danger);background:color-mix(in srgb,var(--danger) 8%,var(--surface));color:var(--danger)}
+    .feedback{padding:14px;border-radius:10px;font-size:.88rem;margin-bottom:14px;line-height:1.5;display:none}
+    .feedback.show{display:block}
+    .feedback.ok{background:color-mix(in srgb,var(--success) 10%,var(--surface));border:1px solid var(--success);color:var(--success)}
+    .feedback.ko{background:color-mix(in srgb,var(--danger) 8%,var(--surface));border:1px solid var(--danger);color:var(--danger)}
+    .reward{font-size:1.5rem;text-align:center;margin-bottom:10px;min-height:2rem}
+    .gate-note{display:none;padding:16px;border-radius:12px;border:1px solid var(--border);background:var(--surface3);font-size:.88rem;color:var(--muted);margin-top:16px;line-height:1.6}
+    .gate-note.show{display:block}
+    .gate-note.pass{border-color:var(--success);background:color-mix(in srgb,var(--success) 8%,var(--surface));color:var(--success)}
+    .gate-note.fail{border-color:var(--danger);background:color-mix(in srgb,var(--danger) 6%,var(--surface));color:var(--danger)}
+    .review-box{display:none;padding:16px;border-radius:12px;background:color-mix(in srgb,var(--gold) 8%,var(--surface));border:1px solid var(--gold);font-size:.85rem;color:var(--text);margin-top:14px;line-height:1.7}
+    .review-box.show{display:block}
+    .review-box strong{color:var(--gold)}
+    .next-btn{width:100%;padding:11px;border-radius:10px;background:var(--primary);color:#fff;border:none;cursor:pointer;font-family:var(--font-body);font-weight:700;font-size:.95rem;transition:.2s}
+    .next-btn:hover{opacity:.88}
+    .lock-screen{text-align:center;padding:40px;color:var(--muted)}
+    .lock-screen .lock-icon{font-size:2.5rem;margin-bottom:12px}
+    .lock-screen p{font-size:.9rem;line-height:1.6;max-width:380px;margin:0 auto}
+    .report-box{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:28px;box-shadow:var(--shadow)}
+    .table{width:100%;border-collapse:collapse;font-size:.88rem;margin-top:16px}
+    .table th{text-align:left;padding:10px 12px;border-bottom:2px solid var(--border);font-weight:700;color:var(--muted);text-transform:uppercase;font-size:.75rem;letter-spacing:.07em}
+    .table td{padding:10px 12px;border-bottom:1px solid var(--border)}
+    .table tr:last-child td{border-bottom:none}
+    .level-badge{display:inline-flex;padding:3px 10px;border-radius:20px;font-size:.75rem;font-weight:700}
+    .l-init{background:var(--surface3);color:var(--muted)}
+    .l-basic{background:color-mix(in srgb,var(--success) 12%,var(--surface));color:var(--success)}
+    .l-med{background:color-mix(in srgb,var(--gold) 12%,var(--surface));color:var(--gold)}
+    .l-adv{background:color-mix(in srgb,var(--primary) 12%,var(--surface));color:var(--primary)}
+    .l-exp{background:color-mix(in srgb,var(--danger) 12%,var(--surface));color:var(--danger)}
+    .diag-box{padding:16px;border-radius:12px;background:var(--surface3);border:1px solid var(--border);font-size:.88rem;line-height:1.7;margin-top:16px}
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="wrap topbar">
+    <div class="brand">
+      <div class="logo">
+        <svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+      </div>
+      <div>
+        <small>RA2 · Mecanizado y Soldadura</small>
+        <strong>Aula Taller</strong>
+      </div>
+    </div>
+    <nav class="nav">
+      <a href="#ud2">UD2 Metrología</a>
+      <a href="#ud3">UD3 Equipos</a>
+      <a href="#ud4">UD4 Materiales</a>
+      <a href="#final">Final RA2</a>
+      <a href="#informe">Informe</a>
+      <button class="theme-btn" data-theme-toggle>◐</button>
+    </nav>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-grid">
+    <div>
+      <span class="eyebrow">RA2 · Mecanizado y Soldadura</span>
+      <h1>Aula Taller</h1>
+      <p class="lead">Prepara y ajusta los equipos, útiles y herramientas para el mecanizado: domina los instrumentos de medida, el equipamiento de taller y las propiedades de los materiales metálicos.</p>
+      <div class="chips">
+        <span class="chip">40 preguntas por unidad</span>
+        <span class="chip">Se extraen 20 por intento</span>
+        <span class="chip">Sin repetición en el intento</span>
+        <span class="chip">Guardado local</span>
+      </div>
+      <div class="student-form">
+        <input id="student-name" type="text" placeholder="Escribe el nombre del alumno">
+        <button class="btn btn-primary" id="save-student">Guardar nombre</button>
+      </div>
+      <div class="save-box">
+        <div class="save-status" id="save-status">Sin perfil cargado</div>
+        <button class="btn btn-secondary" id="resume-student">Cargar progreso</button>
+        <button class="btn btn-secondary" id="clear-student">Reiniciar perfil</button>
+      </div>
+    </div>
+    <aside class="panel hero-side">
+      <h3>Panel del alumno</h3>
+      <div class="hero-stats">
+        <div class="stat"><strong id="global-points">0</strong><br><span class="muted">Puntos</span></div>
+        <div class="stat"><strong id="global-stars">0</strong><br><span class="muted">Estrellas</span></div>
+        <div class="stat"><strong id="global-streak">0</strong><br><span class="muted">Mejor racha</span></div>
+        <div class="stat"><strong id="global-units">0/3</strong><br><span class="muted">UD completadas</span></div>
+        <div class="stat"><strong id="global-saves">0</strong><br><span class="muted">Guardados</span></div>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<!-- INSIGNIAS -->
+<section class="section">
+  <div class="section-head">
+    <div>
+      <h2>Insignias del recorrido</h2>
+      <p class="muted">Supera cada bloque para desbloquear el siguiente.</p>
+    </div>
+  </div>
+  <div class="cards4">
+    <div class="badgebox badge-lock" id="badge-ud2">
+      <h3>📏 UD2</h3>
+      <p>Metrología</p>
+    </div>
+    <div class="badgebox badge-lock" id="badge-ud3">
+      <h3>🔧 UD3</h3>
+      <p>Equipos y Herramientas</p>
+    </div>
+    <div class="badgebox badge-lock" id="badge-ud4">
+      <h3>⚙️ UD4</h3>
+      <p>Materiales</p>
+    </div>
+    <div class="badgebox badge-lock" id="badge-final">
+      <h3>🏁 Final RA2</h3>
+      <p>Prueba final integradora</p>
+    </div>
+  </div>
+</section>
+
+<!-- QUIZZES -->
+<div id="quizzes"></div>
+
+<!-- INFORME -->
+<section class="section" id="informe">
+  <div class="section-head">
+    <div><h2>Informe del alumno</h2><p class="muted">Resumen de resultados por bloque.</p></div>
+  </div>
+  <div class="report-box" id="report-box">
+    <p><strong>Alumno:</strong> <span id="report-name">Sin nombre</span></p>
+    <table class="table">
+      <thead><tr><th>Bloque</th><th>Mejor resultado</th><th>Intentos</th><th>Último</th><th>Nivel</th></tr></thead>
+      <tbody id="report-table"></tbody>
+    </table>
+    <div class="diag-box" id="global-diagnosis">
+      <strong>Diagnóstico global:</strong> Completa al menos un bloque para ver el diagnóstico.
+    </div>
+  </div>
+</section>
+
+<script>
+// ─── TEMA ────────────────────────────────────────────────────
+(function(){
+  const root=document.documentElement,btn=document.querySelector('[data-theme-toggle]');
+  let t=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
+  root.setAttribute('data-theme',t);
+  btn.addEventListener('click',()=>{t=t==='dark'?'light':'dark';root.setAttribute('data-theme',t);});
+})();
+
+// ─── CONFIG ──────────────────────────────────────────────────
+const storagePrefix='aula-taller-mec-ra2-v1';
+const maxAttemptsPerBlock=3;
+const student={name:'Sin nombre'};
+const globalState={points:0,stars:0,bestStreak:0,completedUnits:new Set(),results:{},saveCount:0};
+
+const unitIds=['ud2','ud3','ud4'];
+const unlockOrder=[...unitIds,'final'];
+
+const unlockRules={
+  ud2:null,
+  ud3:{prev:'ud2',score:7,label:'Necesitas al menos 70% en UD2 o acertar todas las básicas.'},
+  ud4:{prev:'ud3',score:7,label:'Necesitas al menos 70% en UD3 o acertar todas las básicas.'},
+  final:{prev:'ud4',score:7,label:'Necesitas superar las tres unidades para acceder a la prueba final.'}
+};
+
+const unitMeta={
+  ud2:['Evaluación UD2 · Metrología','Banco de 40 preguntas; se extraen 20 con dificultad progresiva.'],
+  ud3:['Evaluación UD3 · Equipos y Herramientas','Banco de 40 preguntas; se extraen 20 con dificultad progresiva.'],
+  ud4:['Evaluación UD4 · Materiales','Banco de 40 preguntas; se extraen 20 con dificultad progresiva.'],
+  final:['Prueba Final · RA2','10 preguntas integradoras tras completar las tres unidades.']
+};
+
+// ─── REVIEW MESSAGES ─────────────────────────────────────────
+const reviewMessages={
+  ud2:{
+    medida:'Repasa los conceptos de apreciación, precisión y error de medida (UD2).',
+    sistemas:'Repasa los sistemas de unidades SI y anglosajón, y sus conversiones (UD2).',
+    calibre:'Repasa el uso y lectura del calibre pie de rey con nonio (UD2).',
+    micrometro:'Repasa el uso y lectura del micrómetro de exteriores e interiores (UD2).',
+    comparadores:'Repasa el comparador de reloj: montaje, uso y verificación de planitud (UD2).',
+    instrumentos:'Repasa la selección del instrumento adecuado según el tipo y precisión de la medida (UD2).'
+  },
+  ud3:{
+    puesto:'Repasa la organización del puesto de trabajo de mecanizado y normas de orden (UD3).',
+    herramientas_mano:'Repasa las herramientas de mano de uso general: tipos, usos y mantenimiento (UD3).',
+    herramientas_esp:'Repasa los útiles y herramientas específicas para procesos de mecanizado (UD3).',
+    maquinaria:'Repasa la maquinaria de mecanizado: taladro, sierra, esmeriladora y sus parámetros (UD3).',
+    montaje:'Repasa las operaciones de montaje/desmontaje de herramientas y cambio de formato (UD3).',
+    mantenimiento:'Repasa el mantenimiento de primer nivel: lubricado, limpieza y revisión de equipos (UD3).'
+  },
+  ud4:{
+    ferreos:'Repasa los materiales férreos: hierro, acero y fundición, propiedades y clasificación (UD4).',
+    aceros:'Repasa la clasificación del acero, designación normalizada e identificación en taller (UD4).',
+    no_ferreos:'Repasa los metales y aleaciones no férreas: aluminio, cobre, latón, bronce y sus usos (UD4).',
+    carroceria:'Repasa los materiales metálicos usados en carrocería: aceros de alta resistencia y aluminio (UD4).',
+    propiedades:'Repasa las propiedades mecánicas: dureza, tenacidad, maleabilidad y resistencia (UD4).'
+  },
+  final:{
+    integracion:'Repasa la relación entre instrumentos de medida, herramientas y materiales en el proceso de mecanizado.',
+    seguridad:'Refuerza el trabajo seguro: EPI, mantenimiento de equipos y orden en el taller.',
+    seleccion:'Repasa los criterios de selección de herramienta y parámetros de corte según el material.'
+  }
+};
+
+// ─── BANCO DE PREGUNTAS ───────────────────────────────────────
+const questionPools={
+
+// ══════════════════════════════════════════════════════════════
+// UD2 · METROLOGÍA  (8b + 16m + 16a = 40)
+// ══════════════════════════════════════════════════════════════
+ud2:[
+  // ── BÁSICO (8) ──
+  {band:'b',tag:'medida',level:'Básico',points:10,
+   q:'¿Qué es la apreciación de un instrumento de medida?',
+   options:['El valor mínimo que puede leerse directamente en su escala','El error máximo admitido en la medida','El rango total de medida del instrumento','El tiempo que tarda en estabilizar la lectura'],
+   correct:0,explanation:'La apreciación es la mínima división que el instrumento puede leer sin interpolación.'},
+
+  {band:'b',tag:'sistemas',level:'Básico',points:10,
+   q:'¿Cuál es la unidad de longitud del Sistema Internacional (SI)?',
+   options:['Metro (m)','Pulgada (in)','Pie (ft)','Yarda (yd)'],
+   correct:0,explanation:'El metro es la unidad básica de longitud en el Sistema Internacional de Unidades.'},
+
+  {band:'b',tag:'calibre',level:'Básico',points:10,
+   q:'¿Para qué sirve el calibre pie de rey?',
+   options:['Medir longitudes exteriores, interiores y profundidades','Solo medir diámetros exteriores','Medir ángulos entre superficies','Comprobar la planitud de una superficie'],
+   correct:0,explanation:'El calibre pie de rey permite medir exteriores, interiores y profundidades gracias a sus tres partes funcionales.'},
+
+  {band:'b',tag:'micrometro',level:'Básico',points:10,
+   q:'¿Con qué apreciación típica mide un micrómetro estándar?',
+   options:['0,01 mm','0,1 mm','0,001 mm','1 mm'],
+   correct:0,explanation:'El micrómetro estándar tiene una apreciación de 0,01 mm; con tambor de vernier puede llegar a 0,001 mm.'},
+
+  {band:'b',tag:'instrumentos',level:'Básico',points:10,
+   q:'¿Qué instrumento mide ángulos entre superficies en el taller?',
+   options:['Goniómetro','Micrómetro','Comparador de reloj','Calibre de profundidades'],
+   correct:0,explanation:'El goniómetro es el instrumento diseñado para medir ángulos con precisión en el taller mecánico.'},
+
+  {band:'b',tag:'medida',level:'Básico',points:10,
+   q:'¿Qué significa que un instrumento tiene rango de 0 a 25 mm?',
+   options:['Solo puede medir dimensiones entre 0 y 25 mm con fiabilidad','Admite un error máximo de 25 mm','El instrumento tiene 25 mm de longitud total','Su apreciación es de 25 milésimas'],
+   correct:0,explanation:'El rango indica los límites entre los cuales las medidas son válidas y fiables.'},
+
+  {band:'b',tag:'sistemas',level:'Básico',points:10,
+   q:'¿Cuántos milímetros equivale una pulgada (1 in)?',
+   options:['25,4 mm','12,7 mm','10 mm','30,5 mm'],
+   correct:0,explanation:'Una pulgada equivale exactamente a 25,4 mm, equivalencia fundamental entre los sistemas anglosajón y métrico.'},
+
+  {band:'b',tag:'comparadores',level:'Básico',points:10,
+   q:'¿Cuál es la función principal de un comparador de reloj?',
+   options:['Detectar variaciones de medida respecto a una referencia','Medir longitudes absolutas con alta precisión','Trazar líneas paralelas en la superficie','Medir diámetros interiores de agujeros pequeños'],
+   correct:0,explanation:'El comparador de reloj mide diferencias respecto a una cota de referencia, no valores absolutos.'},
+
+  // ── MEDIO (16) ──
+  {band:'m',tag:'calibre',level:'Medio',points:15,
+   q:'Un calibre con nonio de 0,05 mm indica 14 mm en escala principal y la 3ª división del nonio coincide. ¿Cuál es la lectura?',
+   options:['14,15 mm','14,03 mm','14,30 mm','14,50 mm'],
+   correct:0,explanation:'Lectura = escala principal + (nº división × apreciación): 14 + 3 × 0,05 = 14,15 mm.'},
+
+  {band:'m',tag:'micrometro',level:'Medio',points:15,
+   q:'¿Qué elemento del micrómetro garantiza una presión de contacto constante al medir?',
+   options:['El trinquete o carraca','El husillo graduado','El yunque fijo','El tambor con la escala circular'],
+   correct:0,explanation:'La carraca o trinquete limita la fuerza aplicada sobre la pieza, evitando errores por exceso de presión de contacto.'},
+
+  {band:'m',tag:'medida',level:'Medio',points:15,
+   q:'¿Qué es el error sistemático en una medición?',
+   options:['Error constante que se repite en todas las medidas por defecto del instrumento','Error aleatorio e impredecible','Error de lectura por parallax','Diferencia entre medida máxima y mínima de una serie'],
+   correct:0,explanation:'El error sistemático es reproducible y constante; puede deberse al instrumento (descalibrado) o al método de medida.'},
+
+  {band:'m',tag:'comparadores',level:'Medio',points:15,
+   q:'¿Cómo se verifica la planitud de una superficie con comparador de reloj?',
+   options:['Se apoya la pieza en un plato de mármol y se desliza el comparador midiendo la variación del puntero','Se lee el valor absoluto del comparador apoyado sobre la pieza','Se compara con una fotografía normalizada','Se mide el peso y se compara con tablas'],
+   correct:0,explanation:'Con un plato plano de referencia (mármol), la variación del reloj al desplazarlo indica la falta de planitud de la superficie.'},
+
+  {band:'m',tag:'instrumentos',level:'Medio',points:15,
+   q:'¿Cuándo es más adecuado usar micrómetro de interiores frente al calibre?',
+   options:['Cuando se requiere medir diámetros interiores con mayor precisión (0,01 mm)','Cuando el agujero es mayor de 300 mm','Cuando la pieza está caliente','Cuando no se dispone de calibre'],
+   correct:0,explanation:'El micrómetro de interiores ofrece mayor precisión (0,01 mm) que el calibre para diámetros interiores de agujeros.'},
+
+  {band:'m',tag:'calibre',level:'Medio',points:15,
+   q:'¿Qué verificación previa debe hacerse antes de usar el calibre pie de rey?',
+   options:['Comprobar que las mordazas cierran en cero y que no hay holgura en el cursor','Limpiar la pieza con agua','Calentar el calibre a temperatura de trabajo','Lubricar las guías con aceite mineral'],
+   correct:0,explanation:'Antes de medir se verifica el cero cerrando las mordazas: la lectura debe ser 0,00 mm, sin holgura en el cursor.'},
+
+  {band:'m',tag:'sistemas',level:'Medio',points:15,
+   q:'Una pieza mide 1/2 pulgada. ¿Cuánto es en milímetros?',
+   options:['12,7 mm','25,4 mm','6,35 mm','9,525 mm'],
+   correct:0,explanation:'1/2 × 25,4 = 12,7 mm. Conversión estándar de pulgadas a milímetros.'},
+
+  {band:'m',tag:'medida',level:'Medio',points:15,
+   q:'¿Qué es la repetibilidad de un instrumento de medida?',
+   options:['Capacidad de dar la misma lectura al medir la misma pieza repetidas veces en iguales condiciones','El tiempo que tarda en dar una lectura','La temperatura de trabajo admitida','El rango de medidas que cubre'],
+   correct:0,explanation:'La repetibilidad indica cuán consistentes son las medidas del instrumento bajo condiciones idénticas.'},
+
+  {band:'m',tag:'micrometro',level:'Medio',points:15,
+   q:'¿Por qué es importante calibrar el micrómetro antes de usarlo?',
+   options:['Para asegurar que la lectura en cero es exacta y eliminar errores sistemáticos','Para engrasar el husillo y reducir el rozamiento','Para adaptar el instrumento a la temperatura','Para ampliar el rango de medida'],
+   correct:0,explanation:'La calibración corrige la deriva del instrumento respecto al cero, garantizando medidas trazables y exactas.'},
+
+  {band:'m',tag:'instrumentos',level:'Medio',points:15,
+   q:'¿Qué instrumento se usa para medir la rugosidad superficial en el taller?',
+   options:['Rugosímetro o perfilómetro de contacto','Micrómetro de exteriores','Calibre de profundidades','Comparador de reloj'],
+   correct:0,explanation:'El rugosímetro desplaza una punta de diamante sobre la superficie y registra el perfil, calculando Ra, Rz, etc.'},
+
+  {band:'m',tag:'comparadores',level:'Medio',points:15,
+   q:'¿Qué es un soporte magnético en el uso del comparador de reloj?',
+   options:['Base con imán que permite posicionar libremente el comparador sobre superficies metálicas','Un calibre especial para medidas magnéticas','Un dispositivo de cero para calibrar el instrumento','Una guía que mueve el comparador en línea recta'],
+   correct:0,explanation:'El soporte magnético fija y orienta el comparador con libertad total sobre cualquier superficie metálica o bancada.'},
+
+  {band:'m',tag:'medida',level:'Medio',points:15,
+   q:'¿Qué es el error de paralaje al leer un instrumento?',
+   options:['Error producido al leer la escala con la visual no perpendicular al plano de la escala','Error por dilatación del instrumento con la temperatura','Error por vibración durante la medida','Error sistemático por falta de calibración'],
+   correct:0,explanation:'El error de paralaje ocurre cuando el ojo no está perpendicular a la escala, desplazando la lectura respecto al valor real.'},
+
+  {band:'m',tag:'calibre',level:'Medio',points:15,
+   q:'¿Qué mide la sonda de profundidades del calibre pie de rey?',
+   options:['Profundidad de agujeros, ranuras o escalones','El diámetro exterior de un eje','La distancia entre dos superficies paralelas exteriores','El ángulo de una superficie cónica'],
+   correct:0,explanation:'La sonda de profundidades (varilla posterior del calibre) mide la profundidad de agujeros, ranuras y escalones.'},
+
+  {band:'m',tag:'micrometro',level:'Medio',points:15,
+   q:'Al leer un micrómetro, ¿qué escala se lee primero?',
+   options:['El manguito (escala fija) con divisiones de 0,5 mm','El tambor con las divisiones de 0,01 mm','El vernier de milésimas','La escala angular del tambor'],
+   correct:0,explanation:'Primero se lee el manguito fijo (mm y 0,5 mm visibles) y luego se añade la lectura del tambor giratorio (centésimas).'},
+
+  {band:'m',tag:'sistemas',level:'Medio',points:15,
+   q:'¿Cuántos milímetros tiene un centímetro?',
+   options:['10 mm','100 mm','1 mm','0,1 mm'],
+   correct:0,explanation:'Un centímetro equivale a 10 milímetros. Relación básica del sistema métrico decimal.'},
+
+  {band:'m',tag:'instrumentos',level:'Medio',points:15,
+   q:'¿Para qué se usa un calibre de verificación de roscas (pasa/no pasa)?',
+   options:['Comprobar si una rosca cumple las tolerancias sin medir su diámetro','Medir el paso de la rosca en milímetros','Cortar roscas en agujeros','Limpiar el fondo de la rosca'],
+   correct:0,explanation:'Los calibres pasa/no pasa verifican que la rosca está dentro de tolerancias: si la parte pasa entra y la no pasa no, la rosca es correcta.'},
+
+  // ── ALTO (16) ──
+  {band:'a',tag:'medida',level:'Alto',points:20,
+   q:'¿Qué diferencia hay entre exactitud y precisión en metrología?',
+   options:['Exactitud indica cercanía al valor verdadero; precisión indica repetibilidad de las medidas','Son sinónimos en metrología industrial','Exactitud es la apreciación del instrumento; precisión es el rango','Precisión se refiere al instrumento; exactitud al operario'],
+   correct:0,explanation:'Un instrumento puede ser preciso (resultados repetibles) pero no exacto (alejado del valor real). Lo ideal es ser ambas cosas.'},
+
+  {band:'a',tag:'calibre',level:'Alto',points:20,
+   q:'Un calibre digital marca 25,37 mm al medir un eje. El micrómetro da 25,29 mm. ¿Cuál es más fiable y por qué?',
+   options:['El micrómetro, porque tiene mayor apreciación (0,01 mm) y menor incertidumbre en piezas de precisión','El calibre digital, porque tiene más cifras','Ambos son igualmente fiables','El calibre, porque el micrómetro solo mide exteriores'],
+   correct:0,explanation:'El micrómetro tiene mayor apreciación y menor incertidumbre; el calibre es más rápido pero menos preciso para cotas de ajuste.'},
+
+  {band:'a',tag:'micrometro',level:'Alto',points:20,
+   q:'¿Por qué debe sujetarse el micrómetro por el arco y no por el tambor al medir?',
+   options:['Para evitar la dilatación por calor de la mano, que alteraría la lectura','Porque el tambor es más frágil','Para no bloquear el mecanismo de giro','Porque la normativa lo exige sin causa técnica'],
+   correct:0,explanation:'El calor de la mano dilata el arco metálico; sujetar por el aislante térmico o soporte evita errores por dilatación.'},
+
+  {band:'a',tag:'comparadores',level:'Alto',points:20,
+   q:'Al usar un comparador de reloj para verificar el alabeo de un disco de freno, ¿qué indica una variación de 0,3 mm?',
+   options:['El disco tiene un alabeo de 0,3 mm, que puede superar la tolerancia máxima del fabricante','El disco está perfectamente plano','El comparador necesita recalibrarse','La medida es irrelevante para el freno'],
+   correct:0,explanation:'Un alabeo de 0,3 mm puede superar la tolerancia de planitud del fabricante (generalmente 0,05-0,15 mm) y provocar vibración al frenar.'},
+
+  {band:'a',tag:'instrumentos',level:'Alto',points:20,
+   q:'¿Qué instrumento permite verificar la conicidad de un agujero con precisión?',
+   options:['Micrómetro de interiores midiendo en varios puntos de la profundidad','Calibre pie de rey midiendo el diámetro en la boca','Comparador de reloj con punta plana','Goniómetro aplicado al interior del agujero'],
+   correct:0,explanation:'Midiendo con micrómetro de interiores a distintas profundidades, la diferencia de diámetros revela la conicidad del agujero.'},
+
+  {band:'a',tag:'medida',level:'Alto',points:20,
+   q:'¿Qué es la trazabilidad metrológica y por qué es importante en el taller?',
+   options:['La cadena documentada que relaciona la medida con patrones nacionales e internacionales; garantiza la validez de los resultados','El registro del número de serie del instrumento','La periodicidad de la limpieza de los instrumentos','El certificado de compra del instrumento'],
+   correct:0,explanation:'La trazabilidad vincula cada medida con patrones de referencia reconocidos, garantizando que los resultados son comparables y fiables.'},
+
+  {band:'a',tag:'calibre',level:'Alto',points:20,
+   q:'¿Cómo afecta la temperatura a las mediciones con calibre pie de rey en taller?',
+   options:['La pieza caliente se dilata y da una medida mayor de la real en frío; hay que medir siempre a 20 °C o corregir','La temperatura no afecta porque el acero no se dilata','Solo afecta a piezas de aluminio, no al acero','El calibre compensa automáticamente la temperatura'],
+   correct:0,explanation:'La norma ISO establece 20 °C como temperatura de referencia. Las piezas calientes presentan medidas mayores que en frío debido a la dilatación.'},
+
+  {band:'a',tag:'micrometro',level:'Alto',points:20,
+   q:'¿Qué es el paso del husillo en un micrómetro y cómo se relaciona con la apreciación?',
+   options:['El avance del husillo por vuelta (0,5 mm); dividido entre las divisiones del tambor (50) da la apreciación: 0,5/50 = 0,01 mm','El número de dientes del tambor','La distancia entre el yunque y el husillo','La longitud máxima del recorrido del husillo'],
+   correct:0,explanation:'El husillo avanza 0,5 mm por vuelta. Con 50 divisiones en el tambor: 0,5 ÷ 50 = 0,01 mm de apreciación.'},
+
+  {band:'a',tag:'comparadores',level:'Alto',points:20,
+   q:'Al controlar la excentricidad de un eje torneado con comparador de reloj, ¿qué representa el valor total del oscilación del puntero?',
+   options:['El doble de la excentricidad real del eje respecto al eje de giro','La excentricidad directa sin factor','El error de redondez únicamente','La diferencia entre diámetro máximo y mínimo'],
+   correct:0,explanation:'El oscilación total del puntero (FIM) es el doble de la excentricidad, ya que incluye el desplazamiento positivo y negativo al girar el eje.'},
+
+  {band:'a',tag:'sistemas',level:'Alto',points:20,
+   q:'Un plano antiguo indica una cota de 2,500 in. ¿Cuál es su equivalente exacto en milímetros?',
+   options:['63,5 mm','50,8 mm','25,4 mm','127 mm'],
+   correct:0,explanation:'2,500 in × 25,4 mm/in = 63,5 mm. Conversión exacta imprescindible en talleres que trabajan con piezas de importación.'},
+
+  {band:'a',tag:'instrumentos',level:'Alto',points:20,
+   q:'¿Qué criterio determina si usar un calibre o un micrómetro para verificar un eje con tolerancia h6?',
+   options:['El campo h6 implica tolerancias de pocas micras; se requiere micrómetro (0,01 mm); el calibre (0,05 mm) no tiene suficiente apreciación','Siempre se usa el calibre por ser más rápido','El micrómetro solo sirve para rosca; el calibre para exteriores','Depende únicamente del diámetro nominal, no de la tolerancia'],
+   correct:0,explanation:'La tolerancia del campo h6 puede ser de 9-16 µm según el diámetro; el calibre con nonio de 0,05 mm no discrimina dentro de ese rango; se necesita micrómetro.'},
+
+  {band:'a',tag:'medida',level:'Alto',points:20,
+   q:'¿Por qué se realizan tres medidas en distintas secciones de un eje antes de aceptar el resultado?',
+   options:['Para detectar falta de redondez, conicidad o errores de forma que una sola medida no revelaría','Porque la normativa obliga a tres medidas siempre','Para calcular la media y reducir el coste del control','Porque el micrómetro solo es fiable a la tercera medida'],
+   correct:0,explanation:'Medir en varias secciones y orientaciones revela defectos geométricos como ovalización, conicidad o combadura que una sola medida no detecta.'},
+
+  {band:'a',tag:'calibre',level:'Alto',points:20,
+   q:'¿Cómo se mide el diámetro interior de un agujero de 8 mm con calibre pie de rey?',
+   options:['Con las mordazas interiores (puntas superiores), introduciendo las puntas en el agujero y extendiendo hasta contacto','Con las mordazas exteriores rodeando el agujero','Con la sonda de profundidades','Con el calibre de rosca incluido en el cuerpo'],
+   correct:0,explanation:'Las mordazas interiores (puntas superiores más pequeñas) se insertan en el agujero cerradas y se abren hasta contactar con las paredes.'},
+
+  {band:'a',tag:'comparadores',level:'Alto',points:20,
+   q:'¿Qué significa "precargar" el comparador de reloj antes de tomar la referencia cero?',
+   options:['Deprimir el palpador unos 2-3 mm antes de poner a cero, para que trabaje en el rango lineal del instrumento','Calibrar el instrumento con un patrón externo','Limpiar el palpador con alcohol','Desconectar el soporte magnético'],
+   correct:0,explanation:'La precarga asegura que el palpador opera en la zona central y lineal de la escala, evitando lecturas erróneas en los extremos.'},
+
+  {band:'a',tag:'micrometro',level:'Alto',points:20,
+   q:'Un micrómetro de 25-50 mm mide un eje y da 37,48 mm. ¿Cuánto es el error si el valor nominal es 37,50 mm con tolerancia ±0,02 mm?',
+   options:['Error de −0,02 mm; la pieza está en el límite inferior de tolerancia, aún válida','Error de +0,02 mm; la pieza está fuera de tolerancia','Error de −0,02 mm; la pieza está fuera de tolerancia','No hay error porque la tolerancia es de 0,04 mm en total'],
+   correct:0,explanation:'37,48 = 37,50 − 0,02 mm; el límite inferior es 37,50 − 0,02 = 37,48 mm. La pieza está exactamente en el límite: aún válida.'},
+
+  {band:'a',tag:'instrumentos',level:'Alto',points:20,
+   q:'¿Qué es un bloque patrón (bloque Johansson) y cuál es su uso en metrología de taller?',
+   options:['Pieza de acero templado de dimensión certificada usada para calibrar instrumentos y establecer referencias de medida','Una herramienta de corte de alta precisión','Un calibre digital de referencia','Un soporte para el comparador de reloj'],
+   correct:0,explanation:'Los bloques patrón tienen longitudes certificadas con incertidumbre de micras; se usan para calibrar comparadores y verificar instrumentos en taller.'}
+],
+
+// ══════════════════════════════════════════════════════════════
+// UD3 · EQUIPOS Y HERRAMIENTAS  (8b + 16m + 16a = 40)
+// ══════════════════════════════════════════════════════════════
+ud3:[
+  // ── BÁSICO (8) ──
+  {band:'b',tag:'puesto',level:'Básico',points:10,
+   q:'¿Cuál es el elemento central de trabajo en un puesto de mecanizado manual?',
+   options:['El tornillo de banco','La fresadora CNC','El torno paralelo','La rectificadora plana'],
+   correct:0,explanation:'El tornillo de banco es el elemento de sujeción fundamental en el puesto de mecanizado manual a mano.'},
+
+  {band:'b',tag:'herramientas_mano',level:'Básico',points:10,
+   q:'¿Para qué se usa una llave de boca fija en el taller?',
+   options:['Apretar y aflojar tornillos y tuercas de cabeza hexagonal','Cortar materiales metálicos','Marcar centros de taladrado','Medir el diámetro de agujeros'],
+   correct:0,explanation:'La llave de boca fija transmite par de apriete a elementos de unión hexagonales como tornillos y tuercas.'},
+
+  {band:'b',tag:'herramientas_esp',level:'Básico',points:10,
+   q:'¿Qué herramienta se usa para trazar líneas paralelas a una arista de referencia en la pieza?',
+   options:['Gramil o trazador de altura','Lima plana','Broca helicoidal','Machuelo'],
+   correct:0,explanation:'El gramil permite trazar líneas a una altura fija respecto a una superficie de referencia para guiar el mecanizado.'},
+
+  {band:'b',tag:'maquinaria',level:'Básico',points:10,
+   q:'¿Cuál es la función principal del taladro de columna?',
+   options:['Realizar agujeros cilíndricos con precisión en la pieza','Dar forma exterior a piezas de revolución','Cortar barras metálicas en longitudes','Esmerila y afilar herramientas de corte'],
+   correct:0,explanation:'El taladro de columna realiza agujeros cilíndricos perpendiculares a la superficie con mayor precisión que el taladro portátil.'},
+
+  {band:'b',tag:'herramientas_mano',level:'Básico',points:10,
+   q:'¿Qué es un martillo de bola?',
+   options:['Martillo con un extremo esférico que permite golpear en ángulo y remachado','Martillo de plástico para piezas frágiles','Martillo con cabeza intercambiable','Martillo hidráulico para trabajos pesados'],
+   correct:0,explanation:'El martillo de bola tiene un extremo esférico que facilita el trabajo en zonas de difícil acceso y el remachado de remaches.'},
+
+  {band:'b',tag:'montaje',level:'Básico',points:10,
+   q:'¿Cuál es el procedimiento correcto para cambiar una broca en el portabrocas del taladro?',
+   options:['Parar la máquina, usar la llave de portabrocas para aflojar, retirar la broca e insertar la nueva apretando con la llave','Cambiar la broca con la máquina en marcha lenta','Golpear el portabrocas para aflojar la broca','Solo se necesita girar el portabrocas con la mano'],
+   correct:0,explanation:'Siempre se debe parar la máquina antes de cambiar herramientas. La llave de portabrocas garantiza el apriete correcto.'},
+
+  {band:'b',tag:'mantenimiento',level:'Básico',points:10,
+   q:'¿Con qué frecuencia debe realizarse el mantenimiento de primer nivel en herramientas de taller?',
+   options:['Diariamente: limpieza, inspección visual y lubricación básica','Solo cuando la herramienta falla','Una vez al año en revisión general','Solo cuando lo indica el fabricante en el manual'],
+   correct:0,explanation:'El mantenimiento de primer nivel (limpieza, lubricación, inspección) se realiza a diario para prevenir averías y alargar la vida de los equipos.'},
+
+  {band:'b',tag:'puesto',level:'Básico',points:10,
+   q:'¿Qué significa metodología 5S en el puesto de trabajo de taller?',
+   options:['Clasificar, Ordenar, Limpiar, Estandarizar y Sostener el orden en el puesto','Cinco sistemas de seguridad activa','Cinco tipos de sierra para metales','Cinco pasos del proceso de taladrado'],
+   correct:0,explanation:'Las 5S (Seiri, Seiton, Seiso, Seiketsu, Shitsuke) es una metodología japonesa para organizar y mantener el orden en el puesto de trabajo.'},
+
+  // ── MEDIO (16) ──
+  {band:'m',tag:'herramientas_esp',level:'Medio',points:15,
+   q:'¿Cuál es la diferencia entre una lima bastarda y una lima fina?',
+   options:['La bastarda tiene picadura más gruesa para desbastar; la fina tiene picadura más densa para acabado','La bastarda es más larga y rígida','La fina se usa solo en metales blandos','Son iguales pero de distintos fabricantes'],
+   correct:0,explanation:'La clasificación de limas por picadura (basta, bastarda, entrefina, fina, extrafina) determina el arranque de material y el acabado obtenido.'},
+
+  {band:'m',tag:'maquinaria',level:'Medio',points:15,
+   q:'¿Qué parámetro determina la velocidad de corte adecuada en el taladro de columna?',
+   options:['El diámetro de la broca y el material a taladrar','Solo el material de la broca','El peso de la pieza','La profundidad del agujero únicamente'],
+   correct:0,explanation:'La velocidad de corte depende del diámetro de la broca y del material; con la fórmula n = (v × 1000) / (π × d) se obtienen las rpm.'},
+
+  {band:'m',tag:'herramientas_mano',level:'Medio',points:15,
+   q:'¿Para qué sirve la llave dinamométrica y cuándo es obligatorio usarla?',
+   options:['Para aplicar un par de apriete exacto; es obligatoria en uniones que especifiquen par en el manual','Para aflojar tornillos oxidados con mayor fuerza','Para medir el diámetro de tornillos','Solo en motores de competición'],
+   correct:0,explanation:'La llave dinamométrica garantiza el par de apriete especificado por el fabricante, evitando tanto el apriete insuficiente como la rotura por exceso.'},
+
+  {band:'m',tag:'montaje',level:'Medio',points:15,
+   q:'Al montar una sierra en el arco de sierra manual, ¿en qué dirección deben apuntar los dientes?',
+   options:['Hacia delante (hacia donde se empuja), para cortar en el movimiento de avance','Hacia atrás, para cortar en el retroceso','La dirección no importa','Alternando un diente hacia cada lado'],
+   correct:0,explanation:'Los dientes deben apuntar hacia el extremo libre del arco (dirección de empuje) para cortar en el movimiento de avance.'},
+
+  {band:'m',tag:'maquinaria',level:'Medio',points:15,
+   q:'¿Qué es la velocidad de avance en una operación de taladrado?',
+   options:['La distancia que penetra la broca por revolución (mm/rev)','La velocidad de giro del husillo en rpm','La fuerza aplicada sobre la broca','El tiempo total de la operación'],
+   correct:0,explanation:'El avance es la penetración axial de la broca por vuelta; un avance excesivo rompe la broca; insuficiente aumenta el desgaste sin producir viruta adecuada.'},
+
+  {band:'m',tag:'herramientas_esp',level:'Medio',points:15,
+   q:'¿Qué función tiene el granete antes de taladrar?',
+   options:['Marcar el centro del agujero para que la broca no resbale al iniciar el taladro','Perforar el material antes de usar la broca','Limpiar la superficie de óxido','Medir la profundidad del futuro agujero'],
+   correct:0,explanation:'El granete crea una pequeña marca cónica que guía el vértice de la broca en el inicio del taladro, evitando que resbale.'},
+
+  {band:'m',tag:'puesto',level:'Medio',points:15,
+   q:'¿Cómo debe sujetarse la pieza en el tornillo de banco para limar?',
+   options:['Con la zona a limar ligeramente por encima de las mordazas, pieza bien apretada y en posición estable','Con la pieza sobresaliendo 15 cm para mayor acceso','Sin apretar el tornillo para evitar marcas','Sujetándola con la mano libre mientras se lima'],
+   correct:0,explanation:'La zona de trabajo debe sobresalir lo mínimo necesario, bien sujeta para evitar vibraciones que perjudican el acabado y la seguridad.'},
+
+  {band:'m',tag:'mantenimiento',level:'Medio',points:15,
+   q:'¿Qué lubricante se usa habitualmente para el taladrado de acero?',
+   options:['Taladrina (aceite soluble en agua) o aceite de corte','Grasa de litio','Aceite de motor','Agua pura sin aditivos'],
+   correct:0,explanation:'La taladrina refrigera la broca y la pieza, lubrica el corte y arrastra la viruta, aumentando la vida de la herramienta y mejorando el acabado.'},
+
+  {band:'m',tag:'herramientas_mano',level:'Medio',points:15,
+   q:'¿Qué diferencia hay entre un destornillador plano y uno Phillips (estrella)?',
+   options:['El plano encaja en ranuras rectas; el Phillips encaja en cruces de cuatro canales que centran el apriete','Son intercambiables en cualquier tornillo','El Phillips solo sirve para tornillos de electrónica','El plano transmite mayor par que el Phillips siempre'],
+   correct:0,explanation:'Los tornillos Phillips tienen una cruz de 4 canales que centra el destornillador y distribuye el par, reduciendo el deslizamiento (cam-out).'},
+
+  {band:'m',tag:'maquinaria',level:'Medio',points:15,
+   q:'¿Qué es la esmeriladora de banco y para qué se usa en el taller de mecanizado?',
+   options:['Máquina con dos muelas abrasivas para afilar herramientas de corte y desbastar piezas','Máquina para fresar superficies planas','Torno de banco para piezas pequeñas','Sierra circular para cortar perfiles'],
+   correct:0,explanation:'La esmeriladora de banco tiene dos muelas (grano grueso y fino) para afilar brocas, cuchillas, formones y desbastar piezas metálicas.'},
+
+  {band:'m',tag:'montaje',level:'Medio',points:15,
+   q:'¿Cómo se comprueba que una muela abrasiva está en buen estado antes de montarla?',
+   options:['Prueba de sonido (ring test): golpearla suavemente; un sonido claro indica integridad; un sonido sordo indica grieta','Midiéndola con calibre','Haciéndola girar a mano libremente','Inspeccionando solo visualmente el color'],
+   correct:0,explanation:'El ring test detecta grietas internas: una muela sana suena clara y metálica; una fisurada suena sorda. Es obligatorio antes del montaje.'},
+
+  {band:'m',tag:'herramientas_esp',level:'Medio',points:15,
+   q:'¿Qué es un escariador y cuándo se usa en el proceso de taladrado?',
+   options:['Herramienta de corte para mejorar el diámetro, la redondez y el acabado de un agujero ya taladrado','Herramienta para realizar el agujero inicial desde cero','Herramienta para hacer roscas interiores','Broca especial para materiales duros'],
+   correct:0,explanation:'El escariador se usa tras el taladrado para llevar el agujero a la cota exacta con acabado superficial y tolerancia de forma precisos.'},
+
+  {band:'m',tag:'mantenimiento',level:'Medio',points:15,
+   q:'¿Cómo se almacenan correctamente las brocas en el taller?',
+   options:['En estuche o soporte clasificado por diámetro, con los filos protegidos y sin contacto entre ellas','En un cajón mezcladas con otras herramientas','Clavadas en un tablero de madera por los filos','Sumergidas en aceite para evitar la oxidación'],
+   correct:0,explanation:'Las brocas deben guardarse clasificadas por diámetro con los filos protegidos; el roce entre ellas daña los filos y dificulta la identificación.'},
+
+  {band:'m',tag:'puesto',level:'Medio',points:15,
+   q:'¿Qué EPI es imprescindible en operaciones de esmerilado o amolado?',
+   options:['Gafas de seguridad o pantalla facial, guantes de cuero y ropa sin partes sueltas','Solo delantal de cuero','Solo tapones auditivos','Ninguno si la velocidad es baja'],
+   correct:0,explanation:'El esmerilado proyecta chispas y fragmentos a alta velocidad; las gafas o pantalla facial protegen los ojos, y los guantes las manos.'},
+
+  {band:'m',tag:'herramientas_mano',level:'Medio',points:15,
+   q:'¿Qué es una terraja y para qué se usa?',
+   options:['Herramienta de corte para roscar el exterior de un vástago o barra metálica','Herramienta para marcar centros de taladrado','Herramienta para medir ángulos de roscas','Tipo de lima para ranuras estrechas'],
+   correct:0,explanation:'La terraja corta la rosca exterior (macho) en vástagos, tornillos o espárragos. El machuelo hace la rosca interior.'},
+
+  {band:'m',tag:'maquinaria',level:'Medio',points:15,
+   q:'¿Para qué sirve la prensa de taladro al perforar piezas pequeñas?',
+   options:['Fijar la pieza con seguridad para que no gire con la broca y evitar accidentes','Aumentar la potencia del taladro','Enfriar la broca durante el taladrado','Regular la velocidad del husillo'],
+   correct:0,explanation:'La pieza debe estar siempre fijada mecánicamente (prensa, tornillo o mordaza de taladro) para evitar que gire peligrosamente con la broca.'},
+
+  // ── ALTO (16) ──
+  {band:'a',tag:'maquinaria',level:'Alto',points:20,
+   q:'¿Cómo se calcula la velocidad de giro (rpm) para taladrar acero de 30 HRC con broca HSS de ø10 mm? Vc recomendada: 15 m/min.',
+   options:['n = (15 × 1000) / (π × 10) ≈ 477 rpm','n = 15 × 10 × π ≈ 471 rpm','n = 1000 / (15 × 10) ≈ 7 rpm','n = 15 × π / 10 ≈ 5 rpm'],
+   correct:0,explanation:'Fórmula: n = (Vc × 1000) / (π × d) = (15 × 1000) / (3,14 × 10) ≈ 477 rpm.'},
+
+  {band:'a',tag:'herramientas_esp',level:'Alto',points:20,
+   q:'¿Qué diferencia operativa hay entre el machuelo de desbaste, semiacabado y acabado en un juego de tres?',
+   options:['El desbaste inicia la rosca eliminando material; el semiacabado la profundiza; el acabado la lleva a la forma y tolerancia final','Los tres son iguales y se usan en cualquier orden','Solo se usa el de acabado en materiales blandos','El de desbaste tiene más dientes que el de acabado'],
+   correct:0,explanation:'El juego de tres machuelos reparte el esfuerzo de corte: el primero elimina el grueso de material, el segundo profundiza, el tercero da el acabado final.'},
+
+  {band:'a',tag:'herramientas_mano',level:'Alto',points:20,
+   q:'Al limar una pieza de acero, ¿qué causa el "arañado" de la superficie en lugar de un acabado uniforme?',
+   options:['Virutas incrustadas en la picadura de la lima (cargada); se evita con cepillo de púas de acero o tiza en la lima','Limar con demasiada lentitud','Usar una lima bastarda en lugar de fina','Exceso de refrigerante en la pieza'],
+   correct:0,explanation:'Cuando la lima se "carga" de virutas, estas rayan la superficie. Limpiar con cepillo de púas o aplicar tiza previene el cargado.'},
+
+  {band:'a',tag:'montaje',level:'Alto',points:20,
+   q:'¿Qué consecuencia tiene montar una muela abrasiva sin los discos de cartón (flanges) de amortiguación?',
+   options:['Concentración de tensiones en el contacto con la brida que puede fracturar la muela durante el giro','La muela gira más rápido de lo normal','Se reduce la vibración durante el esmerilado','No tiene consecuencias si la muela está centrada'],
+   correct:0,explanation:'Los discos de cartón distribuyen uniformemente la presión de la brida sobre la muela; sin ellos, la concentración de tensiones puede fracturarla al girar.'},
+
+  {band:'a',tag:'mantenimiento',level:'Alto',points:20,
+   q:'¿Cómo se diagnostica el desgaste excesivo de una broca durante el taladrado?',
+   options:['Aumento del esfuerzo necesario, temperatura elevada, viruta azulada o quemada, y agujero de diámetro menor al nominal','Disminución del ruido de corte','Viruta en espiral larga y continua sin cambio de color','El agujero resulta más grande de lo previsto'],
+   correct:0,explanation:'Una broca desgastada genera mayor fricción: necesita más fuerza, produce calor excesivo (viruta azul) y no mantiene el diámetro correcto.'},
+
+  {band:'a',tag:'puesto',level:'Alto',points:20,
+   q:'¿Por qué es peligroso usar guantes de punto al trabajar en taladro de columna o torno?',
+   options:['Los guantes pueden ser atrapados por la herramienta giratoria y arrastrar la mano hacia el corte','Porque los guantes reducen la sensibilidad táctil','Porque la normativa lo prohíbe sin razón técnica','Porque aumentan la humedad y oxidación de la herramienta'],
+   correct:0,explanation:'En máquinas rotativas, los guantes de punto pueden engancharse en la herramienta y arrastrar la mano en una fracción de segundo, causando amputaciones.'},
+
+  {band:'a',tag:'herramientas_esp',level:'Alto',points:20,
+   q:'¿Cuándo se usa un escariador a máquina en lugar de a mano?',
+   options:['En producción en serie o cuando se requiere alta precisión y acabado constante en grandes lotes','Solo en materiales blandos como aluminio','Únicamente para agujeros mayores de 20 mm','Solo en taladros de columna con más de 2 kW'],
+   correct:0,explanation:'El escariador a máquina garantiza concentricidad, acabado y tolerancia constantes en toda una serie; el manual se usa en reparaciones y piezas únicas.'},
+
+  {band:'a',tag:'maquinaria',level:'Alto',points:20,
+   q:'¿Qué indica el código del disco abrasivo "A 36 L 5 V" en una muela de esmeriladora?',
+   options:['A=abrasivo (corindón), 36=grano, L=dureza media, 5=estructura, V=vitrificado (aglomerante)','A=aluminio, 36=diámetro mm, L=longitud, 5=peso, V=velocidad','A=acero, 36=rpm máximas, L=laboratorio, 5=capas, V=versión','Código de fabricante sin significado normalizado'],
+   correct:0,explanation:'El código ISO de muelas indica: tipo de abrasivo, tamaño de grano, dureza, estructura y tipo de aglomerante. A=Al₂O₃, 36=grano medio, L=blando-medio, V=vitrificado.'},
+
+  {band:'a',tag:'herramientas_mano',level:'Alto',points:20,
+   q:'¿Cómo se determina el par de apriete correcto para un tornillo M10 clase 8.8?',
+   options:['Consultando la tabla de pares normalizada para la clase de resistencia o el manual del fabricante; no se estima a ojo','Apretando hasta notar resistencia al giro','Usando la regla de un cuarto de vuelta tras toque','Aplicando la fuerza máxima posible con llave fija'],
+   correct:0,explanation:'El par de apriete depende del diámetro, paso, clase de resistencia y lubricación; siempre se consulta tabla o manual; M10 clase 8.8 seco ≈ 46-55 Nm.'},
+
+  {band:'a',tag:'montaje',level:'Alto',points:20,
+   q:'¿Qué comprobación previa debe hacerse en el tornillo de banco antes de mecanizar una pieza de aluminio?',
+   options:['Colocar mordazas blandas (aluminio o cobre) para no marcar la pieza y comprobar que las guías deslicen sin holgura','Solo limpiar las mordazas con un trapo','Regular la altura del tornillo al nivel de los ojos','Lubricar las mordazas con aceite de motor'],
+   correct:0,explanation:'Las mordazas de acero marcan el aluminio blando; las mordazas blandas protegen el acabado. La holgura en guías provoca vibraciones durante el mecanizado.'},
+
+  {band:'a',tag:'mantenimiento',level:'Alto',points:20,
+   q:'¿Cómo se afile correctamente una broca helicoidal HSS desgastada en la esmeriladora?',
+   options:['Afilando el filo principal a 59° respecto al eje, manteniendo el ángulo de incidencia positivo y sin quemar el filo (sin azulear)','Afilando solo la punta sin ángulo específico','Pasando la punta sobre la muela sin apoyo hasta que brille','Solo se puede reafilar en máquina de afilado CNC'],
+   correct:0,explanation:'El ángulo de punta estándar es 118° (59° por cada filo). Hay que refrigerar durante el afilado para no perder el temple HSS (el azulado indica sobrecalentamiento).'},
+
+  {band:'a',tag:'herramientas_esp',level:'Alto',points:20,
+   q:'¿Qué es el ángulo de incidencia en una broca helicoidal y qué pasa si es negativo?',
+   options:['Es el ángulo entre el filo y la superficie mecanizada; si es negativo, el filo no corta sino que comprime el material y la broca no penetra','Es el ángulo de la hélice de la broca','Es el ángulo de punta total de 118°','Es el ángulo entre el eje de la broca y la superficie de la pieza'],
+   correct:0,explanation:'El ángulo de incidencia positivo permite que el filo penetre y arranque viruta. Un ángulo negativo hace que el filo frote en lugar de cortar.'},
+
+  {band:'a',tag:'puesto',level:'Alto',points:20,
+   q:'¿Qué medida de seguridad activa incorpora el taladro de columna para proteger al operario?',
+   options:['Protector de broca regulable (guarda) que impide el contacto accidental con la broca en giro','Botón de parada de emergencia solo','Silenciador acústico integrado','Sensor de temperatura en el husillo'],
+   correct:0,explanation:'La guarda de protección de broca es un dispositivo de seguridad activa que protege al operario del contacto con la broca giratoria y de la proyección de virutas.'},
+
+  {band:'a',tag:'herramientas_mano',level:'Alto',points:20,
+   q:'¿Cuál es la consecuencia de usar una llave de boca desgastada (boca abierta) para apretar un tornillo?',
+   options:['La llave resbala y puede redondear los planos del tornillo, además de provocar lesión por escurrimiento brusco','Mayor par de apriete al reducirse el contacto','Solo se rayan las caras de la llave, no el tornillo','No tiene consecuencias si se aplica fuerza suficiente'],
+   correct:0,explanation:'Una llave con la boca desgastada contacta en aristas en lugar de en caras; al aplicar fuerza, resbala y redondea los planos del tornillo, inutilizándolo.'},
+
+  {band:'a',tag:'herramientas_esp',level:'Alto',points:20,
+   q:'¿Qué ventaja ofrece usar un portabrocas de cambio rápido (sistema SDS o similar) frente al portabrocas de llave tradicional?',
+   options:['Permite cambiar la broca sin llave en segundos, reduciendo tiempos muertos en producción y eliminando el riesgo de olvidar la llave puesta','Mayor apriete de la broca para materiales duros','Solo es compatible con brocas de diámetro mayor de 10 mm','Aumenta la velocidad de corte del taladro automáticamente'],
+   correct:0,explanation:'El sistema de cambio rápido enclava la herramienta mecánicamente sin llave; reduce el tiempo de cambio de herramienta y elimina el peligro de lanzar la llave si se olvida en el portabrocas al arrancar.'},
+
+  {band:'a',tag:'maquinaria',level:'Alto',points:20,
+   q:'¿Por qué se usa refrigeración en el taladrado de acero inoxidable y qué problemas aparecen sin ella?',
+   options:['El inoxidable se endurece por deformación (acritud) con el calor; sin refrigeración la broca se embota rápido, la pieza se endurece y el agujero queda sobredimensionado','El inoxidable no genera calor al taladrar','La refrigeración solo mejora el acabado superficial sin afectar a la herramienta','El inoxidable no requiere refrigeración porque disipa bien el calor'],
+   correct:0,explanation:'El acero inoxidable tiene baja conductividad térmica y tendencia a la acritud; sin refrigeración, el filo se embota en segundos y la zona mecanizada se endurece.'}
+],
+
+// ══════════════════════════════════════════════════════════════
+// UD4 · MATERIALES  (8b + 16m + 16a = 40)
+// ══════════════════════════════════════════════════════════════
+ud4:[
+  // ── BÁSICO (8) ──
+  {band:'b',tag:'ferreos',level:'Básico',points:10,
+   q:'¿Cuál es el elemento químico principal de los materiales férreos?',
+   options:['Hierro (Fe)','Aluminio (Al)','Cobre (Cu)','Titanio (Ti)'],
+   correct:0,explanation:'Los materiales férreos tienen al hierro como elemento principal. Es el metal más utilizado en la industria de la automoción.'},
+
+  {band:'b',tag:'aceros',level:'Básico',points:10,
+   q:'¿Qué diferencia principal hay entre el acero y la fundición en cuanto al contenido de carbono?',
+   options:['El acero tiene menos del 2,11% de C; la fundición tiene más del 2,11% de C','El acero tiene más carbono que la fundición','Ambos tienen el mismo contenido de carbono','La fundición no contiene carbono'],
+   correct:0,explanation:'El límite es 2,11% de carbono: por debajo es acero (dúctil, soldable); por encima es fundición (frágil, no soldable por arco).'},
+
+  {band:'b',tag:'no_ferreos',level:'Básico',points:10,
+   q:'¿Cuál es el metal no férreo más utilizado en la fabricación de piezas de automóvil por su ligereza?',
+   options:['Aluminio (Al)','Cobre (Cu)','Titanio (Ti)','Plomo (Pb)'],
+   correct:0,explanation:'El aluminio tiene una densidad de solo 2,7 g/cm³ (frente a 7,8 del acero), lo que lo hace ideal para reducir el peso del vehículo.'},
+
+  {band:'b',tag:'propiedades',level:'Básico',points:10,
+   q:'¿Qué es la dureza de un material?',
+   options:['Resistencia que opone un material a ser rayado o penetrado','Capacidad de deformarse sin romperse','Resistencia a fuerzas de tracción repetidas','Capacidad de recuperar la forma tras la deformación'],
+   correct:0,explanation:'La dureza mide la resistencia superficial a la penetración o al rayado; se mide en escalas Rockwell, Brinell o Vickers.'},
+
+  {band:'b',tag:'ferreos',level:'Básico',points:10,
+   q:'¿Cómo se denomina la aleación de hierro y carbono con contenido de C entre 2,11% y 6,67%?',
+   options:['Fundición de hierro','Acero dulce','Acero inoxidable','Acero de herramientas'],
+   correct:0,explanation:'La fundición de hierro tiene entre 2,11% y 6,67% de carbono. Es dura y resistente al desgaste, pero frágil.'},
+
+  {band:'b',tag:'no_ferreos',level:'Básico',points:10,
+   q:'¿Qué aleación se obtiene mezclando cobre y estaño?',
+   options:['Bronce','Latón','Alpaca','Cuproníquel'],
+   correct:0,explanation:'El bronce es la aleación de cobre (Cu) y estaño (Sn). Tiene buena resistencia a la corrosión y al desgaste.'},
+
+  {band:'b',tag:'aceros',level:'Básico',points:10,
+   q:'¿Qué propiedad imprescindible tiene un acero para ser soldable por arco?',
+   options:['Contenido de carbono bajo (generalmente < 0,25%)','Alta dureza superficial','Elevado contenido en cromo','Alta resistencia a tracción superior a 1000 MPa'],
+   correct:0,explanation:'Los aceros con bajo contenido en carbono son soldables; a mayor %C, mayor riesgo de formación de martensita frágil en la zona soldada.'},
+
+  {band:'b',tag:'propiedades',level:'Básico',points:10,
+   q:'¿Qué es la maleabilidad de un material metálico?',
+   options:['Capacidad de deformarse mediante compresión (laminado, forjado) sin romperse','Resistencia a la fractura por impacto','Resistencia superficial al rayado','Capacidad de conducir electricidad'],
+   correct:0,explanation:'La maleabilidad permite laminar y forjar el material. El oro y el aluminio son muy maleables; la fundición es poco maleable.'},
+
+  // ── MEDIO (16) ──
+  {band:'m',tag:'aceros',level:'Medio',points:15,
+   q:'¿Qué significa la designación del acero S275JR según la norma EN 10025?',
+   options:['S=acero estructural, 275=límite elástico mínimo en MPa, J=tenacidad a impacto, R=sentido de laminación longitudinal','S=inoxidable, 275=dureza Brinell, JR=proceso de fabricación','S=soldable, 275=resistencia a tracción, JR=tratamiento térmico','Código de fabricante sin significado normalizado'],
+   correct:0,explanation:'En la norma EN 10025: S=acero estructural, 275=Re mínimo en MPa, J=resilencia ≥27 J, R=temperatura de ensayo Charpy a 20°C.'},
+
+  {band:'m',tag:'ferreos',level:'Medio',points:15,
+   q:'¿Cuál es la diferencia práctica entre la fundición gris y la fundición nodular?',
+   options:['La gris tiene grafito laminar (frágil); la nodular tiene grafito esferoidal (más tenaz y dúctil)','La gris es más dura que la nodular','La nodular no contiene carbono libre','Son idénticas pero de distinto color superficial'],
+   correct:0,explanation:'La morfología del grafito determina las propiedades: laminar (gris) favorece la fragilidad; esferoidal (nodular) mejora la tenacidad y la ductilidad.'},
+
+  {band:'m',tag:'no_ferreos',level:'Medio',points:15,
+   q:'¿Por qué el aluminio no se oxida fácilmente a pesar de ser un metal reactivo?',
+   options:['Forma una capa de óxido de aluminio (Al₂O₃) superficial densa que actúa como barrera protectora','No reacciona con el oxígeno del aire','Se recubre con una capa de cromo durante la fabricación','Su baja densidad impide la oxidación'],
+   correct:0,explanation:'La capa de Al₂O₃ se forma espontáneamente y es adherente, impermeable y dura: protege el aluminio subyacente de la corrosión.'},
+
+  {band:'m',tag:'propiedades',level:'Medio',points:15,
+   q:'¿Qué es la tenacidad de un material y en qué situaciones es crítica?',
+   options:['Energía que absorbe antes de fracturar; crítica en piezas sometidas a impactos y cargas dinámicas','Resistencia superficial al rayado','Capacidad de deformarse permanentemente','Resistencia a la corrosión química'],
+   correct:0,explanation:'La tenacidad (área bajo la curva tensión-deformación) es clave en ejes de transmisión, bielas y piezas que absorben impactos sin fracturarse.'},
+
+  {band:'m',tag:'aceros',level:'Medio',points:15,
+   q:'¿Qué elemento químico se añade al acero para hacerlo inoxidable?',
+   options:['Cromo (Cr) en cantidad superior al 10,5%','Níquel (Ni) en cualquier proporción','Carbono (C) adicional','Silicio (Si) en elevada proporción'],
+   correct:0,explanation:'Con más del 10,5% de Cr, el acero forma una capa pasiva de Cr₂O₃ que lo hace resistente a la corrosión: acero inoxidable.'},
+
+  {band:'m',tag:'carroceria',level:'Medio',points:15,
+   q:'¿Por qué se usan aceros de alta resistencia (AHSS) en la carrocería del automóvil?',
+   options:['Permiten reducir el espesor (y el peso) manteniendo la resistencia estructural y mejorando la absorción de impactos','Son más baratos que el acero ordinario','Se sueldan mejor que el acero convencional','No requieren tratamiento anticorrosión'],
+   correct:0,explanation:'Los AHSS tienen Re > 300 MPa; al ser más resistentes, se emplean espesores menores, reduciendo peso sin sacrificar seguridad pasiva.'},
+
+  {band:'m',tag:'no_ferreos',level:'Medio',points:15,
+   q:'¿Qué es el latón y cuáles son sus aplicaciones típicas en automoción?',
+   options:['Aleación de cobre y cinc; se usa en racores, válvulas, terminales eléctricos y piezas decorativas','Aleación de aluminio y magnesio; en bloques de motor','Aleación de titanio y aluminio; en frenos de alta gama','Aleación de hierro y carbono; en carrocería'],
+   correct:0,explanation:'El latón (Cu + Zn) tiene buena conductividad eléctrica, maquinabilidad y resistencia a la corrosión; ideal para piezas eléctricas y hidráulicas.'},
+
+  {band:'m',tag:'ferreos',level:'Medio',points:15,
+   q:'¿Cómo se identifica visualmente en taller la diferencia entre un acero y una fundición al fracturar una probeta?',
+   options:['El acero fractura con superficie brillante y fibrosa (dúctil); la fundición fractura con superficie gris opaca y granular (frágil)','La fundición tiene un color exterior más oscuro','El acero es siempre más pesado que la fundición','No se pueden diferenciar visualmente'],
+   correct:0,explanation:'La fractura revela la microestructura: el acero dúctil muestra deformación plástica (aspecto fibroso); la fundición gris muestra grafito laminar (aspecto gris granular).'},
+
+  {band:'m',tag:'propiedades',level:'Medio',points:15,
+   q:'¿Qué ensayo mide la dureza Brinell (HB) de un material?',
+   options:['Se presiona una bola de acero templado o carburo de 10 mm con 3000 kg y se mide el diámetro de la huella','Se raya la superficie con un diamante piramidal y se mide la huella','Se hace penetrar un cono de diamante a 150 kg y se lee directamente en escala','Se mide la energía de fractura a impacto mediante un péndulo Charpy'],
+   correct:0,explanation:'El ensayo Brinell usa una bola (10 mm, 3000 kgf para acero) y calcula HB = F / (A huella). Es adecuado para materiales de grano grueso como la fundición.'},
+
+  {band:'m',tag:'aceros',level:'Medio',points:15,
+   q:'¿Qué significa que un acero se denomina "acero de herramientas" (tool steel)?',
+   options:['Tiene alto contenido en carbono y elementos de aleación que le confieren alta dureza y resistencia al desgaste','Es un acero blando específico para fabricar herramientas manuales','Es un acero inoxidable de alta pureza','Es cualquier acero estructural de alta resistencia'],
+   correct:0,explanation:'Los aceros de herramientas tienen alto %C y aleantes (Cr, W, Mo, V) para conseguir alta dureza en caliente, resistencia al desgaste y tenacidad suficiente.'},
+
+  {band:'m',tag:'carroceria',level:'Medio',points:15,
+   q:'¿Qué ventaja ofrece el aluminio en la fabricación de capós y puertas de vehículo frente al acero?',
+   options:['Menor densidad (un tercio del acero) que reduce el peso sin pérdida excesiva de rigidez','Mayor resistencia a la tracción que el acero ordinario','Menor coste de producción que el acero laminado','Mayor facilidad de soldadura por resistencia'],
+   correct:0,explanation:'El aluminio pesa 2,7 g/cm³ frente a 7,8 del acero; paneles de aluminio de mayor espesor igualan la rigidez del acero con menor peso total.'},
+
+  {band:'m',tag:'no_ferreos',level:'Medio',points:15,
+   q:'¿Por qué se usa cobre en el sistema eléctrico del vehículo?',
+   options:['Por su alta conductividad eléctrica (segunda tras la plata) y buena resistencia a la fatiga en cables flexibles','Por ser el metal más ligero disponible','Por su resistencia mecánica superior al aluminio','Por su bajo coste respecto a otros conductores'],
+   correct:0,explanation:'El cobre tiene una conductividad eléctrica de 58 MS/m, solo superada por la plata. Su ductilidad lo hace ideal para cables que sufren flexiones repetidas.'},
+
+  {band:'m',tag:'ferreos',level:'Medio',points:15,
+   q:'¿Qué es el acero galvanizado y para qué se usa en carrocería?',
+   options:['Acero recubierto de una capa de cinc que actúa como barrera y ánodo de sacrificio contra la corrosión','Acero tratado térmicamente para aumentar la dureza','Acero inoxidable laminado en frío','Acero con alto contenido en carbono para mayor resistencia'],
+   correct:0,explanation:'El galvanizado protege el acero mediante barrera física y protección catódica: el cinc se oxida antes que el acero (ánodo de sacrificio).'},
+
+  {band:'m',tag:'propiedades',level:'Medio',points:15,
+   q:'¿Qué diferencia hay entre deformación elástica y deformación plástica?',
+   options:['La elástica es reversible (el material recupera su forma); la plástica es permanente (no recupera)','La plástica es reversible; la elástica es permanente','Ambas son permanentes pero a distinta temperatura','La elástica solo ocurre en polímeros, no en metales'],
+   correct:0,explanation:'En la zona elástica el material recupera su forma al retirar la carga; en la zona plástica ha superado el límite elástico y la deformación es permanente.'},
+
+  {band:'m',tag:'aceros',level:'Medio',points:15,
+   q:'¿Qué tratamiento térmico aumenta la dureza de un acero con suficiente carbono?',
+   options:['Temple: calentamiento a temperatura de austenización seguido de enfriamiento rápido en agua o aceite','Recocido: calentamiento y enfriamiento lento','Normalizado: calentamiento y enfriamiento al aire','Revenido únicamente, sin temple previo'],
+   correct:0,explanation:'El temple consiste en calentar hasta que el acero sea austenítico y enfriar bruscamente; se forma martensita, fase muy dura pero frágil.'},
+
+  {band:'m',tag:'no_ferreos',level:'Medio',points:15,
+   q:'¿Qué aleación de aluminio se usa habitualmente en culatas y bloques de motor por su buen comportamiento a alta temperatura?',
+   options:['Aleaciones Al-Si (silumina) con pequeñas adiciones de Cu y Mg','Aluminio puro de alta pureza (>99,5% Al)','Aleaciones Al-Zn de alta resistencia','Aleaciones Al-Li para aplicaciones aeronáuticas'],
+   correct:0,explanation:'Las aleaciones Al-Si (silumina) tienen buena colabilidad, reducida contracción y aceptable resistencia a la temperatura; ideales para fundición a presión de culatas y cárters.'},
+
+  // ── ALTO (16) ──
+  {band:'a',tag:'propiedades',level:'Alto',points:20,
+   q:'¿Qué es la fluencia (creep) en materiales metálicos y en qué condiciones de servicio del automóvil puede aparecer?',
+   options:['Deformación plástica lenta y continua bajo carga constante a temperatura elevada; aparece en juntas de culata, turbocompresores y colectores de escape sometidos a altas temperaturas','Deformación elástica reversible bajo impacto','Corrosión acelerada bajo tensión mecánica','Fractura súbita por fatiga a temperatura ambiente'],
+   correct:0,explanation:'La fluencia ocurre cuando la temperatura supera el 30-40% de la temperatura de fusión absoluta; en el motor, juntas de culata y piezas del turbo pueden fluir si el material no es adecuado para la temperatura de servicio.'},
+
+  {band:'a',tag:'aceros',level:'Alto',points:20,
+   q:'¿Qué diferencia hay entre el acero laminado en caliente y el laminado en frío para aplicaciones de carrocería?',
+   options:['El laminado en frío tiene mejor acabado superficial, mayor precisión dimensional y mayor resistencia (acritud); el en caliente es más barato y se usa en estructuras','El en caliente tiene mejor acabado superficial','Son equivalentes para carrocería','El en frío solo se usa en aceros inoxidables'],
+   correct:0,explanation:'El laminado en frío produce superficies más lisas y tolerancias más estrechas; es el estándar para paneles de carrocería vistos. El en caliente sirve para perfiles estructurales.'},
+
+  {band:'a',tag:'ferreos',level:'Alto',points:20,
+   q:'¿Por qué la fundición gris no puede soldarse por arco voltaico sin precauciones especiales?',
+   options:['El alto contenido en carbono forma martensita frágil en la zona afectada por el calor; se requiere precalentamiento y postenf riamiento','Porque el grafito arde y destruye la pieza','Porque la fundición no conduce la corriente eléctrica','Porque su punto de fusión es superior al del electrodo'],
+   correct:0,explanation:'Al soldar fundición sin control térmico, el carbono migra y la zona afectada forma martensita muy frágil que se agrieta. El precalentamiento (300-500°C) lo previene.'},
+
+  {band:'a',tag:'propiedades',level:'Alto',points:20,
+   q:'¿Qué es el límite elástico (Re) y cómo se diferencia de la resistencia a tracción (Rm)?',
+   options:['Re es la tensión máxima sin deformación permanente; Rm es la tensión máxima que soporta antes de fractura','Re y Rm son idénticos en aceros de alta resistencia','Rm es siempre menor que Re','Re se mide en HB; Rm en MPa'],
+   correct:0,explanation:'Re marca el fin del comportamiento elástico; Rm es el máximo de la curva tensión-deformación. Para diseño seguro se trabaja siempre por debajo de Re.'},
+
+  {band:'a',tag:'no_ferreos',level:'Alto',points:20,
+   q:'¿Por qué el magnesio se usa en tapas de caja de cambios y cárters de algunos vehículos de alto rendimiento?',
+   options:['Es el metal estructural más ligero (1,74 g/cm³), un tercio más ligero que el aluminio, con buena relación resistencia-peso','Porque es más barato que el aluminio','Por su alta resistencia a la corrosión sin tratamiento','Porque es el único metal que no funde al verter aceite caliente'],
+   correct:0,explanation:'El magnesio tiene densidad de 1,74 g/cm³ (vs. 2,7 del Al y 7,8 del Fe); piezas de caja de cambios y cárter en Mg reducen significativamente el peso no suspendido.'},
+
+  {band:'a',tag:'aceros',level:'Alto',points:20,
+   q:'¿Qué es el acero Dual Phase (DP) y por qué se usa en elementos de seguridad de carrocería?',
+   options:['Acero AHSS con microestructura de ferrita blanda + martensita dura; combina alta resistencia con buena capacidad de absorción de energía','Acero con dos capas de galvanizado de distinto espesor','Acero que se somete a dos temples sucesivos','Acero inoxidable de fase dúplex (ferrita + austenita)'],
+   correct:0,explanation:'Los DP tienen Re > 300 MPa y Rm 600-1000 MPa con buena elongación; absorben energía de impacto de forma controlada, clave en zonas de deformación programada.'},
+
+  {band:'a',tag:'propiedades',level:'Alto',points:20,
+   q:'¿Qué es el fenómeno de fatiga en materiales metálicos y por qué es relevante en piezas de automóvil?',
+   options:['Fractura producida por cargas cíclicas muy por debajo de Rm; es la causa más frecuente de fallo en ejes, muelles y cigüeñales','Degradación por temperatura elevada continua','Corrosión acelerada en presencia de carga mecánica','Deformación plástica lenta bajo carga constante (fluencia)'],
+   correct:0,explanation:'La fatiga provoca microgrietas que crecen hasta la fractura con tensiones muy inferiores a Rm. Ejes, cigüeñales y muelles están especialmente expuestos.'},
+
+  {band:'a',tag:'carroceria',level:'Alto',points:20,
+   q:'¿Cómo se une el aluminio al acero en estructuras de carrocería multimaterial y qué problema principal presenta?',
+   options:['Mediante adhesivos estructurales, remaches SPR o soldadura láser con capa intermedia; el problema es la corrosión galvánica al contacto directo','Solo puede unirse con tornillos de acero inoxidable','La unión es imposible sin piezas adaptadoras de plástico','Mediante soldadura MIG convencional sin problema alguno'],
+   correct:0,explanation:'Al y acero tienen distinto potencial galvánico; el contacto directo acelera la corrosión. Los adhesivos y remaches evitan el par galvánico y distribuyen tensiones.'},
+
+  {band:'a',tag:'ferreos',level:'Alto',points:20,
+   q:'¿Qué es el acero cementado y en qué piezas de automoción se usa?',
+   options:['Acero de bajo carbono al que se añade C en la capa superficial mediante cementación, logrando exterior duro e interior tenaz; se usa en piñones, levas y ejes de transmisión','Acero mezclado con cemento para mayor peso','Acero con alta cantidad de carbono en toda la sección','Acero inoxidable tratado con cemento de carburos'],
+   correct:0,explanation:'La cementación aporta C a la superficie (0,8-1,2%) manteniendo el núcleo bajo en C; tras temple, la superficie es dura (resistente al desgaste) y el núcleo es tenaz (absorbe impactos).'},
+
+  {band:'a',tag:'no_ferreos',level:'Alto',points:20,
+   q:'¿Qué es el titanio y por qué su uso en automoción está limitado a vehículos de alta gama?',
+   options:['Metal no férreo con excelente relación resistencia-peso y resistencia a la corrosión, pero de coste muy elevado y difícil mecanizado','Metal abundante y barato pero de baja resistencia','Aleación de aluminio y hierro con propiedades intermedias','Metal que solo existe en aleación, nunca en estado puro'],
+   correct:0,explanation:'El titanio tiene Rm > 900 MPa con densidad de 4,5 g/cm³; su coste (extracción y mecanizado) es 20-50× el del acero, restringiéndolo a componentes de alto rendimiento.'},
+
+  {band:'a',tag:'propiedades',level:'Alto',points:20,
+   q:'¿Qué es la corrosión galvánica y cómo se previene en la unión de dos metales distintos?',
+   options:['Corrosión acelerada del metal más anódico al contacto con un metal más noble en presencia de electrolito; se previene con aislamiento, sellado o ánodos de sacrificio','Corrosión que afecta igualmente a ambos metales','Solo ocurre en ambientes marinos, no en automóviles','Se evita aumentando el espesor de la pieza más anódica'],
+   correct:0,explanation:'En el par galvánico, el metal con menor potencial (ánodo) se corroe. La separación física (juntas de plástico, sellado) o los ánodos de sacrificio (Zn) lo previenen.'},
+
+  {band:'a',tag:'aceros',level:'Alto',points:20,
+   q:'¿Por qué el acero inoxidable austenítico no puede templarse y qué propiedades lo hacen útil en el automóvil?',
+   options:['No tiene suficiente carbono para formar martensita al temple; su alta resistencia a la corrosión y buena conformabilidad lo hacen útil en tubos de escape y piezas ornamentales','Porque su temperatura de fusión es demasiado alta para el temple','Porque el cromo impide la formación de austenita','Porque el tratamiento térmico lo haría magnético'],
+   correct:0,explanation:'Los austeníticos (18/8: 18%Cr-8%Ni) son estables en austenita a temperatura ambiente y no martensitizables; su resistencia a la corrosión los hace ideales para escapes y piezas visibles.'},
+
+  {band:'a',tag:'ferreos',level:'Alto',points:20,
+   q:'¿Qué es el hierro galvanizado por inmersión en caliente (HDG) y cuánto tiempo protege una carrocería?',
+   options:['Acero recubierto de cinc por inmersión en baño fundido a ~450°C; la capa de 70-150 µm protege típicamente 15-30 años en ambiente urbano','Acero recubierto electrolíticamente con una capa decorativa','Acero con un 5% de Zn en su composición','Acero tratado con ácido para eliminar la oxidación superficial'],
+   correct:0,explanation:'El HDG forma capas intermetálicas Zn-Fe muy adherentes. El espesor de la capa determina la vida; en carrocería se usa galvanizado electrolítico (más fino) o por inmersión (zonas estructurales).'},
+
+  {band:'a',tag:'no_ferreos',level:'Alto',points:20,
+   q:'¿Por qué las aleaciones Al-Si coladas a presión (HPDC) requieren baja temperatura de precalentamiento antes de soldar?',
+   options:['Porque el Si y los poros de fundición favorecen la formación de defectos de soldadura; el precalentamiento reduce el gradiente térmico y los poros de gas','Porque el aluminio puro no se puede soldar','Porque el Si hace el aluminio magnético a bajas temperaturas','El HPDC no requiere precalentamiento en ningún caso'],
+   correct:0,explanation:'Las piezas HPDC tienen porosidad interna y elevado contenido en Si; la soldadura sin precalentamiento genera vapores de gas atrapado que producen porosidad y grietas en el cordón.'},
+
+  {band:'a',tag:'propiedades',level:'Alto',points:20,
+   q:'¿Qué es la resiliencia (KV, ensayo Charpy) y por qué es importante seleccionar materiales con alta resiliencia para zonas de impacto?',
+   options:['Energía absorbida por unidad de área al fracturarse por impacto (J); alta resiliencia = mayor capacidad de absorber energía sin fractura frágil','Resistencia a la corrosión bajo tensión mecánica','Capacidad de recuperar la forma tras deformación elástica','Dureza superficial medida por penetración dinámica'],
+   correct:0,explanation:'El ensayo Charpy mide la energía de fractura a impacto. Piezas de seguridad (barras antiintrusión, travesaños) necesitan alta resiliencia para absorber energía de choque sin fractura súbita.'},
+
+  {band:'a',tag:'carroceria',level:'Alto',points:20,
+   q:'¿Qué es el PHS (Press-Hardened Steel) o acero al boro 22MnB5 y en qué partes de la carrocería se usa?',
+   options:['Acero que se estampa en caliente (900°C) y se enfría rápidamente en el molde, alcanzando Rm>1500 MPa; se usa en pilares A/B, refuerzos de puerta y túnel central','Acero laminado en frío convencional de alta resistencia','Acero inoxidable para piezas visibles de la carrocería','Acero galvanizado para partes bajas expuestas a sal'],
+   correct:0,explanation:'El 22MnB5 se estampa en caliente y se templa en el molde mediante el sistema de refrigeración de la prensa; alcanza >1500 MPa y permite fabricar geometrías complejas en zonas de seguridad pasiva.'}
+],
+
+// ══════════════════════════════════════════════════════════════
+// FINAL · 10 preguntas integradoras (Niveles 1–10)
+// ══════════════════════════════════════════════════════════════
+final:[
+  {band:'b',tag:'integracion',level:'Nivel 1',points:10,
+   q:'¿Qué instrumento de medida tiene mayor apreciación: el calibre pie de rey con nonio de 0,05 mm o el micrómetro?',
+   options:['El micrómetro (0,01 mm)','El calibre (0,05 mm)','Ambos tienen la misma apreciación','Depende del material a medir'],
+   correct:0,explanation:'El micrómetro tiene apreciación de 0,01 mm frente a los 0,05 mm del calibre con nonio estándar.'},
+
+  {band:'b',tag:'integracion',level:'Nivel 2',points:10,
+   q:'¿Cuál es el elemento central de sujeción en un puesto de mecanizado manual?',
+   options:['El tornillo de banco','El taladro de columna','La esmeriladora','El gramil'],
+   correct:0,explanation:'El tornillo de banco es la herramienta de sujeción fundamental del puesto de mecanizado manual.'},
+
+  {band:'b',tag:'integracion',level:'Nivel 3',points:10,
+   q:'¿Qué metal no férreo se caracteriza por tener la mayor conductividad eléctrica entre los usados en automoción?',
+   options:['Cobre (Cu)','Aluminio (Al)','Titanio (Ti)','Magnesio (Mg)'],
+   correct:0,explanation:'El cobre tiene la mayor conductividad eléctrica de los metales de uso común (58 MS/m), ideal para el cableado del vehículo.'},
+
+  {band:'m',tag:'seleccion',level:'Nivel 4',points:15,
+   q:'Para taladrar un agujero en chapa de acero S275 de 3 mm de espesor con broca de ø6 mm HSS, ¿qué velocidad aproximada es adecuada (Vc=25 m/min)?',
+   options:['≈ 1326 rpm','≈ 265 rpm','≈ 530 rpm','≈ 2652 rpm'],
+   correct:0,explanation:'n = (25 × 1000) / (π × 6) ≈ 1326 rpm. A mayor Vc y menor diámetro, más rpm necesarias.'},
+
+  {band:'m',tag:'integracion',level:'Nivel 5',points:15,
+   q:'¿Qué diferencia el acero de la fundición desde el punto de vista de la mecanizabilidad en el taller?',
+   options:['El acero es más dúctil y se puede mecanizar, fresar, taladrar y soldar; la fundición es frágil, no soldable por arco y produce viruta pulverulenta','La fundición es más fácil de mecanizar en todos los procesos','Son equivalentes en mecanizabilidad','El acero no se puede taladrar sin brocas especiales'],
+   correct:0,explanation:'La ductilidad del acero produce viruta continua; la fragilidad de la fundición genera polvo abrasivo. Ambos requieren brocas y parámetros distintos.'},
+
+  {band:'m',tag:'integracion',level:'Nivel 6',points:15,
+   q:'Al verificar un eje con micrómetro en tres secciones transversales, una sección da 29,97 mm y las otras dos dan 30,01 mm. ¿Qué defecto geométrico indica esto?',
+   options:['Ovalización o falta de redondez en esa sección','Conicidad a lo largo del eje','Error de rugosidad superficial','El eje es correcto dentro de tolerancias'],
+   correct:0,explanation:'Diferencias de diámetro en distintas orientaciones de la misma sección indican ovalización (falta de redondez), defecto geométrico independiente de la cota.'},
+
+  {band:'m',tag:'seleccion',level:'Nivel 7',points:15,
+   q:'¿Qué EPI es imprescindible en operaciones de esmerilado con amoladora angular?',
+   options:['Pantalla facial (careta) + guantes de cuero + ropa sin partes sueltas','Solo gafas de laboratorio','Solo tapones auditivos','Ninguno si la pieza está fría'],
+   correct:0,explanation:'La amoladora proyecta chispas y fragmentos a alta velocidad; la pantalla facial protege toda la cara (no solo los ojos como las gafas).'},
+
+  {band:'a',tag:'integracion',level:'Nivel 8',points:20,
+   q:'Un eje de transmisión fabricado en acero 42CrMo4 (templado y revenido) muestra medidas correctas pero falla por fractura en servicio. ¿Cuál es la causa más probable?',
+   options:['Fatiga: fisuras iniciadas en la raíz de un chavetero u entalla que han crecido bajo las cargas cíclicas de torsión','Corrosión por humedad del ambiente','El acero 42CrMo4 no es apto para ejes de transmisión','Exceso de lubricante en los apoyos del eje'],
+   correct:0,explanation:'Los ejes fallan por fatiga torsional, iniciada casi siempre en concentradores de tensión (chaveteros, cambios de sección). Las medidas correctas no descartan defectos de fatiga.'},
+
+  {band:'a',tag:'seleccion',level:'Nivel 9',points:20,
+   q:'Para mecanizar con terraja una rosca M8 en un vástago de acero inoxidable 304, ¿qué precaución especial es imprescindible?',
+   options:['Usar aceite de corte específico para inoxidable, avanzar media vuelta y retroceder un cuarto para romper la viruta, y girar con fuerza moderada para evitar la acritud','Usar terraja de plástico para no rascar el inoxidable','Taladrar el agujero previo con broca de madera','No se puede roscar el inoxidable con terraja manual'],
+   correct:0,explanation:'El inoxidable 304 tiende a la acritud y al gripado; el aceite específico, el avance fraccionado y la fuerza controlada evitan el gripado de la terraja y la deformación del material.'},
+
+  {band:'a',tag:'seleccion',level:'Nivel 10',points:20,
+   q:'Un técnico debe seleccionar el material para un soporte de motor sometido a vibraciones y cargas dinámicas elevadas, con requerimiento de soldabilidad. ¿Qué acero es más adecuado?',
+   options:['Acero de baja aleación y alta resistencia (HSLA) como S355 o similar: buena resistencia (Re>355 MPa), tenacidad y soldabilidad','Fundición gris por su capacidad de amortiguación','Acero inoxidable 316L por su resistencia a la corrosión','Aluminio 7075-T6 por su alta resistencia específica'],
+   correct:0,explanation:'El S355 (o similar HSLA) ofrece Re>355 MPa, buena tenacidad Charpy y soldabilidad (bajo carbono equivalente); la fundición es frágil, el inox costoso y el Al-7075 no es soldable por MIG convencional.'}
+]
+};// fin questionPools
+
+// ════════════════════════════════════════════════════════════
+// MOTOR (idéntico al RA1, no modificar)
+// ════════════════════════════════════════════════════════════
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+
+function buildSelection(pool){
+  const b=shuffle(pool.filter(q=>q.band==='b')).slice(0,6);
+  const m=shuffle(pool.filter(q=>q.band==='m')).slice(0,8);
+  const a=shuffle(pool.filter(q=>q.band==='a')).slice(0,6);
+  return [...b,...m,...a];
+}
+
+function passesUnlock(id){
+  const r=globalState.results[id];
+  if(!r||r.attempts===0)return false;
+  const total=r.lastTotal||20;
+  const basicTotal=r.lastBasicTotal||6;
+  return(r.bestScore/total)>=0.7||(r.lastBasicCorrect>=basicTotal);
+}
+
+function isQuizUnlocked(id){
+  const rule=unlockRules[id];
+  if(!rule)return true;
+  const idx=unlockOrder.indexOf(id);
+  for(let i=0;i<idx;i++){
+    if(!passesUnlock(unlockOrder[i]))return false;
+  }
+  return passesUnlock(rule.prev);
+}
+
+function attemptsLeft(id){
+  const r=globalState.results[id];
+  return maxAttemptsPerBlock-(r?r.attempts:0);
+}
+
+function defaultResult(){return{bestScore:0,attempts:0,lastScore:0,lastTotal:20,lastBasicCorrect:0,lastBasicTotal:6,stars:0};}
+
+const profileKey=(name)=>`${storagePrefix}::${name}`;
+
+function hydrateResults(raw){
+  const out={};
+  unlockOrder.forEach(id=>{out[id]=raw[id]?{...defaultResult(),...raw[id]}:defaultResult();});
+  return out;
+}
+
+function serializableState(){
+  return{name:student.name,points:globalState.points,stars:globalState.stars,bestStreak:globalState.bestStreak,
+    completedUnits:[...globalState.completedUnits],results:globalState.results,saveCount:globalState.saveCount};
+}
+
+function saveProfile(){
+  try{
+    globalState.saveCount++;
+    localStorage.setItem(profileKey(student.name),JSON.stringify(serializableState()));
+    document.getElementById('save-status').textContent=`✓ Guardado (${globalState.saveCount}× · ${new Date().toLocaleTimeString()})`;
+    document.getElementById('global-saves').textContent=globalState.saveCount;
+  }catch(e){document.getElementById('save-status').textContent='Error al guardar.';}
+}
+
+function loadProfileByName(name){
+  try{
+    const raw=localStorage.getItem(profileKey(name));
+    if(!raw)return false;
+    const data=JSON.parse(raw);
+    student.name=data.name||name;
+    globalState.points=data.points||0;globalState.stars=data.stars||0;
+    globalState.bestStreak=data.bestStreak||0;
+    globalState.completedUnits=new Set(data.completedUnits||[]);
+    globalState.results=hydrateResults(data.results||{});
+    globalState.saveCount=data.saveCount||0;
+    return true;
+  }catch(e){return false;}
+}
+
+function resetProfile(){
+  student.name='Sin nombre';
+  globalState.points=0;globalState.stars=0;globalState.bestStreak=0;
+  globalState.completedUnits=new Set();globalState.results={};globalState.saveCount=0;
+  unlockOrder.forEach(id=>{globalState.results[id]=defaultResult();});
+}
+
+document.getElementById('save-student').addEventListener('click',()=>{
+  const v=document.getElementById('student-name').value.trim();
+  if(!v)return;
+  student.name=v;
+  document.getElementById('save-status').textContent=`Perfil: ${v}`;
+  document.getElementById('report-name').textContent=v;
+  saveProfile();refreshAll();
+});
+
+document.getElementById('resume-student').addEventListener('click',()=>{
+  const v=document.getElementById('student-name').value.trim();
+  if(!v){alert('Escribe primero el nombre del alumno.');return;}
+  if(loadProfileByName(v)){
+    document.getElementById('student-name').value=student.name;
+    document.getElementById('save-status').textContent=`✓ Perfil cargado: ${student.name}`;
+    document.getElementById('report-name').textContent=student.name;
+    updateGlobalPanel();updateReport();refreshAll();
+  }else{
+    document.getElementById('save-status').textContent='No se encontró perfil guardado.';
+  }
+});
+
+document.getElementById('clear-student').addEventListener('click',()=>{
+  if(!confirm('¿Reiniciar el perfil? Se perderá todo el progreso.'))return;
+  const name=document.getElementById('student-name').value.trim();
+  if(name)localStorage.removeItem(profileKey(name));
+  resetProfile();
+  document.getElementById('save-status').textContent='Perfil reiniciado.';
+  document.getElementById('report-name').textContent='Sin nombre';
+  updateGlobalPanel();updateReport();refreshAll();
+});
+
+function levelLabel(score,total){
+  const p=score/total;
+  if(p>=0.9)return['Experto','l-exp'];
+  if(p>=0.7)return['Avanzado','l-adv'];
+  if(p>=0.5)return['Medio','l-med'];
+  if(p>0)return['Básico','l-basic'];
+  return['Sin iniciar','l-init'];
+}
+
+function updateGlobalPanel(){
+  document.getElementById('global-points').textContent=globalState.points;
+  document.getElementById('global-stars').textContent=globalState.stars;
+  document.getElementById('global-streak').textContent=globalState.bestStreak;
+  document.getElementById('global-units').textContent=`${globalState.completedUnits.size}/3`;
+  document.getElementById('global-saves').textContent=globalState.saveCount;
+}
+
+function unlockBadge(id){
+  const el=document.getElementById(`badge-${id}`);
+  if(!el)return;
+  const r=globalState.results[id];
+  const pct=r&&r.lastTotal?Math.round(r.bestScore/r.lastTotal*100):0;
+  el.classList.remove('badge-lock');el.classList.add('badge-unlock');
+  const labels={ud2:'UD2 Metrología',ud3:'UD3 Equipos',ud4:'UD4 Materiales',final:'Final RA2'};
+  el.querySelector('h3').textContent=(pct>=80?'🏆':'✅')+' '+(labels[id]||id);
+}
+
+function updateReport(){
+  const tb=document.getElementById('report-table');
+  const names={ud2:'UD2 · Metrología',ud3:'UD3 · Equipos y Herramientas',ud4:'UD4 · Materiales',final:'Prueba Final RA2'};
+  tb.innerHTML='';
+  unlockOrder.forEach(id=>{
+    const r=globalState.results[id]||defaultResult();
+    const total=r.lastTotal||20;
+    const[lbl,cls]=levelLabel(r.bestScore,total);
+    const pct=r.attempts>0?Math.round(r.bestScore/total*100)+'%':'—';
+    const last=r.attempts>0?Math.round(r.lastScore/(r.lastTotal||20)*100)+'%':'—';
+    tb.innerHTML+=`<tr><td>${names[id]}</td><td>${r.attempts>0?r.bestScore+'/'+total+' ('+pct+')':'—'}</td>
+      <td>${r.attempts}/${maxAttemptsPerBlock}</td><td>${last}</td>
+      <td><span class="level-badge ${cls}">${lbl}</span></td></tr>`;
+  });
+  const diag=document.getElementById('global-diagnosis');
+  const attempted=unlockOrder.filter(id=>globalState.results[id]&&globalState.results[id].attempts>0);
+  if(attempted.length===0){diag.innerHTML='<strong>Diagnóstico global:</strong> Completa al menos un bloque para ver el diagnóstico.';return;}
+  const avg=attempted.reduce((s,id)=>{const r=globalState.results[id];return s+(r.bestScore/(r.lastTotal||20));},0)/attempted.length;
+  let msg='';
+  if(avg>=0.9)msg='Rendimiento excelente. Dominas los contenidos del RA2.';
+  else if(avg>=0.7)msg='Buen nivel. Repasa los temas con feedback de repaso para consolidar.';
+  else if(avg>=0.5)msg='Nivel básico alcanzado. Revisa los temas marcados y vuelve a intentarlo.';
+  else msg='Necesitas reforzar los contenidos. Lee el material de las unidades y vuelve a intentarlo.';
+  diag.innerHTML=`<strong>Diagnóstico global (promedio ${Math.round(avg*100)}%):</strong> ${msg}`;
+}
+
+function buildReview(id,tagErrors){
+  const msgs=reviewMessages[id];
+  if(!msgs||tagErrors.length===0)return'';
+  const lines=[...new Set(tagErrors)].map(t=>msgs[t]||null).filter(Boolean);
+  if(lines.length===0)return'';
+  return'<strong>📚 Repasa:</strong><br>'+lines.map(l=>`• ${l}`).join('<br>');
+}
+
+function buildGateSummary(id,score,total,basicCorrect,basicTotal,stars,tagErrors){
+  const pct=Math.round(score/total*100);
+  const passes=passesUnlock(id);
+  const left=attemptsLeft(id);
+  let html='';
+  if(passes){
+    const nextIdx=unlockOrder.indexOf(id)+1;
+    const nextId=unlockOrder[nextIdx];
+    const nextName=nextId?unitMeta[nextId][0]:'';
+    html+=`<p>✅ <strong>Bloque superado</strong> · ${pct}% · ${stars}⭐</p>`;
+    if(nextName)html+=`<p style="margin-top:6px">🔓 <em>${nextName}</em> desbloqueada.</p>`;
+  }else{
+    html+=`<p>❌ <strong>No superado</strong> · ${pct}% · Intentos restantes: ${left}</p>`;
+    html+=`<p style="margin-top:4px">${left>0?(unlockRules[id]?.label||''):'Has agotado los intentos en este bloque.'}</p>`;
+  }
+  const rev=buildReview(id,tagErrors);
+  if(rev)html+=`<div class="review-box show" style="margin-top:10px">${rev}</div>`;
+  return{html,passes};
+}
+
+function renderQuizSections(){
+  const container=document.getElementById('quizzes');
+  container.innerHTML='';
+  unlockOrder.forEach(id=>{
+    const[title,desc]=unitMeta[id];
+    const totalLabel=id==='final'?10:20;
+    const sec=document.createElement('section');
+    sec.className='section';sec.id=id;
+    sec.innerHTML=`<div class="section-head"><div><h2>${title}</h2><p class="muted">${desc}</p></div></div>
+    <div class="quiz-layout">
+      <div class="status-box" id="status-${id}">
+        <h3>Progreso</h3>
+        <div class="progress-bar-wrap"><div class="progress-bar-fill" id="pb-${id}" style="width:0%"></div></div>
+        <div class="stat-row"><span>Pregunta</span><span id="qnum-${id}">0/${totalLabel}</span></div>
+        <div class="stat-row"><span>Correctas</span><span id="score-${id}">0</span></div>
+        <div class="stat-row"><span>Racha</span><span id="streak-${id}">0</span></div>
+        <div class="stat-row"><span>Puntos</span><span id="pts-${id}">0</span></div>
+        <div class="stat-row"><span>Intentos</span><span id="att-${id}">0/${maxAttemptsPerBlock}</span></div>
+        <button class="reset-btn" id="reset-${id}">↺ Nuevo intento</button>
+      </div>
+      <div class="quiz-box" id="qbox-${id}"></div>
+    </div>`;
+    container.appendChild(sec);
+  });
+}
+
+function createQuiz(id){
+  const box=document.getElementById(`qbox-${id}`);
+  if(!box)return;
+  if(!globalState.results[id])globalState.results[id]=defaultResult();
+
+  function render(){
+    const unlocked=isQuizUnlocked(id);
+    const left=attemptsLeft(id);
+    if(!unlocked){
+      box.innerHTML=`<div class="lock-screen"><div class="lock-icon">🔒</div>
+        <p><strong>Bloque bloqueado</strong><br>${unlockRules[id]?.label||'Supera el bloque anterior para desbloquear.'}</p></div>`;
+      return;
+    }
+    if(left<=0&&!passesUnlock(id)){
+      box.innerHTML=`<div class="lock-screen"><div class="lock-icon">⛔</div>
+        <p><strong>Sin intentos disponibles</strong><br>Has agotado los ${maxAttemptsPerBlock} intentos. Habla con tu profesor.</p></div>`;
+      return;
+    }
+
+    const isFinal=id==='final';
+    const pool=isFinal?[...questionPools.final]:buildSelection(questionPools[id]);
+    const total=pool.length;
+    const basicTotal=isFinal?0:pool.filter(q=>q.band==='b').length;
+    let qi=0,score=0,pts=0,streak=0,bestStreak=0,basicCorrect=0;
+    const tagErrors=[];
+
+    function updateStatus(){
+      document.getElementById(`pb-${id}`).style.width=`${Math.round(qi/total*100)}%`;
+      document.getElementById(`qnum-${id}`).textContent=`${qi}/${total}`;
+      document.getElementById(`score-${id}`).textContent=score;
+      document.getElementById(`streak-${id}`).textContent=streak;
+      document.getElementById(`pts-${id}`).textContent=pts;
+      document.getElementById(`att-${id}`).textContent=`${globalState.results[id].attempts}/${maxAttemptsPerBlock}`;
+    }
+
+    function showQ(){
+      if(qi>=total){finish();return;}
+      const q=pool[qi];
+      const corrOpt=q.options[0];
+      const shuffled=shuffle([...q.options]);
+      const corrIdx=shuffled.indexOf(corrOpt);
+      const tagClass={b:'tag-b',m:'tag-m',a:'tag-a'}[q.band]||'tag-b';
+      box.innerHTML=`
+        <span class="level-tag ${tagClass}">${q.level}</span>
+        <p class="q-text">${q.q}</p>
+        <div class="options" id="opts-${id}">
+          ${shuffled.map((o,i)=>`<button class="opt-btn" data-idx="${i}">${o}</button>`).join('')}
+        </div>
+        <div class="reward" id="reward-${id}"></div>
+        <div class="feedback" id="fb-${id}"></div>
+        <button class="next-btn" id="next-${id}" style="display:none">${qi+1<total?'Siguiente →':'Ver resultado'}</button>`;
+
+      document.querySelectorAll(`#opts-${id} .opt-btn`).forEach(btn=>{
+        btn.addEventListener('click',()=>{
+          if(btn.disabled)return;
+          document.querySelectorAll(`#opts-${id} .opt-btn`).forEach(b=>b.disabled=true);
+          const chosen=parseInt(btn.dataset.idx);
+          const ok=chosen===corrIdx;
+          btn.classList.add(ok?'correct':'wrong');
+          if(!ok)document.querySelectorAll(`#opts-${id} .opt-btn`)[corrIdx].classList.add('correct');
+          const fb=document.getElementById(`fb-${id}`);
+          fb.textContent=(ok?'✓ Correcto: ':'✗ Incorrecto: ')+q.explanation;
+          fb.className=`feedback show ${ok?'ok':'ko'}`;
+          if(ok){score++;pts+=q.points;streak++;if(streak>bestStreak)bestStreak=streak;if(q.band==='b')basicCorrect++;
+            document.getElementById(`reward-${id}`).textContent=streak>=5?'🔥 ¡Racha!':streak>=3?'⚡':'';
+          }else{streak=0;tagErrors.push(q.tag);document.getElementById(`reward-${id}`).textContent='';}
+          qi++;updateStatus();
+          document.getElementById(`next-${id}`).style.display='block';
+        });
+      });
+      document.getElementById(`next-${id}`).addEventListener('click',()=>{if(qi>=total)finish();else showQ();});
+    }
+
+    function finish(){
+      const r=globalState.results[id];
+      r.attempts++;r.lastScore=score;r.lastTotal=total;
+      r.lastBasicCorrect=basicCorrect;r.lastBasicTotal=basicTotal;
+      if(score>r.bestScore)r.bestScore=score;
+      const stars=score/total>=0.9?3:score/total>=0.7?2:score/total>=0.5?1:0;
+      if(stars>r.stars)r.stars=stars;
+      globalState.points+=pts;globalState.stars+=stars;
+      if(bestStreak>globalState.bestStreak)globalState.bestStreak=bestStreak;
+      if(passesUnlock(id)){globalState.completedUnits.add(id);unlockBadge(id);}
+      updateGlobalPanel();updateReport();saveProfile();
+      const{html,passes}=buildGateSummary(id,score,total,basicCorrect,basicTotal,stars,tagErrors);
+      box.innerHTML=`
+        <div style="text-align:center;margin-bottom:20px">
+          <div style="font-size:2.5rem;margin-bottom:8px">${stars===3?'🏆':stars===2?'🥈':stars===1?'🥉':'📋'}</div>
+          <h3 style="font-size:1.3rem;margin-bottom:6px">${score}/${total} correctas</h3>
+          <p class="muted">${pts} puntos · ${Math.round(score/total*100)}%</p>
+        </div>
+        <div class="gate-note show ${passes?'pass':'fail'}">${html}</div>`;
+      if(passes){
+        const nextIdx=unlockOrder.indexOf(id)+1;
+        if(nextIdx<unlockOrder.length)createQuiz(unlockOrder[nextIdx]);
+      }
+    }
+
+    updateStatus();showQ();
+  }
+
+  document.getElementById(`reset-${id}`).addEventListener('click',()=>{
+    if(attemptsLeft(id)<=0){alert('Sin intentos disponibles.');return;}
+    render();
+  });
+  render();
+}
+
+function refreshAll(){
+  unlockOrder.forEach(id=>createQuiz(id));
+  unlockOrder.forEach(id=>{if(passesUnlock(id))unlockBadge(id);});
+}
+
+// INIT
+unlockOrder.forEach(id=>{if(!globalState.results[id])globalState.results[id]=defaultResult();});
+renderQuizSections();
+refreshAll();
+updateGlobalPanel();
+updateReport();
+</script>
+</body>
+</html>

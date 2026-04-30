@@ -1,0 +1,611 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aula Taller · RA5 · PRL y Medioambiente</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root,[data-theme="light"]{
+      --bg:#f7f6f2;--surface:#f9f8f5;--surface2:#fbfbf9;--surface3:#f0ece6;
+      --border:#d4d1ca;--text:#28251d;--muted:#6f6d67;--inv:#faf8f5;
+      --primary:#01696f;--success:#437a22;--danger:#b13b82;--gold:#d19900;
+      --radius:18px;--shadow:0 18px 40px rgba(35,28,18,.09);
+      --font-display:'Instrument Serif',Georgia,serif;
+      --font-body:'Inter',system-ui,sans-serif
+    }
+    [data-theme="dark"]{
+      --bg:#171614;--surface:#1c1b19;--surface2:#201f1d;--surface3:#262422;
+      --border:#393836;--text:#e2dfd9;--muted:#a5a19b;--inv:#191816;
+      --primary:#4f98a3;--success:#76b14c;--danger:#db77b2;--gold:#e4b843;
+      --shadow:0 18px 40px rgba(0,0,0,.35)
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:var(--font-body);background:var(--bg);color:var(--text);line-height:1.6;min-height:100vh}
+    .wrap{max-width:1100px;margin:0 auto;padding:0 20px}
+    header{background:var(--surface);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(0,0,0,.06)}
+    .topbar{display:flex;align-items:center;justify-content:space-between;padding:14px 20px;gap:12px}
+    .brand{display:flex;align-items:center;gap:12px}
+    .logo{width:38px;height:38px;background:var(--primary);border-radius:10px;display:flex;align-items:center;justify-content:center}
+    .logo svg{width:22px;height:22px;fill:none;stroke:#fff;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+    .brand small{display:block;font-size:.7rem;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
+    .brand strong{font-size:.95rem;font-weight:700}
+    .nav{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+    .nav a{font-size:.8rem;font-weight:600;color:var(--muted);text-decoration:none;padding:5px 11px;border-radius:20px;border:1px solid transparent;transition:.2s}
+    .nav a:hover{color:var(--primary);border-color:var(--primary)}
+    .theme-btn{background:none;border:1px solid var(--border);border-radius:20px;padding:5px 10px;cursor:pointer;font-size:.9rem;color:var(--muted);transition:.2s}
+    .theme-btn:hover{color:var(--primary)}
+    .hero{padding:56px 20px 40px;max-width:1100px;margin:0 auto}
+    .hero-grid{display:grid;grid-template-columns:1fr 320px;gap:40px;align-items:start}
+    @media(max-width:800px){.hero-grid{grid-template-columns:1fr}}
+    .eyebrow{display:inline-block;font-size:.75rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--primary);margin-bottom:10px}
+    h1{font-family:var(--font-display);font-size:clamp(2rem,5vw,3rem);font-weight:400;line-height:1.15;margin-bottom:16px}
+    .lead{font-size:1rem;color:var(--muted);max-width:520px;margin-bottom:24px;line-height:1.7}
+    .chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:28px}
+    .chip{font-size:.75rem;font-weight:600;padding:5px 12px;border-radius:20px;background:var(--surface3);border:1px solid var(--border);color:var(--muted)}
+    .student-form{display:flex;gap:10px;margin-bottom:14px;flex-wrap:wrap}
+    .student-form input{flex:1;min-width:200px;padding:10px 14px;border-radius:10px;border:1px solid var(--border);background:var(--surface2);color:var(--text);font-family:var(--font-body);font-size:.95rem}
+    .student-form input:focus{outline:none;border-color:var(--primary)}
+    .save-box{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+    .save-status{font-size:.82rem;color:var(--muted)}
+    .btn{padding:9px 18px;border-radius:10px;border:none;cursor:pointer;font-family:var(--font-body);font-size:.9rem;font-weight:600;transition:.2s}
+    .btn-primary{background:var(--primary);color:#fff}.btn-primary:hover{opacity:.88}
+    .btn-secondary{background:var(--surface3);color:var(--text);border:1px solid var(--border)}.btn-secondary:hover{border-color:var(--primary);color:var(--primary)}
+    .panel{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:24px;box-shadow:var(--shadow)}
+    .panel h3{font-size:1rem;font-weight:700;margin-bottom:18px}
+    .hero-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+    .stat{text-align:center;background:var(--surface3);border-radius:12px;padding:12px 8px}
+    .stat strong{display:block;font-size:1.4rem;font-weight:800;color:var(--primary)}
+    .stat span{font-size:.72rem;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.06em}
+    .section{max-width:1100px;margin:0 auto;padding:40px 20px}
+    .section-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:28px}
+    .section-head h2{font-family:var(--font-display);font-size:1.7rem;font-weight:400}
+    .muted{color:var(--muted);font-size:.9rem}
+    .cards4{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+    @media(max-width:900px){.cards4{grid-template-columns:repeat(2,1fr)}}
+    @media(max-width:500px){.cards4{grid-template-columns:1fr}}
+    .badgebox{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:22px;text-align:center;transition:.3s}
+    .badgebox h3{font-size:1rem;font-weight:700;margin-bottom:6px}
+    .badgebox p{font-size:.82rem;color:var(--muted)}
+    .badge-lock{opacity:.45;filter:grayscale(1)}
+    .badge-unlock{border-color:var(--success);background:color-mix(in srgb,var(--success) 6%,var(--surface))}
+    .quiz-layout{display:grid;grid-template-columns:260px 1fr;gap:24px;align-items:start}
+    @media(max-width:800px){.quiz-layout{grid-template-columns:1fr}}
+    .status-box{position:sticky;top:80px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:22px;box-shadow:var(--shadow)}
+    .status-box h3{font-size:.95rem;font-weight:700;margin-bottom:16px}
+    .progress-bar-wrap{background:var(--surface3);border-radius:99px;height:8px;margin-bottom:16px;overflow:hidden}
+    .progress-bar-fill{height:8px;border-radius:99px;background:var(--primary);transition:.4s}
+    .stat-row{display:flex;justify-content:space-between;font-size:.82rem;margin-bottom:8px}
+    .stat-row span:last-child{font-weight:700;color:var(--primary)}
+    .reset-btn{width:100%;padding:8px;border-radius:8px;border:1px solid var(--border);background:none;cursor:pointer;font-size:.82rem;color:var(--muted);margin-top:12px;transition:.2s}
+    .reset-btn:hover{border-color:var(--danger);color:var(--danger)}
+    .quiz-box{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:28px;box-shadow:var(--shadow)}
+    .level-tag{display:inline-flex;align-items:center;gap:6px;font-size:.75rem;font-weight:700;padding:4px 12px;border-radius:20px;margin-bottom:16px;text-transform:uppercase;letter-spacing:.07em}
+    .tag-b{background:color-mix(in srgb,var(--success) 12%,var(--surface));color:var(--success)}
+    .tag-m{background:color-mix(in srgb,var(--gold) 12%,var(--surface));color:var(--gold)}
+    .tag-a{background:color-mix(in srgb,var(--danger) 12%,var(--surface));color:var(--danger)}
+    .q-text{font-size:1.05rem;font-weight:600;margin-bottom:20px;line-height:1.5}
+    .options{display:flex;flex-direction:column;gap:10px;margin-bottom:20px}
+    .opt-btn{text-align:left;padding:12px 16px;border-radius:12px;border:1.5px solid var(--border);background:var(--surface2);cursor:pointer;font-family:var(--font-body);font-size:.93rem;color:var(--text);transition:.2s}
+    .opt-btn:hover:not(:disabled){border-color:var(--primary);background:color-mix(in srgb,var(--primary) 6%,var(--surface))}
+    .opt-btn.correct{border-color:var(--success);background:color-mix(in srgb,var(--success) 10%,var(--surface));color:var(--success);font-weight:700}
+    .opt-btn.wrong{border-color:var(--danger);background:color-mix(in srgb,var(--danger) 8%,var(--surface));color:var(--danger)}
+    .feedback{padding:14px;border-radius:10px;font-size:.88rem;margin-bottom:14px;line-height:1.5;display:none}
+    .feedback.show{display:block}
+    .feedback.ok{background:color-mix(in srgb,var(--success) 10%,var(--surface));border:1px solid var(--success);color:var(--success)}
+    .feedback.ko{background:color-mix(in srgb,var(--danger) 8%,var(--surface));border:1px solid var(--danger);color:var(--danger)}
+    .reward{font-size:1.5rem;text-align:center;margin-bottom:10px;min-height:2rem}
+    .gate-note{display:none;padding:16px;border-radius:12px;border:1px solid var(--border);background:var(--surface3);font-size:.88rem;color:var(--muted);margin-top:16px;line-height:1.6}
+    .gate-note.show{display:block}
+    .gate-note.pass{border-color:var(--success);background:color-mix(in srgb,var(--success) 8%,var(--surface));color:var(--success)}
+    .gate-note.fail{border-color:var(--danger);background:color-mix(in srgb,var(--danger) 6%,var(--surface));color:var(--danger)}
+    .review-box{display:none;padding:16px;border-radius:12px;background:color-mix(in srgb,var(--gold) 8%,var(--surface));border:1px solid var(--gold);font-size:.85rem;color:var(--text);margin-top:14px;line-height:1.7}
+    .review-box.show{display:block}
+    .review-box strong{color:var(--gold)}
+    .next-btn{width:100%;padding:11px;border-radius:10px;background:var(--primary);color:#fff;border:none;cursor:pointer;font-family:var(--font-body);font-weight:700;font-size:.95rem;transition:.2s}
+    .next-btn:hover{opacity:.88}
+    .lock-screen{text-align:center;padding:40px;color:var(--muted)}
+    .lock-screen .lock-icon{font-size:2.5rem;margin-bottom:12px}
+    .lock-screen p{font-size:.9rem;line-height:1.6;max-width:380px;margin:0 auto}
+    .report-box{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:28px;box-shadow:var(--shadow)}
+    .table{width:100%;border-collapse:collapse;font-size:.88rem;margin-top:16px}
+    .table th{text-align:left;padding:10px 12px;border-bottom:2px solid var(--border);font-weight:700;color:var(--muted);text-transform:uppercase;font-size:.75rem;letter-spacing:.07em}
+    .table td{padding:10px 12px;border-bottom:1px solid var(--border)}
+    .table tr:last-child td{border-bottom:none}
+    .level-badge{display:inline-flex;padding:3px 10px;border-radius:20px;font-size:.75rem;font-weight:700}
+    .l-init{background:var(--surface3);color:var(--muted)}
+    .l-basic{background:color-mix(in srgb,var(--success) 12%,var(--surface));color:var(--success)}
+    .l-med{background:color-mix(in srgb,var(--gold) 12%,var(--surface));color:var(--gold)}
+    .l-adv{background:color-mix(in srgb,var(--primary) 12%,var(--surface));color:var(--primary)}
+    .l-exp{background:color-mix(in srgb,var(--danger) 12%,var(--surface));color:var(--danger)}
+    .diag-box{padding:16px;border-radius:12px;background:var(--surface3);border:1px solid var(--border);font-size:.88rem;line-height:1.7;margin-top:16px}
+  </style>
+</head>
+<body>
+<header>
+  <div class="wrap topbar">
+    <div class="brand">
+      <div class="logo"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+      <div><small>RA5 · Mecanizado y Soldadura</small><strong>Aula Taller</strong></div>
+    </div>
+    <nav class="nav">
+      <a href="#prl">PRL</a>
+      <a href="#medioambiente">Medioambiente</a>
+      <a href="#final">Prueba Final</a>
+      <a href="#informe">Informe</a>
+      <button class="theme-btn" data-theme-toggle>◐</button>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-grid">
+    <div>
+      <span class="eyebrow">RA5 · Mecanizado y Soldadura</span>
+      <h1>Aula Taller</h1>
+      <p class="lead">Aplica las medidas de prevención de riesgos laborales y de protección medioambiental en las operaciones de mecanizado y soldadura, identificando los riesgos y siguiendo la normativa vigente.</p>
+      <div class="chips">
+        <span class="chip">2 bloques + prueba final</span>
+        <span class="chip">20 preguntas por bloque</span>
+        <span class="chip chip-info">🔐 Desbloqueo secuencial</span>
+        <span class="chip">Guardado local</span>
+      </div>
+      <div class="student-form">
+        <input id="student-name" type="text" placeholder="Escribe el nombre del alumno">
+        <button class="btn btn-primary" id="save-student">Guardar nombre</button>
+      </div>
+      <div class="save-box">
+        <div class="save-status" id="save-status">Sin perfil cargado</div>
+        <button class="btn btn-secondary" id="resume-student">Cargar progreso</button>
+        <button class="btn btn-secondary" id="clear-student">Reiniciar perfil</button>
+      </div>
+    </div>
+    <aside class="panel hero-side">
+      <h3>Panel del alumno</h3>
+      <div class="hero-stats">
+        <div class="stat"><strong id="global-points">0</strong><br><span class="muted">Puntos</span></div>
+        <div class="stat"><strong id="global-stars">0</strong><br><span class="muted">Estrellas</span></div>
+        <div class="stat"><strong id="global-streak">0</strong><br><span class="muted">Mejor racha</span></div>
+        <div class="stat"><strong id="global-units">0/3</strong><br><span class="muted">Bloques</span></div>
+        <div class="stat"><strong id="global-saves">0</strong><br><span class="muted">Guardados</span></div>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-head"><div><h2>Insignias del recorrido</h2><p class="muted">Supera cada bloque para desbloquear el siguiente.</p></div></div>
+  <div class="badges-grid" style="grid-template-columns:repeat(3,1fr)">
+    <div class="badgebox" id="badge-prl"><h3>🦺 PRL</h3><p>Prevención de Riesgos Laborales</p></div>
+    <div class="badgebox" id="badge-medioambiente"><h3>🌿 Medioambiente</h3><p>Gestión ambiental en el taller</p></div>
+    <div class="badgebox" id="badge-final"><h3>🎓 Prueba Final</h3><p>Integración PRL + Medioambiente</p></div>
+  </div>
+</section>
+
+<div id="quizzes"></div>
+
+<section class="section" id="informe">
+  <div class="section-head"><div><h2>Informe del alumno</h2><p class="muted">Resumen de resultados por bloque.</p></div></div>
+  <div class="report-box">
+    <p><strong>Alumno:</strong> <span id="report-name">Sin nombre</span></p>
+    <table class="table">
+      <thead><tr><th>Bloque</th><th>Mejor resultado</th><th>Intentos</th><th>Último</th><th>Nivel</th></tr></thead>
+      <tbody id="report-table"></tbody>
+    </table>
+    <div class="diag-box" id="global-diagnosis"><strong>Diagnóstico global:</strong> Completa al menos un bloque para ver el diagnóstico.</div>
+  </div>
+</section>
+
+<script>
+(function(){const root=document.documentElement,btn=document.querySelector('[data-theme-toggle]');let t=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';root.setAttribute('data-theme',t);btn.addEventListener('click',()=>{t=t==='dark'?'light':'dark';root.setAttribute('data-theme',t);});})();
+
+const storagePrefix='aula-taller-mec-ra5-v1';
+const maxAttemptsPerBlock=3;
+const student={name:'Sin nombre'};
+const globalState={points:0,stars:0,bestStreak:0,completedUnits:new Set(),results:{},saveCount:0};
+const unitIds=['prl','medioambiente'];
+const unlockOrder=['prl','medioambiente','final'];
+const unlockRules={
+  medioambiente:{prev:'prl',label:'Supera el bloque de PRL (≥70% o todas las básicas) para desbloquear Medioambiente.'},
+  final:{prev:'medioambiente',label:'Supera el bloque de Medioambiente (≥70% o todas las básicas) para desbloquear la Prueba Final.'}
+};
+const unitMeta={
+  prl:['Bloque 1 · Prevención de Riesgos Laborales','Riesgos en el taller de mecanizado y soldadura, EPI, señalización, primeros auxilios y normativa PRL. Banco de 40 preguntas; se extraen 20.'],
+  medioambiente:['Bloque 2 · Medioambiente en el Taller','Gestión de residuos, contaminación, legislación ambiental y buenas prácticas en talleres de mecanizado y soldadura. Banco de 40 preguntas; se extraen 20.'],
+  final:['Prueba Final · PRL y Medioambiente','10 preguntas integradoras que combinan PRL y gestión ambiental aplicadas al taller.']
+};
+const reviewMessages={
+  prl:{
+    riesgos_mecanizado:'Repasa los riesgos específicos de las operaciones de mecanizado: atrapamientos, proyecciones, ruido y vibraciones.',
+    riesgos_soldadura:'Repasa los riesgos de la soldadura: radiaciones UV, humos metálicos, quemaduras y riesgo eléctrico.',
+    epi:'Repasa los EPI obligatorios para cada operación: careta, guantes, calzado de seguridad, protección auditiva y respiratoria.',
+    senalizacion:'Repasa los tipos de señales de seguridad: prohibición (rojo), advertencia (amarillo), obligación (azul) y emergencia (verde).',
+    orden_limpieza:'Repasa las normas de orden y limpieza en el taller: almacenamiento correcto, pasillos despejados y plan 5S.',
+    primeros_auxilios:'Repasa el protocolo PAS (Proteger, Alertar, Socorrer) y las actuaciones básicas ante accidentes en el taller.',
+    normativa_prl:'Repasa la Ley 31/1995 de PRL: derechos y obligaciones del trabajador, funciones del delegado de prevención y el INSST.',
+    fuego:'Repasa los tipos de fuego (A, B, C, D, F) y los agentes extintores adecuados para cada clase.'
+  },
+  medioambiente:{
+    residuos_peligrosos:'Repasa la clasificación de residuos peligrosos en el taller: aceites usados, disolventes, baterías y envases contaminados.',
+    residuos_no_peligrosos:'Repasa la gestión de residuos no peligrosos: chatarra metálica, cartón, plásticos y su reciclaje.',
+    contaminacion_atmosferica:'Repasa las fuentes de contaminación atmosférica en el taller: humos de soldadura, vapores de disolventes y partículas de mecanizado.',
+    contaminacion_suelo_agua:'Repasa la prevención de contaminación de suelo y agua: gestión de derrames de aceite, uso de bandejas y separadores de grasas.',
+    legislacion_ambiental:'Repasa la legislación ambiental aplicable al taller: Ley de Residuos, normativa de emisiones y autorización ambiental.',
+    buenas_practicas:'Repasa las buenas prácticas ambientales: eficiencia energética, sustitución de productos peligrosos y minimización de residuos.',
+    gestion_aceites:'Repasa la gestión correcta de los aceites usados: almacenamiento en bidones etiquetados, gestión por transportista autorizado.',
+    sustancias_peligrosas:'Repasa la ficha de datos de seguridad (FDS/SDS): secciones, pictogramas GHS y frases H y P.'
+  },
+  final:{
+    integracion:'Repasa la relación entre PRL y medioambiente: un accidente con derrame puede ser simultáneamente un riesgo laboral y ambiental.',
+    normativa:'Repasa la normativa PRL (Ley 31/1995) y ambiental (Ley de Residuos) y su aplicación práctica en el taller.',
+    emergencias:'Repasa el plan de emergencia del taller: evacuación, punto de encuentro, equipos de emergencia y simulacros.'
+  }
+};
+
+const questionPools={
+prl:[
+// ── BÁSICO (8) ──
+{band:'b',tag:'epi',level:'Básico',points:10,q:'¿Qué significa el acrónimo EPI en prevención de riesgos laborales?',options:['Equipo de Protección Individual','Equipo de Prevención de Incendios','Estación de Primeros Auxilios Interna','Elemento de Protección Integrada'],correct:0,explanation:'Los EPI son equipos destinados a ser llevados o sujetados por el trabajador para que le proteja de uno o varios riesgos que puedan amenazar su seguridad o salud en el trabajo.'},
+{band:'b',tag:'senalizacion',level:'Básico',points:10,q:'¿De qué color es una señal de advertencia o peligro según la normativa de señalización de seguridad?',options:['Amarillo con pictograma negro','Rojo con pictograma blanco','Azul con pictograma blanco','Verde con pictograma blanco'],correct:0,explanation:'Las señales de advertencia tienen forma triangular, fondo amarillo y pictograma negro. Advierten de un peligro o riesgo que puede causar daños.'},
+{band:'b',tag:'fuego',level:'Básico',points:10,q:'¿Qué tipo de fuego corresponde a la clase A?',options:['Materiales sólidos combustibles como madera, papel o tejidos','Líquidos inflamables como gasolina o disolventes','Gases inflamables como butano o propano','Metales combustibles como magnesio o titanio'],correct:0,explanation:'La clase A corresponde a fuegos de materiales sólidos (madera, papel, tejidos). Se combaten con agua, polvo ABC o espuma.'},
+{band:'b',tag:'primeros_auxilios',level:'Básico',points:10,q:'¿Cuáles son las tres acciones del protocolo PAS en primeros auxilios?',options:['Proteger, Alertar, Socorrer','Prevenir, Actuar, Salvar','Proteger, Atender, Señalizar','Parar, Avisar, Socorrer'],correct:0,explanation:'El protocolo PAS establece: Proteger la zona del accidente, Alertar al 112 y a los servicios de emergencia, y Socorrer al accidentado con los medios disponibles.'},
+{band:'b',tag:'orden_limpieza',level:'Básico',points:10,q:'¿Qué es la metodología 5S en el taller?',options:['Un sistema de organización del puesto de trabajo: Clasificar, Ordenar, Limpiar, Estandarizar y Mantener','Un sistema de extinción de incendios de cinco etapas','Un protocolo de evacuación de emergencia de cinco pasos','Un método de inspección de EPI en cinco puntos'],correct:0,explanation:'Las 5S (Seiri, Seiton, Seiso, Seiketsu, Shitsuke) son una metodología japonesa de organización del puesto de trabajo que mejora la seguridad, la productividad y las condiciones de trabajo.'},
+{band:'b',tag:'riesgos_mecanizado',level:'Básico',points:10,q:'¿Cuál es el principal riesgo mecánico al trabajar con una sierra de cinta?',options:['Corte o amputación por contacto con la hoja dentada','Proyección de partículas metálicas a los ojos','Quemadura por calor generado en el corte','Intoxicación por humos del lubricante de corte'],correct:0,explanation:'El contacto accidental con la hoja dentada en movimiento es el riesgo principal en la sierra de cinta, pudiendo causar cortes graves o amputaciones. Se previene con guarda de protección y sin distraerse.'},
+{band:'b',tag:'normativa_prl',level:'Básico',points:10,q:'¿Cuál es la ley marco de Prevención de Riesgos Laborales en España?',options:['Ley 31/1995 de Prevención de Riesgos Laborales','Ley 54/2003 de reforma del marco normativo','Real Decreto 39/1997 de Servicios de Prevención','Ley Orgánica 3/2007 de igualdad'],correct:0,explanation:'La Ley 31/1995 de Prevención de Riesgos Laborales es la norma básica que establece los derechos y obligaciones de trabajadores y empresarios en materia de seguridad y salud en el trabajo.'},
+{band:'b',tag:'riesgos_soldadura',level:'Básico',points:10,q:'¿Qué EPI es imprescindible para proteger los ojos durante la soldadura MIG/MAG?',options:['Careta de soldadura con filtro de cristal oscuro adecuado al proceso','Gafas de laboratorio transparentes','Pantalla facial de policarbonato sin filtro de color','Gafas de sol de uso común'],correct:0,explanation:'La careta de soldadura con filtro de cristal oscuro (DIN 9-12 para MIG/MAG) protege los ojos y la cara de la radiación UV, infrarroja y visible del arco eléctrico, que puede causar conjuntivitis actínica y quemaduras.'},
+// ── MEDIO (16) ──
+{band:'m',tag:'epi',level:'Medio',points:15,q:'¿Qué nivel de protección auditiva se requiere cuando el nivel de ruido supera los 85 dB(A) de forma continuada?',options:['Uso obligatorio de protectores auditivos (tapones o cascos) según el Real Decreto 286/2006','Con 85 dB(A) no es obligatorio el uso de protectores auditivos','Solo se requiere señalización acústica, no EPI auditivo','El límite para uso obligatorio es 100 dB(A), no 85 dB(A)'],correct:0,explanation:'El RD 286/2006 establece que a partir de 85 dB(A) (valor superior de exposición) el uso de protectores auditivos es obligatorio; entre 80-85 dB(A) se deben poner a disposición del trabajador.'},
+{band:'m',tag:'riesgos_mecanizado',level:'Medio',points:15,q:'¿Qué medida preventiva es más eficaz para evitar proyecciones de virutas al usar el torno?',options:['Colocar la pantalla deflectora de virutas y usar gafas de protección; nunca retirar virutas con la mano con el torno en marcha','Usar guantes gruesos de cuero para recoger las virutas','Reducir la velocidad de corte al mínimo posible','Solo es necesario usar gafas; no hace falta pantalla deflectora'],correct:0,explanation:'Las virutas del torno pueden alcanzar velocidades peligrosas y causar cortes graves; la pantalla deflectora es la protección colectiva primaria y las gafas son el EPI complementario obligatorio.'},
+{band:'m',tag:'riesgos_soldadura',level:'Medio',points:15,q:'¿Qué riesgo específico presentan los humos de soldadura de acero inoxidable y qué medida preventiva es prioritaria?',options:['Contienen cromo hexavalente Cr(VI), cancerígeno probado; la medida prioritaria es la extracción localizada en la fuente, complementada con mascarilla P3','Los humos del inoxidable son iguales que los del acero al carbono; basta con ventilación general','El riesgo es solo de quemaduras por las salpicaduras, no de los humos','Solo es necesario abrir una ventana durante la soldadura'],correct:0,explanation:'El Cr(VI) generado en la soldadura de inoxidable es cancerígeno categoría 1A (IARC); la extracción localizada en la fuente (0,5 m/s en la zona de respiración) es la medida más eficaz, complementada con EPR P3.'},
+{band:'m',tag:'fuego',level:'Medio',points:15,q:'¿Qué agente extintor está PROHIBIDO usar en fuegos de tipo C (gases)?',options:['Agua y espuma, porque puede provocar explosiones o electrocución','Polvo ABC, que es apto para gases','CO₂, que es válido para gases a presión','Ningún extintor está prohibido para fuegos de gas'],correct:0,explanation:'El agua y la espuma nunca deben usarse en fuegos de gas (tipo C) porque pueden dispersar el gas inflamado o causar electrocución si el gas está asociado a instalaciones eléctricas.'},
+{band:'m',tag:'senalizacion',level:'Medio',points:15,q:'¿Qué significa una señal con fondo azul y pictograma blanco?',options:['Señal de obligación: indica una acción que debe realizarse (ej. uso obligatorio de EPI)','Señal de prohibición: está terminantemente prohibido','Señal de advertencia: existe un peligro','Señal de emergencia: indica la salida de evacuación'],correct:0,explanation:'Las señales de obligación tienen fondo azul y pictograma blanco (forma circular); indican un comportamiento obligatorio, como el uso de casco, gafas, guantes o calzado de seguridad.'},
+{band:'m',tag:'primeros_auxilios',level:'Medio',points:15,q:'¿Cuál es la actuación correcta ante una quemadura química producida por un ácido en el taller?',options:['Lavar abundantemente con agua durante al menos 15-20 minutos y llamar al 112; nunca neutralizar con otra sustancia química','Aplicar bicarbonato sódico para neutralizar el ácido','Cubrir la quemadura con un apósito graso sin lavar','Lavar solo 30 segundos para evitar que el agua extienda el ácido'],correct:0,explanation:'El lavado inmediato y prolongado con agua elimina el agente caústico; intentar neutralizar con otra sustancia puede generar calor adicional y agravar la lesión; siempre avisar al 112.'},
+{band:'m',tag:'normativa_prl',level:'Medio',points:15,q:'¿Qué obligación tiene el trabajador según la Ley 31/1995 respecto al uso de EPI?',options:['Utilizar correctamente los EPI proporcionados por la empresa y comunicar cualquier defecto o deterioro','Solo usarlos cuando lo indique el encargado','El uso de EPI es voluntario; la responsabilidad es exclusivamente del empresario','Solo son obligatorios los EPI marcados con CE; el resto son recomendaciones'],correct:0,explanation:'El artículo 29 de la Ley 31/1995 establece la obligación del trabajador de usar correctamente los medios y equipos de protección proporcionados; el incumplimiento puede ser causa de sanción.'},
+{band:'m',tag:'orden_limpieza',level:'Medio',points:15,q:'¿Por qué es especialmente peligroso dejar aceite o grasa derramada en el suelo del taller?',options:['Crea una superficie resbaladiza que puede provocar caídas al mismo nivel, uno de los accidentes más frecuentes en talleres','Solo es un problema de limpieza estética, sin consecuencias para la seguridad','El aceite en el suelo solo es peligroso en zonas de paso, no en el puesto de trabajo','Las salpicaduras de aceite nunca alcanzan el suelo en operaciones normales de mecanizado'],correct:0,explanation:'Las caídas al mismo nivel por suelo resbaladizo son una de las principales causas de accidente laboral en talleres; la limpieza inmediata de derrames con absorbente y su gestión como residuo peligroso es obligatoria.'},
+{band:'m',tag:'riesgos_mecanizado',level:'Medio',points:15,q:'¿Cuándo está PROHIBIDO usar guantes en una operación de taladrado?',options:['Durante el taladrado con taladradora de columna o de mano: los guantes pueden engancharse con la broca y arrastrar la mano','Los guantes siempre son obligatorios en todas las operaciones de mecanizado','Solo están prohibidos en el rectificado, no en el taladrado','Los guantes anti-corte están prohibidos; los de cuero son siempre obligatorios'],correct:0,explanation:'Los guantes representan un riesgo de atrapamiento en máquinas con elementos rotativos (taladro, torno, fresadora); la broca puede enganchar el guante y arrastrar la mano hacia el husillo.'},
+{band:'m',tag:'riesgos_soldadura',level:'Medio',points:15,q:'¿Qué medida preventiva específica se aplica para reducir el riesgo de incendio en la zona de soldadura?',options:['Retirar o proteger materiales combustibles en un radio de 11 m, disponer de extintor de CO₂ o polvo cerca y usar mantas ignífugas para cubrir lo que no se pueda mover','Solo apagar las máquinas del área antes de soldar','Mojando el suelo con agua antes de iniciar la soldadura','El riesgo de incendio en soldadura es mínimo; no se requieren medidas especiales'],correct:0,explanation:'Las proyecciones de la soldadura pueden alcanzar materiales combustibles a varios metros; el perímetro de seguridad (11 m según NFPA 51B), la protección con mantas y el extintor son medidas estándar.'},
+{band:'m',tag:'epi',level:'Medio',points:15,q:'¿Cuáles son los EPI obligatorios para el esmerilado con amoladora angular?',options:['Gafas de protección o careta facial, guantes anti-corte, calzado de seguridad y protección auditiva si el nivel de ruido lo requiere','Solo gafas de sol graduadas son suficientes','Solo calzado de seguridad; el resto son opcionales','Guantes de látex y gafas de laboratorio'],correct:0,explanation:'El esmerilado proyecta chispas y partículas metálicas a alta velocidad; la careta facial protege mejor que las gafas solas; los guantes anti-corte previenen cortes si el disco se rompe.'},
+{band:'m',tag:'fuego',level:'Medio',points:15,q:'¿Con qué extintor se deben apagar fuegos eléctricos (cuadros, máquinas)?',options:['CO₂ (dióxido de carbono) o polvo seco: no son conductores de la electricidad','Agua: es el más eficaz para bajar la temperatura','Espuma: cubre el foco y corta el oxígeno','Cualquier extintor sirve para fuegos eléctricos si se usa desde cerca'],correct:0,explanation:'El agua y la espuma son conductores eléctricos y pueden electrocutar al operario; el CO₂ y el polvo seco son los agentes extintores seguros para fuegos en equipos bajo tensión eléctrica.'},
+{band:'m',tag:'primeros_auxilios',level:'Medio',points:15,q:'¿Cuál es la posición de seguridad (posición lateral de seguridad) y cuándo se usa?',options:['Colocar al accidentado de lado, con la boca orientada al suelo para evitar que se atragante con vómito u secreciones; se usa si está inconsciente pero respira','Se usa siempre en cualquier accidente, independientemente del estado del accidentado','Se aplica solo cuando hay sospecha de fractura de columna','Solo se usa si el accidentado tiene convulsiones'],correct:0,explanation:'La posición lateral de seguridad (PLS) se aplica a personas inconscientes que respiran; mantiene la vía aérea abierta y evita la aspiración de vómito; no debe usarse si hay sospecha de lesión cervical.'},
+{band:'m',tag:'senalizacion',level:'Medio',points:15,q:'¿A qué altura deben instalarse las señales de seguridad en el taller para ser eficaces?',options:['A la altura de los ojos, aproximadamente entre 1,50 m y 1,80 m del suelo, bien iluminadas y sin obstáculos que las tapen','A 3 m de altura para que sean visibles desde toda la nave','En el suelo, pintadas con franjas amarillas y negras','No existe normativa específica sobre la altura de las señales'],correct:0,explanation:'El Real Decreto 485/1997 establece que las señales deben estar a la altura de los ojos, bien iluminadas (o luminiscentes) y en el lugar más visible posible, sin obstáculos que dificulten su visualización.'},
+{band:'m',tag:'normativa_prl',level:'Medio',points:15,q:'¿Qué es la evaluación de riesgos laborales y quién está obligado a realizarla?',options:['Es el proceso de identificar y valorar los riesgos presentes en cada puesto de trabajo; el empresario está obligado a realizarla y actualizarla periódicamente','Solo es obligatoria en empresas con más de 50 trabajadores','La realiza el trabajador sobre su propio puesto antes de cada jornada','Es una recomendación, no una obligación legal'],correct:0,explanation:'La Ley 31/1995 obliga al empresario a realizar una evaluación de riesgos de todos los puestos de trabajo; debe ser realizada por técnicos de prevención competentes y actualizarse cuando cambien las condiciones.'},
+// ── ALTO (16) ──
+{band:'a',tag:'riesgos_mecanizado',level:'Alto',points:20,q:'¿Qué medidas de control se aplican, por orden jerárquico, para reducir el riesgo de exposición al ruido en una fresadora que emite 92 dB(A)?',options:['1º Eliminación/sustitución (máquina más silenciosa); 2º Protección colectiva (cabina insonorizada, pantallas); 3º Reducción del tiempo de exposición; 4º EPI auditivo como último recurso','1º Uso inmediato de tapones auditivos; 2º Si no es suficiente, cabina insonorizada','No es necesario actuar por debajo de 100 dB(A)','Solo el EPI es eficaz para el ruido; las medidas colectivas no son viables en talleres'],correct:0,explanation:'La jerarquía de controles del RD 286/2006: la eliminación o sustitución siempre es preferible; los EPI son la última línea de defensa, no la primera. Combinar varias medidas es lo más eficaz.'},
+{band:'a',tag:'riesgos_soldadura',level:'Alto',points:20,q:'¿Qué riesgo adicional aparece al soldar en un espacio confinado (depósito, foso) y qué medidas son imprescindibles?',options:['Acumulación de gases tóxicos (humos, CO, ozono) y riesgo de asfixia por desplazamiento del O₂; requiere ventilación forzada, detector de gases y vigilante exterior','En espacios confinados el riesgo es menor porque los humos no se dispersan','Solo hay riesgo eléctrico adicional; los humos no son más peligrosos que al aire libre','Basta con usar mascarilla FFP2 para trabajar en espacios confinados'],correct:0,explanation:'Los espacios confinados concentran gases tóxicos; la Guía Técnica del INSST exige: autorización de entrada, medición continua de O₂ y gases, ventilación forzada, equipos de rescate y vigilante exterior.'},
+{band:'a',tag:'normativa_prl',level:'Alto',points:20,q:'¿Cuáles son las obligaciones del empresario ante un accidente de trabajo con baja según la Ley 31/1995?',options:['Notificar a la autoridad laboral en 5 días hábiles mediante el parte de accidente (DELTA), investigar el accidente para determinar causas y medidas preventivas, y conservar el registro durante 5 años','Solo notificar al médico de empresa; no hay obligación de investigar','La investigación es obligatoria solo si hay accidente mortal','El trabajador es responsable de notificar su propio accidente'],correct:0,explanation:'El empresario debe notificar los accidentes con baja mediante el sistema DELTA (5 días hábiles), investigar las causas para evitar recurrencias y registrar todos los accidentes incluso sin baja.'},
+{band:'a',tag:'epi',level:'Alto',points:20,q:'¿Qué información debe figurar obligatoriamente en todo EPI comercializado en la UE?',options:['Marcado CE, declaración de conformidad, categoría (I, II o III), nombre del fabricante, instrucciones de uso y mantenimiento, y fecha de caducidad si procede','Solo el marcado CE y el nombre del fabricante','Solo las instrucciones de uso en el idioma del país de venta','El marcado CE es voluntario en categoría I; solo obligatorio en III'],correct:0,explanation:'El Reglamento UE 2016/425 obliga al marcado CE en todos los EPI; la categoría III (riesgos mortales) requiere además intervención de organismo notificado y declaración UE de conformidad.'},
+{band:'a',tag:'fuego',level:'Alto',points:20,q:'¿Por qué no se deben utilizar extintores de agua en fuegos de tipo B (líquidos inflamables)?',options:['El agua puede dispersar el líquido inflamado y extender el incendio; además puede provocar explosiones de vapor si el líquido está a alta temperatura','El agua es ineficaz pero no peligrosa en fuegos de tipo B','El agua solo está prohibida en fuegos eléctricos, no en fuegos de líquidos','El agua apaga perfectamente los líquidos inflamables porque reduce la temperatura'],correct:0,explanation:'El agua sobre líquidos inflamables puede provocar "sloshing" (dispersión del líquido ardiendo) y explosiones de vapor con el líquido caliente; el agente correcto para tipo B es CO₂, polvo ABC o espuma.'},
+{band:'a',tag:'primeros_auxilios',level:'Alto',points:20,q:'¿Cuándo se inicia la RCP (Reanimación Cardiopulmonar) y cuál es la secuencia correcta según las guías ERC?',options:['Si el accidentado está inconsciente y no respira con normalidad; llamar al 112, iniciar 30 compresiones torácicas (5-6 cm, 100-120/min) y 2 ventilaciones en ciclos continuos hasta llegada del DEA o de los servicios de emergencia','Siempre que el accidentado esté inconsciente, aunque respire','Solo si el accidentado no tiene pulso radial palpable','La RCP comienza con 5 ventilaciones y luego 15 compresiones'],correct:0,explanation:'Las guías ERC 2021 establecen la secuencia CAB: Compresiones (30) antes que las Ventilaciones (2); relación 30:2; 100-120 compresiones/min a 5-6 cm de profundidad; no interrumpir hasta que llegue el DEA.'},
+{band:'a',tag:'orden_limpieza',level:'Alto',points:20,q:'¿Cómo se gestiona correctamente un derrame de aceite de corte en el suelo del taller?',options:['Señalizar la zona inmediatamente, absorber con material absorbente específico (arena, serrín o absorbente sintético), depositar en contenedor de residuos peligrosos etiquetado y limpiar con detergente; nunca verter al desagüe','Lavar con agua a presión hacia el desagüe para eliminar rápidamente el derrame','Cubrir con serrín y barrer a la basura general','No es un residuo peligroso; puede verterse al desagüe con agua'],correct:0,explanation:'El aceite de corte es un residuo peligroso (código LER 120109/120108); verterlo al desagüe es una infracción ambiental grave; debe absorberse y gestionar por gestor autorizado.'},
+{band:'a',tag:'riesgos_mecanizado',level:'Alto',points:20,q:'¿Qué es el síndrome de vibración mano-brazo y cómo se previene en operaciones con amoladora?',options:['Daño vascular y neurológico crónico producido por vibraciones transmitidas a través de las manos; se previene limitando el tiempo de exposición, usando amoladoras con sistema anti-vibración y guantes anti-vibración','Es un riesgo teórico sin consecuencias clínicas reales en talleres','Solo aparece en conductores de camión, no en operarios de taller','Los guantes gruesos de cuero son suficientes para prevenir el síndrome'],correct:0,explanation:'El síndrome de vibración mano-brazo (fenómeno de Raynaud, neuropatía) es reconocido como enfermedad profesional; el RD 1311/2005 establece valores límite de aceleración y obliga a la vigilancia de la salud.'},
+{band:'a',tag:'senalizacion',level:'Alto',points:20,q:'¿Cuál es la diferencia entre una señal de emergencia y una señal de evacuación, y cómo se distinguen visualmente?',options:['Las señales de emergencia (fondo verde) incluyen la ubicación de equipos de socorro (DEA, extintor, botiquín) y las de evacuación indican la ruta de salida; ambas tienen fondo verde pero diferentes pictogramas','Las señales de emergencia son rojas y las de evacuación son verdes','Son idénticas; la diferencia está solo en la altura de instalación','Las señales de evacuación tienen fondo amarillo'],correct:0,explanation:'Según el RD 485/1997, las señales de evacuación y emergencia tienen fondo verde con pictograma blanco; se diferencian por el pictograma: las de evacuación muestran una figura humana corriendo hacia una salida.'},
+{band:'a',tag:'riesgos_soldadura',level:'Alto',points:20,q:'¿Qué es la "autorización de trabajo en caliente" y cuándo es obligatoria en un taller de mecanizado?',options:['Permiso formal que autoriza operaciones con llama o arco (soldadura, esmerilado) en zonas con riesgo de incendio; obligatorio cuando se trabaja fuera de la zona habilitada de soldadura o cerca de materiales inflamables','Solo es necesaria en plantas petroquímicas, no en talleres de mecanizado','Es una recomendación de buenas prácticas, no una obligación legal','Solo se necesita si se trabaja con gas; para soldadura eléctrica no es necesaria'],correct:0,explanation:'La autorización de trabajo en caliente es exigida por las compañías aseguradoras y por normativas de prevención de incendios; incluye la inspección previa de la zona, medidas de protección y responsable designado.'},
+{band:'a',tag:'normativa_prl',level:'Alto',points:20,q:'¿Qué es el plan de prevención de riesgos laborales y qué documentos lo integran?',options:['Documento que integra la actividad preventiva de la empresa; incluye la evaluación de riesgos, la planificación preventiva, los procedimientos de trabajo seguro y los registros de formación e información','Solo es obligatorio en empresas de más de 250 trabajadores','Lo elabora el servicio médico de empresa, no el técnico de prevención','Es equivalente al plan de emergencia; son el mismo documento'],correct:0,explanation:'El Plan de Prevención (artículo 16 Ley 31/1995) es el documento marco que articula toda la actividad preventiva; las pymes pueden usar documentación simplificada si tienen menos de 25 trabajadores.'},
+{band:'a',tag:'epi',level:'Alto',points:20,q:'¿Cómo se determina el nivel de atenuación necesario en unos protectores auditivos para un puesto con 94 dB(A)?',options:['El nivel de exposición con EPI no debe superar 80 dB(A); si el ruido es 94 dB(A) se necesita un protector con atenuación ≥14 dB; se consulta la ficha técnica del EPI con el método SNR, H, M, L o HML','Se selecciona el protector con mayor atenuación disponible siempre','Cualquier protector auditivo con marcado CE es válido independientemente de su atenuación','El nivel con EPI no debe superar 85 dB(A); se necesita atenuación ≥9 dB'],correct:0,explanation:'El RD 286/2006 y la norma EN ISO 4869 establecen el método de cálculo: el nivel efectivo de exposición con EPI = LAeq - SNR (método simplificado); el objetivo es quasar de 80 dB(A).'},
+{band:'a',tag:'fuego',level:'Alto',points:20,q:'¿Qué procedimiento de evacuación debe seguirse cuando salta la alarma de incendio en el taller?',options:['Parar las máquinas y cortar el gas si es seguro hacerlo, seguir las vías de evacuación señalizadas sin usar el ascensor, dirigirse al punto de encuentro y no entrar de nuevo hasta que lo autorice el responsable de emergencias','Apagar el fuego primero con el extintor más cercano antes de evacuar','Llamar primero a los compañeros por teléfono para avisar, luego evacuar','Evacuar por el camino más corto aunque no sea la vía señalizada'],correct:0,explanation:'El plan de emergencia establece que la prioridad es evacuar de forma ordenada; solo se intenta extinguir el fuego si es pequeño, controlable y sin riesgo para el trabajador; el punto de encuentro permite el recuento.'},
+{band:'a',tag:'primeros_auxilios',level:'Alto',points:20,q:'¿Cómo se trata correctamente una herida por corte profundo producida por una herramienta de mecanizado?',options:['Comprimir la herida con gasas estériles o trapo limpio, mantener la presión continua, elevar el miembro si es posible y llamar al 112; no intentar extraer el objeto si está clavado','Lavar con agua oxigenada y tapar con esparadrapo','Aplicar torniquete inmediatamente para cortar la hemorragia','Retirar el objeto incrustado antes de comprimir la herida'],correct:0,explanation:'La compresión directa y mantenida es la medida más eficaz para controlar la hemorragia; el torniquete solo se usa si la compresión falla y hay riesgo vital; nunca retirar objetos clavados (aumenta el sangrado).'},
+{band:'a',tag:'senalizacion',level:'Alto',points:20,q:'¿Qué obligaciones tiene el empresario respecto a las señales de seguridad según el RD 485/1997?',options:['Colocar señalización cuando un riesgo no pueda eliminarse, elegir el tipo adecuado, mantenerla en buen estado, formarla a los trabajadores sobre su significado y revisarla periódicamente','Las señales solo son obligatorias cuando lo exige la inspección de trabajo','El trabajador es responsable de colocar las señales en su puesto de trabajo','Solo es obligatoria la señalización de salidas de emergencia; el resto es voluntario'],correct:0,explanation:'El RD 485/1997 obliga al empresario a señalizar cuando los riesgos no puedan evitarse o reducirse suficientemente; incluye la formación e información a los trabajadores sobre el significado de las señales.'},
+{band:'a',tag:'riesgos_soldadura',level:'Alto',points:20,q:'¿Cómo se gestiona la seguridad eléctrica al cambiar el electrodo en soldadura por arco en ambiente húmedo?',options:['Usar guantes secos de cuero o goma, no tocar simultáneamente el electrodo y la pinza de masa, desconectar el equipo o usar la función "pausa de arco" si el equipo lo tiene; la OCV puede ser letal con piel mojada','En ambiente húmedo se reduce la tensión; el riesgo es menor','Los guantes de látex son suficientes para protegerse de la corriente de soldadura','La corriente de soldadura (≤80V OCV) no puede causar electrocución en ningún caso'],correct:0,explanation:'La resistencia de la piel mojada cae de ~100kΩ a ~1kΩ; con una OCV de 70-80V, la corriente puede superar el umbral de fibrilación ventricular; los equipos modernos incluyen función de reducción de tensión en vacío (VRD).'}
+,
+  {band:'m',tag:'riesgos_mecanizado',level:'Medio',points:15,q:'¿Qué riesgo genera el polvo metálico producido al rectificar o amolar acero?',options:['Riesgo de inhalación de partículas metálicas y abrasivas que pueden causar neumoconiosis; se previene con extracción localizada y mascarilla FFP2 mínimo','El polvo metálico es inerte y no presenta riesgo para la salud','Solo hay riesgo si el polvo es de metales pesados como plomo o cadmio','El polvo generado en el esmerilado no alcanza el aparato respiratorio'],correct:0,explanation:'Las partículas de polvo metálico < 10 μm (respirables) pueden depositarse en los alveolos pulmonares y causar fibrosis; el rectificado en seco genera las concentraciones más altas; la extracción en la fuente es la medida prioritaria.'}],
+medioambiente:[
+// ── BÁSICO (8) ──
+{band:'b',tag:'residuos_peligrosos',level:'Básico',points:10,q:'¿Cuál de los siguientes residuos generados en un taller de mecanizado se considera PELIGROSO?',options:['Aceite mineral de corte usado','Virutas de acero limpias','Cartón de los embalajes','Envases de plástico sin contaminar'],correct:0,explanation:'El aceite mineral de corte usado (código LER 120109 o 120108) es un residuo peligroso por su contenido en metales pesados, PAH y biocidas; debe gestionarse por transportista y gestor autorizados.'},
+{band:'b',tag:'residuos_no_peligrosos',level:'Básico',points:10,q:'¿A qué contenedor van las virutas de acero limpias generadas en el mecanizado?',options:['Contenedor de metal/chatarra para reciclaje','Contenedor de residuos peligrosos','Basura general (contenedor gris/verde)','Contenedor de residuos orgánicos'],correct:0,explanation:'Las virutas de acero limpias (sin aceite de corte) son un residuo no peligroso y un recurso valioso para la industria siderúrgica; van al contenedor de chatarra para su reciclaje.'},
+{band:'b',tag:'sustancias_peligrosas',level:'Básico',points:10,q:'¿Qué es la Ficha de Datos de Seguridad (FDS) de un producto químico?',options:['Documento que describe las propiedades, riesgos y medidas preventivas de una sustancia o mezcla peligrosa','El etiquetado del envase del producto','El contrato de compra del producto químico','La hoja de precios del proveedor del producto'],correct:0,explanation:'La FDS (o SDS según el Reglamento REACH) contiene 16 secciones con información sobre composición, peligros, EPI necesarios, almacenamiento, gestión de residuos y datos toxicológicos de una sustancia.'},
+{band:'b',tag:'contaminacion_suelo_agua',level:'Básico',points:10,q:'¿Qué se debe hacer inmediatamente si se produce un derrame de aceite hidráulico cerca de un sumidero?',options:['Taponar el sumidero con trapo o tapón de emergencia y absorber el aceite con material absorbente antes de que llegue al desagüe','Lavar con agua a presión para diluirlo y que se vaya por el desagüe','No hacer nada; el aceite se biodegrada solo en pocas semanas','Avisar a la empresa de limpieza y esperar a que lleguen'],correct:0,explanation:'El aceite en el agua es tóxico para organismos acuáticos; 1 litro de aceite puede contaminar 1.000.000 litros de agua; taponar el sumidero y absorber el derrame es la actuación de emergencia correcta.'},
+{band:'b',tag:'gestion_aceites',level:'Básico',points:10,q:'¿Qué obligación tiene el taller respecto a los aceites usados según la legislación española?',options:['Entregarlos a un gestor autorizado de residuos peligrosos; no pueden verterse ni mezclarse con otros residuos','Pueden verterse al desagüe si se diluyen previamente con agua','El taller puede reutilizarlos directamente como lubricante en otras máquinas','Solo deben gestionarse si el volumen supera 1.000 litros al año'],correct:0,explanation:'La Ley 7/2022 de Residuos y la directiva europea clasifican los aceites usados como residuo peligroso prioritario; el productor está obligado a entregarlos a gestor autorizado y llevar registro de entregas.'},
+{band:'b',tag:'buenas_practicas',level:'Básico',points:10,q:'¿Qué medida de ahorro energético simple puede aplicar el operario en el taller?',options:['Apagar las máquinas y la iluminación cuando no estén en uso y evitar el funcionamiento en vacío prolongado','El consumo energético de una máquina es constante independientemente de si está en marcha o parada','Solo el responsable de mantenimiento puede adoptar medidas de ahorro energético','El ahorro energético no es responsabilidad del trabajador de taller'],correct:0,explanation:'El comportamiento del operario tiene un impacto directo en el consumo energético; apagar máquinas en descansos, no dejar el compresor en marcha innecesariamente o apagar la iluminación son medidas sencillas y eficaces.'},
+{band:'b',tag:'contaminacion_atmosferica',level:'Básico',points:10,q:'¿Cuál es el principal contaminante atmosférico generado en la soldadura con electrodo revestido?',options:['Humos metálicos (óxidos de Fe, Mn, Cr) y gases (CO, NOₓ, O₃) que pueden alcanzar concentraciones peligrosas','Solo CO₂ inerte sin efectos sobre la salud','Vapor de agua, sin contaminantes tóxicos','Polvo de sílice procedente del revestimiento del electrodo'],correct:0,explanation:'Los humos de soldadura contienen nanopartículas metálicas y gases tóxicos; la extracción localizada reduce la concentración ambiental y protege simultáneamente la salud del operario y el medio ambiente interior.'},
+{band:'b',tag:'legislacion_ambiental',level:'Básico',points:10,q:'¿Qué ley regula actualmente la gestión de residuos en España?',options:['Ley 7/2022, de 8 de abril, de residuos y suelos contaminados para una economía circular','Ley 31/1995 de Prevención de Riesgos Laborales','Real Decreto 1215/1997 sobre equipos de trabajo','Ley Orgánica 3/2007 de igualdad efectiva'],correct:0,explanation:'La Ley 7/2022 transpone la Directiva Marco de Residuos de la UE; establece los principios de jerarquía de residuos (prevención > preparación para la reutilización > reciclado > valorización > eliminación).'},
+// ── MEDIO (16) ──
+{band:'m',tag:'residuos_peligrosos',level:'Medio',points:15,q:'¿Cómo deben almacenarse temporalmente los residuos peligrosos líquidos (disolventes, aceites) en el taller?',options:['En recipientes cerrados, etiquetados con el código LER y las frases de peligro, sobre bandeja de retención con capacidad ≥110% del volumen mayor, en zona cubierta y ventilada','En cualquier bidón disponible sin necesidad de etiquetado','Mezclados en un único contenedor para minimizar el número de recipientes','Directamente en el suelo si la cantidad es inferior a 200 litros'],correct:0,explanation:'El RD 180/2015 y la normativa de almacenamiento de productos químicos exigen recipientes cerrados y etiquetados, bandeja de retención para evitar derrames, y zona ventilada alejada de fuentes de ignición.'},
+{band:'m',tag:'contaminacion_suelo_agua',level:'Medio',points:15,q:'¿Qué es un separador de grasas y aceites y por qué es obligatorio en los talleres de mecanizado?',options:['Dispositivo instalado antes del desagüe que retiene hidrocarburos y los separa del agua; es obligatorio para evitar la contaminación del sistema de alcantarillado y de las aguas receptoras','Es un filtro de aire para reducir los humos del mecanizado','Solo es obligatorio en talleres de más de 10 trabajadores','Se instala en las chimeneas de evacuación de humos, no en los desagües'],correct:0,explanation:'Las aguas residuales del taller contienen aceites de corte, refrigerantes y partículas metálicas; el separador de grasas retiene los hidrocarburos (clase I, densidad < 0,85 g/cm³) antes de que lleguen al alcantarillado.'},
+{band:'m',tag:'sustancias_peligrosas',level:'Medio',points:15,q:'¿Qué información proporciona un pictograma GHS con una calavera sobre tibias cruzadas (GHS06)?',options:['La sustancia es tóxica aguda (vía oral, cutánea o inhalatoria) y puede causar la muerte en exposiciones cortas','La sustancia es corrosiva y causa quemaduras en piel y ojos','La sustancia es inflamable y puede arder fácilmente','La sustancia es peligrosa para el medio ambiente acuático'],correct:0,explanation:'El pictograma GHS06 (calavera) indica toxicidad aguda categorías 1-3 por cualquier vía de exposición; requiere EPI de protección respiratoria y cutánea y medidas estrictas de almacenamiento y manejo.'},
+{band:'m',tag:'gestion_aceites',level:'Medio',points:15,q:'¿Qué es el aceite de corte soluble (taladrante) y cómo se gestiona cuando se agota su vida útil?',options:['Mezcla de aceite mineral/sintético y agua (3-10%) con biocidas y anticorrosivos; cuando se degrada, es un residuo peligroso (LER 120109) que debe entregarse a gestor autorizado','El aceite de corte soluble puede verterse al desagüe porque está muy diluido en agua','Puede reutilizarse indefinidamente sin necesidad de renovarlo','Solo es residuo peligroso si contiene más de 50% de aceite mineral'],correct:0,explanation:'El aceite de corte soluble agotado contiene metales disueltos, bacterias y productos de degradación; a pesar de su alta dilución en agua, está clasificado como residuo peligroso y no puede verterse al alcantarillado.'},
+{band:'m',tag:'legislacion_ambiental',level:'Medio',points:15,q:'¿Qué es el Libro de Registro de Residuos Peligrosos y qué talleres están obligados a llevarlo?',options:['Registro donde se anota la cantidad, naturaleza y destino de cada residuo peligroso entregado a gestor; todos los productores de residuos peligrosos, sin excepción de tamaño, están obligados','Solo los talleres que producen más de 10.000 kg/año de residuos peligrosos','El registro es obligatorio solo para residuos radioactivos','Es una recomendación de buenas prácticas, no una obligación legal'],correct:0,explanation:'La Ley 7/2022 obliga a todos los productores de residuos peligrosos a llevar un registro cronológico de los residuos producidos y entregados; debe conservarse al menos 5 años.'},
+{band:'m',tag:'buenas_practicas',level:'Medio',points:15,q:'¿Qué ventaja ambiental tiene usar aceites de corte de base vegetal frente a los minerales en mecanizado?',options:['Son biodegradables (>60% en 28 días según OCDE), menos tóxicos para organismos acuáticos y reducen el riesgo en caso de vertido accidental','Son más contaminantes que los minerales al ser de origen biológico','No tienen diferencias ambientales; la única ventaja es el precio','Los aceites vegetales no son aptos para mecanizado de precisión'],correct:0,explanation:'Los aceites de corte de base vegetal o de síntesis ester tienen alta biodegradabilidad y baja ecotoxicidad; en caso de derrame accidental, su impacto ambiental es significativamente menor que el de los aceites minerales.'},
+{band:'m',tag:'residuos_no_peligrosos',level:'Medio',points:15,q:'¿Cómo deben gestionarse los envases de productos químicos vacíos (disolventes, desengrasantes) en el taller?',options:['Si han contenido sustancias peligrosas, se consideran envases contaminados (residuo peligroso) y deben gestionarse como tal por gestor autorizado','Pueden tirarse al contenedor de reciclaje de plástico si están aparentemente vacíos','Solo son peligrosos si el envase es de vidrio; los plásticos van a la basura normal','Los envases vacíos nunca son residuos peligrosos independientemente de su contenido anterior'],correct:0,explanation:'Los envases que han contenido sustancias peligrosas retienen residuos del producto en sus paredes; se clasifican como residuos peligrosos (código LER 15 01 10*) y requieren gestión específica.'},
+{band:'m',tag:'contaminacion_atmosferica',level:'Medio',points:15,q:'¿Qué medida técnica reduce más eficazmente la contaminación atmosférica interior producida por los humos de mecanizado?',options:['Extracción localizada en el punto de generación del humo (tobera captadora junto a la zona de corte), complementada con filtración HEPA o de carbón activo antes de la expulsión al exterior','Abrir las ventanas del taller, que es siempre suficiente','Solo la mascarilla del operario es necesaria; no hace falta ventilación técnica','Los humos de mecanizado no son contaminantes si el taller tiene más de 500 m²'],correct:0,explanation:'La extracción localizada captura los contaminantes antes de que se dispersen en el ambiente del taller (eficiencia >90%); la ventilación general diluye pero no elimina el contaminante y contamina más el exterior.'},
+{band:'m',tag:'residuos_peligrosos',level:'Medio',points:15,q:'¿Qué son los COV (Compuestos Orgánicos Volátiles) y por qué son relevantes en un taller de carrocería?',options:['Son sustancias que se evaporan fácilmente a temperatura ambiente (disolventes, pinturas); contribuyen a la formación de ozono troposférico y smog fotoquímico; los talleres de pintura están sometidos a límites de emisión','Los COV son solo peligrosos para la salud del trabajador, no para el medio ambiente exterior','Solo los COV de los tubos de escape de los vehículos son contaminantes','Los talleres de mecanizado no generan COV en ninguna operación'],correct:0,explanation:'El RD 117/2003 sobre limitación de emisiones de COV en uso de disolventes obliga a los talleres de carrocería a controlar sus emisiones con sustitución de productos, sistemas de aplicación eficientes y recuperación de vapores.'},
+{band:'m',tag:'sustancias_peligrosas',level:'Medio',points:15,q:'¿Qué medidas de almacenamiento son obligatorias para disolventes inflamables en el taller?',options:['Armario de seguridad ignífugo (RF 15 o superior), cantidad mínima en el puesto de trabajo, alejado de fuentes de ignición, ventilado y con extintor de CO₂ o polvo próximo','Cualquier armario metálico es suficiente para almacenar disolventes','Los disolventes pueden almacenarse junto a otros productos químicos sin separación','Solo es obligatorio el armario ignífugo para cantidades superiores a 1.000 litros'],correct:0,explanation:'La norma UNE-EN 14470-1 y el RD 379/2001 de almacenamiento de productos químicos exigen armarios de seguridad para inflamables con resistencia al fuego RF 15 (15 minutos) y ventilación adecuada.'},
+{band:'m',tag:'gestion_aceites',level:'Medio',points:15,q:'¿Qué ocurre si un taller mezcla aceites usados con disolventes antes de entregarlos al gestor?',options:['La mezcla complica la valorización del aceite (que podría regenerarse) y puede generar un residuo más peligroso; está prohibido y puede acarrear sanciones graves','La mezcla no está prohibida y simplifica la gestión al reducir el número de residuos','Los disolventes mejoran las propiedades del aceite para su valorización energética','No tiene consecuencias legales si el volumen total no supera 1.000 litros'],correct:0,explanation:'La Ley 7/2022 prohíbe la mezcla de residuos peligrosos de diferente naturaleza; mezclar aceites con disolventes impide la regeneración del aceite (gestión preferente) y puede generar mezclas más peligrosas.'},
+{band:'m',tag:'legislacion_ambiental',level:'Medio',points:15,q:'¿Qué es la jerarquía de residuos y cuál es el orden correcto de preferencia?',options:['Prevención > Preparación para la reutilización > Reciclado > Valorización energética > Eliminación; la prevención (generar menos residuo) es siempre la opción más prioritaria','Eliminación > Valorización > Reciclado > Reutilización > Prevención','Reciclado > Valorización > Eliminación > Prevención > Reutilización','El orden es indiferente; lo importante es que el residuo no acabe en el medio natural'],correct:0,explanation:'La jerarquía de residuos está establecida en la Directiva Marco 2008/98/CE y la Ley 7/2022; refleja el orden de impacto ambiental de menor a mayor: lo mejor es no generar el residuo (prevención).'},
+{band:'m',tag:'buenas_practicas',level:'Medio',points:15,q:'¿Qué ventaja ambiental tiene el mantenimiento preventivo de las máquinas-herramienta?',options:['Reduce fugas de aceite y refrigerante (menos residuos peligrosos), mejora la eficiencia energética (menos consumo) y prolonga la vida útil de los equipos (menos residuos de aparatos)','El mantenimiento preventivo no tiene repercusión medioambiental','Solo reduce costes económicos, sin beneficios ambientales','El mantenimiento correctivo es más respetuoso con el medio ambiente que el preventivo'],correct:0,explanation:'Una máquina bien mantenida consume entre un 10-30% menos de energía, genera menos residuos por fugas y averías, y tiene una vida útil más larga; el mantenimiento preventivo es una práctica clave de eco-eficiencia.'},
+{band:'m',tag:'contaminacion_suelo_agua',level:'Medio',points:15,q:'¿Por qué está prohibido lavar el suelo del taller vertiendo el agua sucia directamente al desagüe sin tratamiento previo?',options:['El agua de limpieza contiene aceites, metales pesados e hidrocarburos que contaminarían el alcantarillado y, finalmente, los cauces receptores; debe pasar por el separador de grasas','Si el agua se diluye suficientemente no contamina el alcantarillado','El agua de limpieza del taller está exenta de la normativa de vertidos porque es de uso industrial','Solo está prohibido si el taller está cerca de un río o lago'],correct:0,explanation:'El Reglamento de Dominio Público Hidráulico y las ordenanzas municipales de vertidos prohíben el vertido de aguas con contenido en hidrocarburos superior a 5-10 mg/L; el separador de grasas es de instalación obligatoria.'},
+{band:'m',tag:'residuos_no_peligrosos',level:'Medio',points:15,q:'¿Qué es el código LER (Lista Europea de Residuos) y para qué sirve?',options:['Código de 6 dígitos que identifica cada tipo de residuo; permite clasificarlos como peligrosos (con asterisco) o no peligrosos y determinar su tratamiento correcto','Es el número de matrícula del vehículo que transporta los residuos','Es el certificado de gestión ambiental del taller (equivalente a ISO 14001)','Es el número de contrato con la empresa gestora de residuos'],correct:0,explanation:'El código LER (Decisión 2014/955/UE) identifica inequívocamente cada residuo; los códigos con asterisco (*) son residuos peligrosos; permite al gestor saber qué tratamiento aplicar y es obligatorio en todos los documentos de residuos.'},
+// ── ALTO (16) ──
+{band:'a',tag:'residuos_peligrosos',level:'Alto',points:20,q:'¿Qué es la responsabilidad ampliada del productor (RAP) y cómo afecta a un taller que usa baterías de plomo?',options:['El fabricante es responsable de la gestión del residuo al final de la vida útil; el taller está obligado a entregar las baterías usadas al punto de recogida del distribuidor o a gestor autorizado, y no puede cobrar por ello','El taller es responsable de financiar el reciclaje de las baterías que usa','La RAP solo aplica a los fabricantes de vehículos, no a los talleres','El taller puede tirar las baterías al contenedor de basura si está descargada'],correct:0,explanation:'La Directiva europea de baterías y la Ley 7/2022 establecen la RAP; los distribuidores de baterías están obligados a recogerlas gratuitamente; el taller debe entregarlas y no puede cobrar al cliente por la gestión.'},
+{band:'a',tag:'legislacion_ambiental',level:'Alto',points:20,q:'¿Qué sanciones pueden derivarse de un vertido accidental de aceite usado al alcantarillado en un taller?',options:['Infracción grave o muy grave según la Ley 7/2022: multas de 10.001€ a 1.500.000€, obligación de restaurar el daño ambiental, y posible responsabilidad penal por delito contra el medio ambiente (art. 325 CP)','Solo es una infracción leve con multa máxima de 600€','No hay sanción si el vertido fue accidental y no intencionado','La responsabilidad es siempre de la empresa gestora de aguas, no del taller'],correct:0,explanation:'La Ley 7/2022 tipifica los vertidos de residuos peligrosos como infracción grave o muy grave; el artículo 325 del Código Penal establece penas de prisión de 6 meses a 2 años por delitos contra el medio ambiente.'},
+{band:'a',tag:'sustancias_peligrosas',level:'Alto',points:20,q:'¿Cómo se gestiona correctamente un derrame de disolvente inflamable (acetona) en el taller?',options:['Eliminar fuentes de ignición, ventilar el área, cubrir con absorbente específico (no serrín), recoger en recipiente hermético etiquetado como residuo peligroso, airear hasta que desaparezca el olor y avisar al responsable de PRL','Lavar con agua a presión para diluir el disolvente','Cubrir con serrín y dejar secar al aire sin más actuaciones','Lavar el área con detergente y verter el agua al desagüe'],correct:0,explanation:'La acetona tiene un punto de inflamación de -18°C; la primera medida es eliminar fuentes de ignición (chispas, llamas); el absorbente debe ser antiestático o específico para inflamables; el serrín puede crear polvo inflamable.'},
+{band:'a',tag:'contaminacion_atmosferica',level:'Alto',points:20,q:'¿Qué es el balance de masa de disolventes y qué talleres están obligados a realizarlo?',options:['Cálculo anual de la cantidad de disolventes consumidos frente a las emisiones a la atmósfera y los residuos generados; obligatorio para talleres de carrocería que superan el umbral de consumo del RD 117/2003 (normalmente >1 t/año)','Es un procedimiento de mantenimiento de las máquinas-herramienta','Solo lo realizan las grandes industrias químicas, no los talleres de automoción','Es voluntario para cualquier tipo de taller'],correct:0,explanation:'El RD 117/2003 obliga a los talleres que usan más de ciertos umbrales de disolventes (varía por actividad) a realizar un plan de gestión de disolventes con balance de entradas/salidas y demostrar que cumplen los valores límite de emisión.'},
+{band:'a',tag:'gestion_aceites',level:'Alto',points:20,q:'¿Qué es la regeneración del aceite usado y por qué es la opción de gestión más preferente según la normativa?',options:['Proceso de refinado que elimina contaminantes del aceite usado para obtener aceite base de alta calidad reutilizable; es preferente porque recupera el recurso natural, requiere menos energía que producir aceite virgen y evita la incineración','La regeneración es un proceso experimental no aplicable industrialmente','La valorización energética (combustión en cementera) es más preferente que la regeneración','El aceite usado no puede regenerarse; solo puede incinerarse o depositarse en vertedero'],correct:0,explanation:'La Directiva 2008/98/CE y la Ley 7/2022 priorizan la regeneración del aceite usado frente a otras formas de valorización; el aceite regenerado puede sustituir hasta un 70% del aceite base virgen con menor huella de carbono.'},
+{band:'a',tag:'buenas_practicas',level:'Alto',points:20,q:'¿Qué es la economía circular aplicada a un taller de mecanizado y cómo se materializa en la práctica?',options:['Modelo que busca mantener los materiales en uso el mayor tiempo posible: reparar máquinas en lugar de sustituirlas, remanufacturar piezas, reciclar virutas metálicas, reutilizar el aceite filtrado y minimizar la generación de residuos','La economía circular es un concepto teórico sin aplicación práctica en talleres','Consiste únicamente en separar los residuos en contenedores de colores','Solo aplica a grandes industrias con más de 500 trabajadores'],correct:0,explanation:'En el taller, la economía circular se materializa en: mantenimiento preventivo para prolongar la vida de los equipos, remanufactura de piezas, valorización de virutas metálicas, filtración y reutilización de aceites de corte.'},
+{band:'a',tag:'contaminacion_suelo_agua',level:'Alto',points:20,q:'¿Qué es el suelo contaminado y qué obligaciones tiene el propietario de un taller que lo detecta?',options:['Suelo cuya concentración de contaminantes supera los valores indicativos de evaluación (VIE); el propietario/poseedor debe comunicarlo a la autoridad ambiental, realizar una investigación de detalle y ejecutar las medidas de limpieza que se determinen','Solo es suelo contaminado si hay afectación visible a la capa freática','El propietario solo tiene obligación de actuar si la autoridad le notifica de oficio','Basta con cubrir la zona contaminada con hormigón para cumplir la normativa'],correct:0,explanation:'La Ley 7/2022 obliga a comunicar a la Comunidad Autónoma la existencia de suelo contaminado; el responsable de la contaminación está obligado a la limpieza conforme al principio "quien contamina paga".'},
+{band:'a',tag:'residuos_no_peligrosos',level:'Alto',points:20,q:'¿Cómo puede un taller reducir la generación de residuos de envases de productos químicos (prevención)?',options:['Adquirir productos en formatos de gran volumen (bidones) y recargables, usar sistemas de dosificación concentrada, sustituir productos peligrosos por alternativas más seguras y menos envasadas','La reducción de envases solo es posible en la industria de fabricación, no en el taller','Comprar envases más pequeños para gastar menos producto por unidad','La prevención de residuos de envases no tiene impacto ambiental significativo'],correct:0,explanation:'La prevención es la opción más prioritaria de la jerarquía de residuos; los sistemas de graneles y recarga reducen los residuos de envases en un 60-80%; los concentrados reducen el volumen de producto y envase.'},
+{band:'a',tag:'legislacion_ambiental',level:'Alto',points:20,q:'¿Qué es la autorización ambiental integrada (AAI) y qué actividades de mecanizado la requieren?',options:['Autorización única que integra todos los permisos ambientales (emisiones, vertidos, residuos) para instalaciones que superan los umbrales del Reglamento IPPC; los talleres pequeños y medianos generalmente no la requieren','Todos los talleres de mecanizado, sin excepción, necesitan AAI','La AAI solo es necesaria para instalaciones nucleares','Es sinónimo del certificado ISO 14001 de gestión ambiental'],correct:0,explanation:'La AAI (Ley 16/2002 y RD 815/2013) aplica a instalaciones con grandes volúmenes de producción; los talleres convencionales de mecanizado habitualmente no alcanzan los umbrales, pero pueden requerir licencia ambiental municipal.'},
+{band:'a',tag:'residuos_peligrosos',level:'Alto',points:20,q:'¿Qué es un documento de identificación (DI) de residuos peligrosos y cuándo es obligatorio?',options:['Documento que acompaña al residuo peligroso desde el productor hasta el gestor final, identificando el residuo, las cantidades y los responsables; obligatorio en cada entrega de residuos peligrosos al transportista','Solo es obligatorio para residuos radioactivos','Es un documento voluntario que mejora la trazabilidad pero sin obligación legal','Solo se necesita si el transporte cruza fronteras autonómicas'],correct:0,explanation:'El RD 553/2020 establece la obligación del documento de identificación (antes llamado "ficha de aceptación y seguimiento") que debe acompañar cada entrega de residuos peligrosos y conservarse 5 años.'},
+{band:'a',tag:'sustancias_peligrosas',level:'Alto',points:20,q:'¿Cómo se evalúa el riesgo de exposición a un disolvente en el puesto de trabajo y qué medidas correctoras pueden adoptarse?',options:['Medición higiénica de la concentración ambiental, comparación con el VLA (Valor Límite Ambiental del INSST), y si supera el 50% del VLA: sustituir el disolvente, mejorar la ventilación, usar EPI respiratorio y vigilar la salud','Solo es necesario evaluar si el disolvente tiene olor fuerte','La evaluación la realiza el trabajador en base a su propia percepción del olor','No es necesario evaluar si se usan guantes y mascarilla de papel'],correct:0,explanation:'Los VLA-ED (valores límite ambientales de exposición diaria) del INSST son los valores de referencia en España; la evaluación requiere medición con equipos homologados por técnico competente; combinar medidas técnicas y EPI es lo más eficaz.'},
+{band:'a',tag:'buenas_practicas',level:'Alto',points:20,q:'¿Qué es la declaración medioambiental de la verificación EMAS y en qué se diferencia de la certificación ISO 14001?',options:['EMAS (Reglamento UE 1221/2009) requiere una declaración ambiental pública verificada externamente e implica mejora continua demostrable con datos; ISO 14001 es una norma privada que no exige declaración pública de resultados ambientales','Son equivalentes; EMAS es simplemente la versión europea de ISO 14001','EMAS es solo para empresas industriales; ISO 14001 es universal','ISO 14001 es más exigente que EMAS en todos los aspectos'],correct:0,explanation:'EMAS (Eco-Management and Audit Scheme) exige publicar anualmente una declaración ambiental verificada con indicadores cuantitativos; ISO 14001 no exige esta transparencia pública, aunque sí la mejora continua del sistema de gestión.'},
+{band:'a',tag:'contaminacion_atmosferica',level:'Alto',points:20,q:'¿Qué obligaciones tiene un taller de carrocería respecto a la gestión de los residuos de pintura y barnices?',options:['Las pinturas usadas, residuos de cabina, filtros contaminados y envases son residuos peligrosos (LER 08 01 11*); el taller debe registrar su producción, almacenarlos correctamente y entregarlos a gestor autorizado con el DI correspondiente','Las pinturas en base acuosa no son residuos peligrosos y pueden tirarse a la basura','Los residuos de cabina de pintura no son peligrosos si la cabina tiene filtración HEPA','Solo son obligatorias las medidas si se usa pintura de base disolvente; las de base agua están exentas'],correct:0,explanation:'Incluso las pinturas de base acuosa generan lodos con pigmentos metálicos y biocidas que son residuos peligrosos; los filtros de cabina saturados de disolventes también son peligrosos y requieren gestión específica.'},
+{band:'a',tag:'gestion_aceites',level:'Alto',points:20,q:'¿Qué es la trazabilidad en la gestión de residuos peligrosos y cómo se garantiza en un taller?',options:['Capacidad de seguir el rastro del residuo desde su generación hasta su tratamiento final; se garantiza conservando los documentos de identificación, los contratos con gestores autorizados y los certificados de tratamiento durante 5 años','La trazabilidad solo aplica a los residuos nucleares','El taller no necesita conservar documentación si entrega los residuos a un gestor con camión identificado','La trazabilidad es una exigencia de las aseguradoras, no de la normativa ambiental'],correct:0,explanation:'La Ley 7/2022 exige que los productores de residuos peligrosos mantengan registros completos que permitan reconstruir la cadena de custodia del residuo; la pérdida de documentación puede implicar sanciones graves.'},
+{band:'a',tag:'legislacion_ambiental',level:'Alto',points:20,q:'¿Cómo se calcula la huella de carbono de un taller y cuál es su relevancia actual?',options:['Suma de las emisiones de GEI (CO₂eq) directas (combustión) e indirectas (electricidad, materias primas); su cálculo es voluntario para pymes pero cada vez más exigido por clientes y licitaciones públicas','La huella de carbono es solo relevante para las grandes industrias','Se calcula contando el número de máquinas del taller','El taller no emite CO₂ porque no quema combustibles fósiles directamente'],correct:0,explanation:'La norma ISO 14064 y el GHG Protocol son los estándares de referencia para el cálculo de la huella de carbono; aunque voluntario para pymes, su reporte se está exigiendo crecientemente en cadenas de suministro de automoción.'},
+{band:'a',tag:'contaminacion_suelo_agua',level:'Alto',points:20,q:'¿Qué es la responsabilidad medioambiental y cuándo puede ser exigida a un taller?',options:['Obligación de reparar o compensar los daños ambientales causados (Ley 26/2007); puede exigirse cuando el taller causa un daño significativo a suelos, aguas o biodiversidad por contaminación directa o incumplimiento normativo','Solo aplica a las empresas que voluntariamente contratan un seguro de responsabilidad ambiental','La responsabilidad medioambiental nunca puede exigirse a talleres de menos de 50 trabajadores','Es una responsabilidad solo administrativa; no puede derivar en responsabilidad civil o penal'],correct:0,explanation:'La Ley 26/2007 de Responsabilidad Medioambiental transpone la Directiva 2004/35/CE; el operador causante del daño ambiental está obligado a adoptar las medidas de reparación; para algunas actividades el seguro o garantía financiera son obligatorios.'}
+,
+  {band:'m',tag:'buenas_practicas',level:'Medio',points:15,q:'¿Qué es la sustitución de sustancias peligrosas y por qué es prioritaria en la jerarquía de controles ambientales?',options:['Reemplazar un producto peligroso por otro de menor riesgo o riesgo nulo manteniendo la función técnica; es prioritaria porque elimina el peligro en el origen, no solo lo controla','La sustitución es siempre más cara y solo se aplica si no hay otra opción','La sustitución solo aplica a productos cancerígenos, no a otros peligrosos','Ningún producto peligroso puede sustituirse en mecanizado industrial'],correct:0,explanation:'Sustituir un disolvente halogenado por un base acuosa o un aceite mineral por uno vegetal elimina el riesgo en la fuente; la jerarquía de controles prioriza la eliminación/sustitución sobre la ventilación o los EPI.'}],
+final:[
+{band:'f',tag:'normativa',level:'Nivel 1',points:10,q:'¿Cuál es la ley marco de Prevención de Riesgos Laborales en España?',options:['Ley 31/1995 de Prevención de Riesgos Laborales','Ley 7/2022 de Residuos','Real Decreto 486/1997 de lugares de trabajo','Real Decreto 1215/1997 de equipos de trabajo'],correct:0,explanation:'La Ley 31/1995 establece los derechos y obligaciones de empresarios y trabajadores en materia de seguridad y salud; es la norma básica del sistema de PRL en España.'},
+{band:'f',tag:'normativa',level:'Nivel 2',points:10,q:'¿Qué significa el color rojo en una señal de seguridad?',options:['Prohibición o peligro (señales de prohibición y equipos contra incendios)','Obligación de uso de EPI','Advertencia de riesgo eléctrico','Vía de evacuación de emergencia'],correct:0,explanation:'El color rojo indica prohibición en señales circulares y se usa también en equipos contra incendios (extintores, mangueras); el amarillo es advertencia, el azul es obligación y el verde es emergencia/evacuación.'},
+{band:'f',tag:'integracion',level:'Nivel 3',points:10,q:'¿Cuál de los siguientes residuos generados en un taller de mecanizado y soldadura es siempre un RESIDUO PELIGROSO?',options:['Aceite de corte usado (LER 120109*)','Virutas de acero limpias sin aceite','Cartón de embalaje','Envases de plástico limpios sin contaminar'],correct:0,explanation:'El aceite de corte usado contiene metales pesados, biocidas y productos de degradación; su código LER lleva asterisco (*) que indica residuo peligroso, con gestión específica obligatoria.'},
+{band:'f',tag:'epi_integracion',level:'Nivel 4',points:10,q:'Al soldar con electrodo en posición vertical y luego picar la escoria, ¿qué EPI son necesarios en cada fase?',options:['Soldando: careta de soldar DIN 9-13, guantes de cuero, delantal y polainas. Picando escoria: gafas de seguridad adicionales a la careta; la escoria puede proyectarse al levantar la careta','Para ambas operaciones solo hacen falta guantes de cuero','La careta de soldar protege también en el picado de escoria; no se necesitan gafas adicionales','Solo se necesita careta de soldar; el picado no genera proyecciones'],correct:0,explanation:'La escoria caliente proyecta fragmentos al golpearla con el piquete; llevar gafas de seguridad bajo la careta de soldar (que se levanta para ver mejor) protege ante esta proyección.'},
+{band:'f',tag:'integracion',level:'Nivel 5',points:10,q:'¿Qué medida previene simultáneamente un riesgo laboral Y un daño ambiental en el taller de soldadura?',options:['Instalar extracción localizada de humos: protege la salud del operario (riesgo inhalación) y evita la emisión de contaminantes al exterior (impacto ambiental)','Usar EPI respiratorio sin ventilación: protege al trabajador pero no reduce la contaminación ambiental','Abrir ventanas: elimina completamente el riesgo y la contaminación','Trabajar a baja intensidad: reduce humos pero no tiene efecto ambiental'],correct:0,explanation:'La extracción localizada es un ejemplo de medida que actúa simultáneamente en la protección de la salud del trabajador y en la reducción de emisiones contaminantes; ilustra la integración entre PRL y medioambiente.'},
+{band:'f',tag:'emergencias',level:'Nivel 6',points:10,q:'En el taller ocurre un derrame de 50 litros de aceite hidráulico que alcanza el desagüe. Ordena las actuaciones correctas:',options:['1-Taponar el desagüe y contener el derrame; 2-Absorber con material absorbente; 3-Recoger en bidón etiquetado; 4-Notificar al responsable; 5-Gestionar como residuo peligroso','1-Lavar con agua; 2-Llamar a la empresa gestora; 3-Esperar a que se seque','1-Cubrir con arena; 2-Barrer a la basura; 3-Avisar al encargado','1-Abrir el grifo para diluir el aceite; 2-Dejar que el separador de grasas lo retenga'],correct:0,explanation:'La secuencia correcta sigue el protocolo de emergencia ambiental: contener antes de que se extienda, absorber, segregar como residuo peligroso y notificar; esperar o diluir agrava el problema.'},
+{band:'f',tag:'normativa',level:'Nivel 7',points:10,q:'¿Cuál es la jerarquía correcta de gestión de residuos según la Ley 7/2022?',options:['Prevención > Reutilización > Reciclado > Valorización energética > Eliminación en vertedero','Eliminación > Valorización > Reciclado > Prevención','Reciclado > Valorización > Prevención > Eliminación','El orden es indiferente si todos los residuos acaban siendo gestionados'],correct:0,explanation:'La jerarquía refleja el orden de prioridad ambiental: evitar generar residuo es siempre mejor que gestionarlo; el vertedero es el último recurso porque representa pérdida de recursos y mayor impacto ambiental.'},
+{band:'f',tag:'emergencias',level:'Nivel 8',points:10,q:'Un operario sufre una descarga eléctrica y queda inconsciente al contacto con la pinza de soldadura. ¿Cuál es la primera actuación?',options:['Cortar la corriente eléctrica (interruptor/diferencial) ANTES de tocar al accidentado; si no es posible, separarlo con un objeto no conductor sin tocarlo directamente; luego llamar al 112 y aplicar RCP si no respira','Tirar del accidentado con fuerza para alejarlo del cable','Tocar al accidentado inmediatamente para evaluar su estado','Aplicar agua para apagar el posible incendio eléctrico'],correct:0,explanation:'Tocar a un accidentado bajo tensión electrocuta también al socorrista; la prioridad absoluta es desconectar la corriente o aislar al accidentado con material no conductor antes de iniciar los primeros auxilios.'},
+{band:'f',tag:'integracion',level:'Nivel 9',points:10,q:'¿Qué relación existe entre el mantenimiento preventivo de una amoladora angular y la PRL y el medioambiente?',options:['El mantenimiento correcto reduce el riesgo de rotura del disco (PRL) y disminuye el consumo eléctrico y la generación de residuos de discos defectuosos prematuros (medioambiente)','El mantenimiento solo tiene efectos económicos, sin relación con PRL ni medioambiente','El medioambiente no se ve afectado por el estado de una herramienta portátil','El mantenimiento aumenta el riesgo de accidente al manipular la máquina con frecuencia'],correct:0,explanation:'Un disco desgastado o defectuoso puede romperse a alta velocidad (5.000-11.000 rpm) causando lesiones graves; además, los discos deteriorados se sustituyen antes de su vida útil, generando más residuos.'},
+{band:'f',tag:'emergencias',level:'Nivel 10',points:10,q:'El taller debe elaborar un plan de emergencia. ¿Qué elementos son imprescindibles según la normativa?',options:['Identificación de riesgos, medidas de prevención, protocolo de actuación ante emergencias, vías de evacuación, punto de encuentro, equipos de emergencia con funciones asignadas, y simulacros periódicos','Solo el plano de evacuación pegado en la pared','La dirección del hospital más cercano y el número del 112','Solo es obligatorio en empresas de más de 50 trabajadores; los talleres pequeños están exentos'],correct:0,explanation:'El artículo 20 de la Ley 31/1995 obliga a todos los empresarios a adoptar medidas de emergencia; el RD 485/1997 especifica la señalización; el manual de autoprotección (RD 393/2007) aplica a instalaciones de mayor riesgo.'}
+]
+};
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+
+function buildSelection(pool){
+  const b=shuffle(pool.filter(q=>q.band==='b')).slice(0,6);
+  const m=shuffle(pool.filter(q=>q.band==='m')).slice(0,8);
+  const a=shuffle(pool.filter(q=>q.band==='a')).slice(0,6);
+  return [...b,...m,...a];
+}
+
+function passesUnlock(id){
+  const r=globalState.results[id];
+  if(!r||r.attempts===0)return false;
+  const total=r.lastTotal||20;
+  const basicTotal=r.lastBasicTotal||6;
+  return(r.bestScore/total)>=0.7||(r.lastBasicCorrect>=basicTotal);
+}
+
+function isQuizUnlocked(id){
+  const rule=unlockRules[id];
+  if(!rule)return true;
+  const idx=unlockOrder.indexOf(id);
+  for(let i=0;i<idx;i++){if(!passesUnlock(unlockOrder[i]))return false;}
+  return passesUnlock(rule.prev);
+}
+
+function attemptsLeft(id){const r=globalState.results[id];return maxAttemptsPerBlock-(r?r.attempts:0);}
+function defaultResult(){return{bestScore:0,attempts:0,lastScore:0,lastTotal:20,lastBasicCorrect:0,lastBasicTotal:6,stars:0};}
+const profileKey=(name)=>`${storagePrefix}::${name}`;
+function hydrateResults(raw){const out={};unlockOrder.forEach(id=>{out[id]=raw[id]?{...defaultResult(),...raw[id]}:defaultResult();});return out;}
+function serializableState(){return{name:student.name,points:globalState.points,stars:globalState.stars,bestStreak:globalState.bestStreak,completedUnits:[...globalState.completedUnits],results:globalState.results,saveCount:globalState.saveCount};}
+
+function saveProfile(){
+  try{globalState.saveCount++;localStorage.setItem(profileKey(student.name),JSON.stringify(serializableState()));
+  document.getElementById('save-status').textContent=`✓ Guardado (${globalState.saveCount}× · ${new Date().toLocaleTimeString()})`;
+  document.getElementById('global-saves').textContent=globalState.saveCount;}
+  catch(e){document.getElementById('save-status').textContent='Error al guardar.';}
+}
+
+function loadProfileByName(name){
+  try{const raw=localStorage.getItem(profileKey(name));if(!raw)return false;
+  const data=JSON.parse(raw);
+  student.name=data.name||name;globalState.points=data.points||0;globalState.stars=data.stars||0;
+  globalState.bestStreak=data.bestStreak||0;globalState.completedUnits=new Set(data.completedUnits||[]);
+  globalState.results=hydrateResults(data.results||{});globalState.saveCount=data.saveCount||0;return true;}
+  catch(e){return false;}
+}
+
+function resetProfile(){
+  student.name='Sin nombre';globalState.points=0;globalState.stars=0;globalState.bestStreak=0;
+  globalState.completedUnits=new Set();globalState.results={};globalState.saveCount=0;
+  unlockOrder.forEach(id=>{globalState.results[id]=defaultResult();});
+}
+
+document.getElementById('save-student').addEventListener('click',()=>{
+  const v=document.getElementById('student-name').value.trim();if(!v)return;
+  student.name=v;document.getElementById('save-status').textContent=`Perfil: ${v}`;
+  document.getElementById('report-name').textContent=v;saveProfile();refreshAll();
+});
+document.getElementById('resume-student').addEventListener('click',()=>{
+  const v=document.getElementById('student-name').value.trim();
+  if(!v){alert('Escribe primero el nombre del alumno.');return;}
+  if(loadProfileByName(v)){
+    document.getElementById('student-name').value=student.name;
+    document.getElementById('save-status').textContent=`✓ Perfil cargado: ${student.name}`;
+    document.getElementById('report-name').textContent=student.name;
+    updateGlobalPanel();updateReport();refreshAll();
+  }else{document.getElementById('save-status').textContent='No se encontró perfil guardado.';}
+});
+document.getElementById('clear-student').addEventListener('click',()=>{
+  if(!confirm('¿Reiniciar el perfil? Se perderá todo el progreso.'))return;
+  const name=document.getElementById('student-name').value.trim();
+  if(name)localStorage.removeItem(profileKey(name));
+  resetProfile();document.getElementById('save-status').textContent='Perfil reiniciado.';
+  document.getElementById('report-name').textContent='Sin nombre';
+  updateGlobalPanel();updateReport();refreshAll();
+});
+
+function levelLabel(score,total){const p=score/total;if(p>=0.9)return['Experto','l-exp'];if(p>=0.7)return['Avanzado','l-adv'];if(p>=0.5)return['Medio','l-med'];if(p>0)return['Básico','l-basic'];return['Sin iniciar','l-init'];}
+
+function updateGlobalPanel(){
+  document.getElementById('global-points').textContent=globalState.points;
+  document.getElementById('global-stars').textContent=globalState.stars;
+  document.getElementById('global-streak').textContent=globalState.bestStreak;
+  document.getElementById('global-units').textContent=`${globalState.completedUnits.size}/3`;
+  document.getElementById('global-saves').textContent=globalState.saveCount;
+}
+
+function unlockBadge(id){
+  const el=document.getElementById(`badge-${id}`);if(!el)return;
+  const r=globalState.results[id];const pct=r&&r.lastTotal?Math.round(r.bestScore/r.lastTotal*100):0;
+  el.classList.remove('badge-lock');el.classList.add('badge-unlock');
+  const labels={prl:'PRL',medioambiente:'Medioambiente',final:'Prueba Final'};
+  el.querySelector('h3').textContent=(pct>=80?'🏆':'✅')+' '+(labels[id]||id);
+}
+
+function updateReport(){
+  const tb=document.getElementById('report-table');
+  const names={prl:'Bloque 1 · PRL',medioambiente:'Bloque 2 · Medioambiente',final:'Prueba Final RA5'};
+  tb.innerHTML='';
+  unlockOrder.forEach(id=>{
+    const r=globalState.results[id]||defaultResult();const total=r.lastTotal||20;
+    const[lbl,cls]=levelLabel(r.bestScore,total);
+    const pct=r.attempts>0?Math.round(r.bestScore/total*100)+'%':'—';
+    const last=r.attempts>0?Math.round(r.lastScore/(r.lastTotal||20)*100)+'%':'—';
+    tb.innerHTML+=`<tr><td>${names[id]}</td><td>${r.attempts>0?r.bestScore+'/'+total+' ('+pct+')':'—'}</td><td>${r.attempts}/${maxAttemptsPerBlock}</td><td>${last}</td><td><span class="level-badge ${cls}">${lbl}</span></td></tr>`;
+  });
+  const diag=document.getElementById('global-diagnosis');
+  const attempted=unlockOrder.filter(id=>globalState.results[id]&&globalState.results[id].attempts>0);
+  if(attempted.length===0){diag.innerHTML='<strong>Diagnóstico global:</strong> Completa al menos un bloque para ver el diagnóstico.';return;}
+  const avg=attempted.reduce((s,id)=>{const r=globalState.results[id];return s+(r.bestScore/(r.lastTotal||20));},0)/attempted.length;
+  let msg='';
+  if(avg>=0.9)msg='Rendimiento excelente. Dominas los contenidos de PRL y Medioambiente del RA5.';
+  else if(avg>=0.7)msg='Buen nivel. Repasa los mensajes de feedback para consolidar los conceptos.';
+  else if(avg>=0.5)msg='Nivel básico alcanzado. Revisa los temas marcados con feedback de repaso y vuelve a intentarlo.';
+  else msg='Necesitas reforzar los contenidos. Lee el material de PRL y Medioambiente y vuelve a intentarlo.';
+  diag.innerHTML=`<strong>Diagnóstico global (promedio ${Math.round(avg*100)}%):</strong> ${msg}`;
+}
+
+function buildReview(id,tagErrors){
+  const msgs=reviewMessages[id];if(!msgs||tagErrors.length===0)return'';
+  const lines=[...new Set(tagErrors)].map(t=>msgs[t]||null).filter(Boolean);
+  if(lines.length===0)return'';
+  return'<strong>📚 Repasa:</strong><br>'+lines.map(l=>`• ${l}`).join('<br>');
+}
+
+function buildGateSummary(id,score,total,basicCorrect,basicTotal,stars,tagErrors){
+  const pct=Math.round(score/total*100);const passes=passesUnlock(id);const left=attemptsLeft(id);
+  let html='';
+  if(passes){
+    const nextIdx=unlockOrder.indexOf(id)+1;const nextId=unlockOrder[nextIdx];const nextName=nextId?unitMeta[nextId][0]:'';
+    html+=`<p>✅ <strong>Bloque superado</strong> · ${pct}% · ${stars}⭐</p>`;
+    if(nextName)html+=`<p style="margin-top:6px">🔓 <em>${nextName}</em> desbloqueada.</p>`;
+  }else{
+    html+=`<p>❌ <strong>No superado</strong> · ${pct}% · Intentos restantes: ${left}</p>`;
+    html+=`<p style="margin-top:4px">${left>0?(unlockRules[id]?.label||''):'Has agotado los intentos en este bloque.'}</p>`;
+  }
+  const rev=buildReview(id,tagErrors);if(rev)html+=`<div class="review-box show" style="margin-top:10px">${rev}</div>`;
+  return{html,passes};
+}
+
+function renderQuizSections(){
+  const container=document.getElementById('quizzes');container.innerHTML='';
+  unlockOrder.forEach(id=>{
+    const[title,desc]=unitMeta[id];const totalLabel=id==='final'?10:20;
+    const sec=document.createElement('section');sec.className='section';sec.id=id;
+    sec.innerHTML=`<div class="section-head"><div><h2>${title}</h2><p class="muted">${desc}</p></div></div>
+    <div class="quiz-layout">
+      <div class="status-box" id="status-${id}"><h3>Progreso</h3>
+        <div class="progress-bar-wrap"><div class="progress-bar-fill" id="pb-${id}" style="width:0%"></div></div>
+        <div class="stat-row"><span>Pregunta</span><span id="qnum-${id}">0/${totalLabel}</span></div>
+        <div class="stat-row"><span>Correctas</span><span id="score-${id}">0</span></div>
+        <div class="stat-row"><span>Racha</span><span id="streak-${id}">0</span></div>
+        <div class="stat-row"><span>Puntos</span><span id="pts-${id}">0</span></div>
+        <div class="stat-row"><span>Intentos</span><span id="att-${id}">0/${maxAttemptsPerBlock}</span></div>
+        <button class="reset-btn" id="reset-${id}">↺ Nuevo intento</button>
+      </div>
+      <div class="quiz-box" id="qbox-${id}"></div>
+    </div>`;
+    container.appendChild(sec);
+  });
+}
+
+function createQuiz(id){
+  const box=document.getElementById(`qbox-${id}`);if(!box)return;
+  if(!globalState.results[id])globalState.results[id]=defaultResult();
+
+  function render(){
+    const unlocked=isQuizUnlocked(id);const left=attemptsLeft(id);
+    if(!unlocked){
+      box.innerHTML=`<div class="lock-screen"><div class="lock-icon">🔒</div><p><strong>Bloque bloqueado</strong><br>${unlockRules[id]?.label||'Supera el bloque anterior para desbloquear.'}</p></div>`;return;
+    }
+    if(left<=0&&!passesUnlock(id)){
+      box.innerHTML=`<div class="lock-screen"><div class="lock-icon">⛔</div><p><strong>Sin intentos disponibles</strong><br>Has agotado los ${maxAttemptsPerBlock} intentos. Habla con tu profesor.</p></div>`;return;
+    }
+    const isFinal=id==='final';
+    const pool=isFinal?[...questionPools.final]:buildSelection(questionPools[id]);
+    const total=pool.length;const basicTotal=isFinal?0:pool.filter(q=>q.band==='b').length;
+    let qi=0,score=0,pts=0,streak=0,bestStreak=0,basicCorrect=0;const tagErrors=[];
+
+    function updateStatus(){
+      document.getElementById(`pb-${id}`).style.width=`${Math.round(qi/total*100)}%`;
+      document.getElementById(`qnum-${id}`).textContent=`${qi}/${total}`;
+      document.getElementById(`score-${id}`).textContent=score;
+      document.getElementById(`streak-${id}`).textContent=streak;
+      document.getElementById(`pts-${id}`).textContent=pts;
+      document.getElementById(`att-${id}`).textContent=`${globalState.results[id].attempts}/${maxAttemptsPerBlock}`;
+    }
+
+    function showQ(){
+      if(qi>=total){finish();return;}
+      const q=pool[qi];const corrOpt=q.options[0];
+      const shuffled=isFinal?[...q.options]:shuffle([...q.options]);
+      const corrIdx=shuffled.indexOf(corrOpt);
+      const tagClass=isFinal?'tag-f':{b:'tag-b',m:'tag-m',a:'tag-a'}[q.band]||'tag-b';
+      box.innerHTML=`<span class="level-tag ${tagClass}">${q.level}</span>
+        <p class="q-text">${q.q}</p>
+        <div class="options" id="opts-${id}">${shuffled.map((o,i)=>`<button class="opt-btn" data-idx="${i}">${o}</button>`).join('')}</div>
+        <div class="reward" id="reward-${id}"></div>
+        <div class="feedback" id="fb-${id}"></div>
+        <button class="next-btn" id="next-${id}" style="display:none">${qi+1<total?'Siguiente →':'Ver resultado'}</button>`;
+      document.querySelectorAll(`#opts-${id} .opt-btn`).forEach(btn=>{
+        btn.addEventListener('click',()=>{
+          if(btn.disabled)return;
+          document.querySelectorAll(`#opts-${id} .opt-btn`).forEach(b=>b.disabled=true);
+          const chosen=parseInt(btn.dataset.idx);const ok=chosen===corrIdx;
+          btn.classList.add(ok?'correct':'wrong');
+          if(!ok)document.querySelectorAll(`#opts-${id} .opt-btn`)[corrIdx].classList.add('correct');
+          const fb=document.getElementById(`fb-${id}`);
+          fb.textContent=(ok?'✓ Correcto: ':'✗ Incorrecto: ')+q.explanation;
+          fb.className=`feedback show ${ok?'ok':'ko'}`;
+          if(ok){score++;pts+=q.points;streak++;if(streak>bestStreak)bestStreak=streak;if(q.band==='b')basicCorrect++;
+            document.getElementById(`reward-${id}`).textContent=streak>=5?'🔥 ¡Racha!':streak>=3?'⚡':'';}
+          else{streak=0;tagErrors.push(q.tag);document.getElementById(`reward-${id}`).textContent='';}
+          qi++;updateStatus();document.getElementById(`next-${id}`).style.display='block';
+        });
+      });
+      document.getElementById(`next-${id}`).addEventListener('click',()=>{if(qi>=total)finish();else showQ();});
+    }
+
+    function finish(){
+      const r=globalState.results[id];
+      r.attempts++;r.lastScore=score;r.lastTotal=total;
+      r.lastBasicCorrect=basicCorrect;r.lastBasicTotal=basicTotal;
+      if(score>r.bestScore)r.bestScore=score;
+      const stars=score/total>=0.9?3:score/total>=0.7?2:score/total>=0.5?1:0;
+      if(stars>r.stars)r.stars=stars;
+      globalState.points+=pts;globalState.stars+=stars;
+      if(bestStreak>globalState.bestStreak)globalState.bestStreak=bestStreak;
+      if(passesUnlock(id)){globalState.completedUnits.add(id);unlockBadge(id);}
+      updateGlobalPanel();updateReport();saveProfile();
+      const{html,passes}=buildGateSummary(id,score,total,basicCorrect,basicTotal,stars,tagErrors);
+      box.innerHTML=`<div style="text-align:center;margin-bottom:20px">
+        <div style="font-size:2.5rem;margin-bottom:8px">${stars===3?'🏆':stars===2?'🥈':stars===1?'🥉':'📋'}</div>
+        <h3 style="font-size:1.3rem;margin-bottom:6px">${score}/${total} correctas</h3>
+        <p class="muted">${pts} puntos · ${Math.round(score/total*100)}%</p>
+      </div>
+      <div class="gate-note show ${passes?'pass':'fail'}">${html}</div>`;
+      if(passes){const nextIdx=unlockOrder.indexOf(id)+1;if(nextIdx<unlockOrder.length)createQuiz(unlockOrder[nextIdx]);}
+    }
+
+    updateStatus();showQ();
+  }
+
+  document.getElementById(`reset-${id}`).addEventListener('click',()=>{if(attemptsLeft(id)<=0){alert('Sin intentos disponibles.');return;}render();});
+  render();
+}
+
+function refreshAll(){
+  unlockOrder.forEach(id=>createQuiz(id));
+  unlockOrder.forEach(id=>{if(passesUnlock(id))unlockBadge(id);});
+}
+
+// INIT
+unlockOrder.forEach(id=>{if(!globalState.results[id])globalState.results[id]=defaultResult();});
+renderQuizSections();
+refreshAll();
+updateGlobalPanel();
+updateReport();
+</script>
+</body>
+</html>

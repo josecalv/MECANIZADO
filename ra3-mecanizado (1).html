@@ -1,0 +1,1530 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aula Taller · RA3 Mecanizado y Soldadura</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root,[data-theme="light"]{
+      --bg:#f7f6f2;--surface:#f9f8f5;--surface2:#fbfbf9;--surface3:#f0ece6;
+      --border:#d4d1ca;--text:#28251d;--muted:#6f6d67;--inv:#faf8f5;
+      --primary:#01696f;--success:#437a22;--danger:#b13b82;--gold:#d19900;
+      --radius:18px;--shadow:0 18px 40px rgba(35,28,18,.09);
+      --font-display:'Instrument Serif',Georgia,serif;
+      --font-body:'Inter',system-ui,sans-serif
+    }
+    [data-theme="dark"]{
+      --bg:#171614;--surface:#1c1b19;--surface2:#201f1d;--surface3:#262422;
+      --border:#393836;--text:#e2dfd9;--muted:#a5a19b;--inv:#191816;
+      --primary:#4f98a3;--success:#76b14c;--danger:#db77b2;--gold:#e4b843;
+      --shadow:0 18px 40px rgba(0,0,0,.35)
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:var(--font-body);background:var(--bg);color:var(--text);line-height:1.6;min-height:100vh}
+    .wrap{max-width:1100px;margin:0 auto;padding:0 20px}
+    header{background:var(--surface);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(0,0,0,.06)}
+    .topbar{display:flex;align-items:center;justify-content:space-between;padding:14px 20px;gap:12px;flex-wrap:wrap}
+    .brand{display:flex;align-items:center;gap:12px}
+    .logo{width:38px;height:38px;background:var(--primary);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+    .logo svg{width:22px;height:22px;fill:none;stroke:#fff;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+    .brand small{display:block;font-size:.7rem;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
+    .brand strong{font-size:.95rem;font-weight:700}
+    .nav{display:flex;align-items:center;gap:5px;flex-wrap:wrap}
+    .nav a{font-size:.75rem;font-weight:600;color:var(--muted);text-decoration:none;padding:4px 9px;border-radius:20px;border:1px solid transparent;transition:.2s}
+    .nav a:hover{color:var(--primary);border-color:var(--primary)}
+    .theme-btn{background:none;border:1px solid var(--border);border-radius:20px;padding:5px 10px;cursor:pointer;font-size:.9rem;color:var(--muted);transition:.2s}
+    .theme-btn:hover{color:var(--primary)}
+    .hero{padding:56px 20px 40px;max-width:1100px;margin:0 auto}
+    .hero-grid{display:grid;grid-template-columns:1fr 320px;gap:40px;align-items:start}
+    @media(max-width:800px){.hero-grid{grid-template-columns:1fr}}
+    .eyebrow{display:inline-block;font-size:.75rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--primary);margin-bottom:10px}
+    h1{font-family:var(--font-display);font-size:clamp(2rem,5vw,3rem);font-weight:400;line-height:1.15;margin-bottom:16px}
+    .lead{font-size:1rem;color:var(--muted);max-width:520px;margin-bottom:24px;line-height:1.7}
+    .chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:28px}
+    .chip{font-size:.75rem;font-weight:600;padding:5px 12px;border-radius:20px;background:var(--surface3);border:1px solid var(--border);color:var(--muted)}
+    .student-form{display:flex;gap:10px;margin-bottom:14px;flex-wrap:wrap}
+    .student-form input{flex:1;min-width:200px;padding:10px 14px;border-radius:10px;border:1px solid var(--border);background:var(--surface2);color:var(--text);font-family:var(--font-body);font-size:.95rem}
+    .student-form input:focus{outline:none;border-color:var(--primary)}
+    .save-box{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+    .save-status{font-size:.82rem;color:var(--muted)}
+    .btn{padding:9px 18px;border-radius:10px;border:none;cursor:pointer;font-family:var(--font-body);font-size:.9rem;font-weight:600;transition:.2s}
+    .btn-primary{background:var(--primary);color:#fff}.btn-primary:hover{opacity:.88}
+    .btn-secondary{background:var(--surface3);color:var(--text);border:1px solid var(--border)}.btn-secondary:hover{border-color:var(--primary);color:var(--primary)}
+    .panel{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:24px;box-shadow:var(--shadow)}
+    .panel h3{font-size:1rem;font-weight:700;margin-bottom:18px}
+    .hero-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+    .stat{text-align:center;background:var(--surface3);border-radius:12px;padding:12px 8px}
+    .stat strong{display:block;font-size:1.4rem;font-weight:800;color:var(--primary)}
+    .stat span{font-size:.72rem;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.06em}
+    .section{max-width:1100px;margin:0 auto;padding:40px 20px}
+    .section-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:28px}
+    .section-head h2{font-family:var(--font-display);font-size:1.7rem;font-weight:400}
+    .muted{color:var(--muted);font-size:.9rem}
+    .badges-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+    @media(max-width:900px){.badges-grid{grid-template-columns:repeat(2,1fr)}}
+    @media(max-width:480px){.badges-grid{grid-template-columns:1fr}}
+    .badgebox{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:18px;text-align:center;transition:.3s}
+    .badgebox h3{font-size:.95rem;font-weight:700;margin-bottom:4px}
+    .badgebox p{font-size:.78rem;color:var(--muted)}
+    .badge-lock{opacity:.4;filter:grayscale(1)}
+    .badge-unlock{border-color:var(--success);background:color-mix(in srgb,var(--success) 6%,var(--surface))}
+    .quiz-layout{display:grid;grid-template-columns:240px 1fr;gap:24px;align-items:start}
+    @media(max-width:800px){.quiz-layout{grid-template-columns:1fr}}
+    .status-box{position:sticky;top:80px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow)}
+    .status-box h3{font-size:.9rem;font-weight:700;margin-bottom:14px}
+    .progress-bar-wrap{background:var(--surface3);border-radius:99px;height:8px;margin-bottom:14px;overflow:hidden}
+    .progress-bar-fill{height:8px;border-radius:99px;background:var(--primary);transition:.4s}
+    .stat-row{display:flex;justify-content:space-between;font-size:.8rem;margin-bottom:7px}
+    .stat-row span:last-child{font-weight:700;color:var(--primary)}
+    .reset-btn{width:100%;padding:8px;border-radius:8px;border:1px solid var(--border);background:none;cursor:pointer;font-size:.8rem;color:var(--muted);margin-top:10px;transition:.2s}
+    .reset-btn:hover{border-color:var(--danger);color:var(--danger)}
+    .quiz-box{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:28px;box-shadow:var(--shadow)}
+    .level-tag{display:inline-flex;align-items:center;gap:6px;font-size:.75rem;font-weight:700;padding:4px 12px;border-radius:20px;margin-bottom:16px;text-transform:uppercase;letter-spacing:.07em}
+    .tag-b{background:color-mix(in srgb,var(--success) 12%,var(--surface));color:var(--success)}
+    .tag-m{background:color-mix(in srgb,var(--gold) 12%,var(--surface));color:var(--gold)}
+    .tag-a{background:color-mix(in srgb,var(--danger) 12%,var(--surface));color:var(--danger)}
+    .q-text{font-size:1.05rem;font-weight:600;margin-bottom:20px;line-height:1.5}
+    .options{display:flex;flex-direction:column;gap:10px;margin-bottom:20px}
+    .opt-btn{text-align:left;padding:12px 16px;border-radius:12px;border:1.5px solid var(--border);background:var(--surface2);cursor:pointer;font-family:var(--font-body);font-size:.93rem;color:var(--text);transition:.2s}
+    .opt-btn:hover:not(:disabled){border-color:var(--primary);background:color-mix(in srgb,var(--primary) 6%,var(--surface))}
+    .opt-btn.correct{border-color:var(--success);background:color-mix(in srgb,var(--success) 10%,var(--surface));color:var(--success);font-weight:700}
+    .opt-btn.wrong{border-color:var(--danger);background:color-mix(in srgb,var(--danger) 8%,var(--surface));color:var(--danger)}
+    .feedback{padding:14px;border-radius:10px;font-size:.88rem;margin-bottom:14px;line-height:1.5;display:none}
+    .feedback.show{display:block}
+    .feedback.ok{background:color-mix(in srgb,var(--success) 10%,var(--surface));border:1px solid var(--success);color:var(--success)}
+    .feedback.ko{background:color-mix(in srgb,var(--danger) 8%,var(--surface));border:1px solid var(--danger);color:var(--danger)}
+    .reward{font-size:1.5rem;text-align:center;margin-bottom:10px;min-height:2rem}
+    .gate-note{display:none;padding:16px;border-radius:12px;border:1px solid var(--border);background:var(--surface3);font-size:.88rem;color:var(--muted);margin-top:16px;line-height:1.6}
+    .gate-note.show{display:block}
+    .gate-note.pass{border-color:var(--success);background:color-mix(in srgb,var(--success) 8%,var(--surface));color:var(--success)}
+    .gate-note.fail{border-color:var(--danger);background:color-mix(in srgb,var(--danger) 6%,var(--surface));color:var(--danger)}
+    .review-box{display:none;padding:14px;border-radius:12px;background:color-mix(in srgb,var(--gold) 8%,var(--surface));border:1px solid var(--gold);font-size:.85rem;color:var(--text);margin-top:12px;line-height:1.7}
+    .review-box.show{display:block}
+    .review-box strong{color:var(--gold)}
+    .next-btn{width:100%;padding:11px;border-radius:10px;background:var(--primary);color:#fff;border:none;cursor:pointer;font-family:var(--font-body);font-weight:700;font-size:.95rem;transition:.2s}
+    .next-btn:hover{opacity:.88}
+    .lock-screen{text-align:center;padding:40px;color:var(--muted)}
+    .lock-screen .lock-icon{font-size:2.5rem;margin-bottom:12px}
+    .lock-screen p{font-size:.9rem;line-height:1.6;max-width:380px;margin:0 auto}
+    .report-box{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:28px;box-shadow:var(--shadow)}
+    .table{width:100%;border-collapse:collapse;font-size:.88rem;margin-top:16px}
+    .table th{text-align:left;padding:10px 12px;border-bottom:2px solid var(--border);font-weight:700;color:var(--muted);text-transform:uppercase;font-size:.72rem;letter-spacing:.07em}
+    .table td{padding:10px 12px;border-bottom:1px solid var(--border)}
+    .table tr:last-child td{border-bottom:none}
+    .level-badge{display:inline-flex;padding:3px 10px;border-radius:20px;font-size:.75rem;font-weight:700}
+    .l-init{background:var(--surface3);color:var(--muted)}
+    .l-basic{background:color-mix(in srgb,var(--success) 12%,var(--surface));color:var(--success)}
+    .l-med{background:color-mix(in srgb,var(--gold) 12%,var(--surface));color:var(--gold)}
+    .l-adv{background:color-mix(in srgb,var(--primary) 12%,var(--surface));color:var(--primary)}
+    .l-exp{background:color-mix(in srgb,var(--danger) 12%,var(--surface));color:var(--danger)}
+    .diag-box{padding:16px;border-radius:12px;background:var(--surface3);border:1px solid var(--border);font-size:.88rem;line-height:1.7;margin-top:16px}
+    .bloque-chip{display:inline-block;font-size:.7rem;font-weight:700;padding:2px 8px;border-radius:10px;background:color-mix(in srgb,var(--primary) 10%,var(--surface));color:var(--primary);border:1px solid color-mix(in srgb,var(--primary) 25%,var(--surface));margin-bottom:6px}
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="wrap topbar">
+    <div class="brand">
+      <div class="logo">
+        <svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+      </div>
+      <div>
+        <small>RA3 · Mecanizado y Soldadura</small>
+        <strong>Aula Taller</strong>
+      </div>
+    </div>
+    <nav class="nav">
+      <a href="#trazado">Trazado</a>
+      <a href="#serrado">Serrado</a>
+      <a href="#limado">Limado</a>
+      <a href="#taladrado">Taladrado</a>
+      <a href="#roscado">Roscado</a>
+      <a href="#remachado">Remachado</a>
+      <a href="#final">Final RA3</a>
+      <a href="#informe">Informe</a>
+      <button class="theme-btn" data-theme-toggle>◐</button>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-grid">
+    <div>
+      <span class="eyebrow">RA3 · Mecanizado y Soldadura</span>
+      <h1>Aula Taller</h1>
+      <p class="lead">Ejecuta el mecanizado a mano de piezas aplicando las técnicas de trazado, serrado, limado, taladrado, escariado, roscado y remachado con precisión y seguridad.</p>
+      <div class="chips">
+        <span class="chip">20 preguntas por bloque</span>
+        <span class="chip">Se extraen 10</span>
+        <span class="chip">Prueba final: 40 → 20</span>
+        <span class="chip">Guardado local</span>
+      </div>
+      <div class="student-form">
+        <input id="student-name" type="text" placeholder="Escribe el nombre del alumno">
+        <button class="btn btn-primary" id="save-student">Guardar nombre</button>
+      </div>
+      <div class="save-box">
+        <div class="save-status" id="save-status">Sin perfil cargado</div>
+        <button class="btn btn-secondary" id="resume-student">Cargar progreso</button>
+        <button class="btn btn-secondary" id="clear-student">Reiniciar perfil</button>
+      </div>
+    </div>
+    <aside class="panel hero-side">
+      <h3>Panel del alumno</h3>
+      <div class="hero-stats">
+        <div class="stat"><strong id="global-points">0</strong><br><span class="muted">Puntos</span></div>
+        <div class="stat"><strong id="global-stars">0</strong><br><span class="muted">Estrellas</span></div>
+        <div class="stat"><strong id="global-streak">0</strong><br><span class="muted">Mejor racha</span></div>
+        <div class="stat"><strong id="global-units">0/6</strong><br><span class="muted">Bloques</span></div>
+        <div class="stat"><strong id="global-saves">0</strong><br><span class="muted">Guardados</span></div>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<!-- INSIGNIAS -->
+<section class="section">
+  <div class="section-head">
+    <div><h2>Insignias del recorrido</h2>
+    <p class="muted">Supera cada bloque para desbloquear el siguiente.</p></div>
+  </div>
+  <div class="badges-grid">
+    <div class="badgebox badge-lock" id="badge-trazado"><h3>✏️ Trazado</h3><p>Bloque 1</p></div>
+    <div class="badgebox badge-lock" id="badge-serrado"><h3>🪚 Serrado</h3><p>Bloque 2</p></div>
+    <div class="badgebox badge-lock" id="badge-limado"><h3>📁 Limado</h3><p>Bloque 3</p></div>
+    <div class="badgebox badge-lock" id="badge-taladrado"><h3>🔩 Taladrado</h3><p>Bloque 4</p></div>
+    <div class="badgebox badge-lock" id="badge-roscado"><h3>🔀 Roscado</h3><p>Bloque 5</p></div>
+    <div class="badgebox badge-lock" id="badge-remachado"><h3>🔨 Remachado</h3><p>Bloque 6</p></div>
+    <div class="badgebox badge-lock" id="badge-final"><h3>🏁 Final RA3</h3><p>Prueba final</p></div>
+  </div>
+</section>
+
+<div id="quizzes"></div>
+
+<!-- INFORME -->
+<section class="section" id="informe">
+  <div class="section-head">
+    <div><h2>Informe del alumno</h2><p class="muted">Resumen de resultados por bloque.</p></div>
+  </div>
+  <div class="report-box">
+    <p><strong>Alumno:</strong> <span id="report-name">Sin nombre</span></p>
+    <table class="table">
+      <thead><tr><th>Bloque</th><th>Mejor resultado</th><th>Intentos</th><th>Último</th><th>Nivel</th></tr></thead>
+      <tbody id="report-table"></tbody>
+    </table>
+    <div class="diag-box" id="global-diagnosis">
+      <strong>Diagnóstico global:</strong> Completa al menos un bloque para ver el diagnóstico.
+    </div>
+  </div>
+</section>
+
+<script>
+// ─── TEMA ────────────────────────────────────────────────────
+(function(){
+  const root=document.documentElement,btn=document.querySelector('[data-theme-toggle]');
+  let t=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
+  root.setAttribute('data-theme',t);
+  btn.addEventListener('click',()=>{t=t==='dark'?'light':'dark';root.setAttribute('data-theme',t);});
+})();
+
+// ─── CONFIG ──────────────────────────────────────────────────
+const storagePrefix='aula-taller-mec-ra3-v1';
+const maxAttemptsPerBlock=3;
+const student={name:'Sin nombre'};
+const globalState={points:0,stars:0,bestStreak:0,completedUnits:new Set(),results:{},saveCount:0};
+
+const unitIds=['trazado','serrado','limado','taladrado','roscado','remachado'];
+const unlockOrder=[...unitIds,'final'];
+
+const unlockRules={
+  trazado:null,
+  serrado:{prev:'trazado',score:7,label:'Necesitas al menos 70% en Trazado o todas las básicas correctas.'},
+  limado:{prev:'serrado',score:7,label:'Necesitas al menos 70% en Serrado o todas las básicas correctas.'},
+  taladrado:{prev:'limado',score:7,label:'Necesitas al menos 70% en Limado o todas las básicas correctas.'},
+  roscado:{prev:'taladrado',score:7,label:'Necesitas al menos 70% en Taladrado o todas las básicas correctas.'},
+  remachado:{prev:'roscado',score:7,label:'Necesitas al menos 70% en Roscado o todas las básicas correctas.'},
+  final:{prev:'remachado',score:7,label:'Necesitas superar los seis bloques para acceder a la prueba final.'}
+};
+
+const unitMeta={
+  trazado:  ['Bloque 1 · Trazado','Banco de 20 preguntas; se extraen 10 con dificultad progresiva.'],
+  serrado:  ['Bloque 2 · Serrado','Banco de 20 preguntas; se extraen 10 con dificultad progresiva.'],
+  limado:   ['Bloque 3 · Limado','Banco de 20 preguntas; se extraen 10 con dificultad progresiva.'],
+  taladrado:['Bloque 4 · Taladrado y Escariado','Banco de 20 preguntas; se extraen 10 con dificultad progresiva.'],
+  roscado:  ['Bloque 5 · Roscado','Banco de 20 preguntas; se extraen 10 con dificultad progresiva.'],
+  remachado:['Bloque 6 · Remachado','Banco de 20 preguntas; se extraen 10 con dificultad progresiva.'],
+  final:    ['Prueba Final · RA3','Banco de 40 preguntas; se extraen 20 preguntas integradoras.']
+};
+
+// ─── REVIEW MESSAGES ─────────────────────────────────────────
+const reviewMessages={
+  trazado:{
+    utiles_trazado:'Repasa los útiles de trazado: gramil, punzón, compás de puntas, regla y escuadra.',
+    proceso_trazado:'Repasa el proceso secuencial de trazado: limpieza, referencia, trazado y graneteado.',
+    precision_trazado:'Repasa la importancia de la precisión en el trazado y su influencia en el mecanizado posterior.',
+    seguridad_trazado:'Repasa las normas de seguridad en operaciones de trazado: manejo de punzones y granetes.'
+  },
+  serrado:{
+    utiles_serrado:'Repasa los componentes del arco de sierra y los tipos de hojas según TPI y material.',
+    proceso_serrado:'Repasa el proceso de serrado: sujeción, inicio del corte, presión y acabado.',
+    parametros_serrado:'Repasa los parámetros de selección de hoja: TPI, material, espesor de la pieza.',
+    seguridad_serrado:'Repasa las normas de seguridad en el serrado: sujeción de la pieza y uso de EPI.'
+  },
+  limado:{
+    tipos_lima:'Repasa los tipos de lima según picadura (basta, bastarda, fina) y perfil (plana, redonda, triangular).',
+    proceso_limado:'Repasa la técnica de limado: postura, agarre, presión y movimiento cruzado.',
+    verificacion_limado:'Repasa la verificación del limado: regla, escuadra y comparador.',
+    seguridad_limado:'Repasa la seguridad en el limado: mango obligatorio, sujeción correcta de la pieza.'
+  },
+  taladrado:{
+    brocas:'Repasa los tipos de brocas, geometría de corte y materiales (HSS, carburo).',
+    proceso_taladrado:'Repasa el proceso de taladrado: graneteado, velocidad, avance y refrigeración.',
+    escariado:'Repasa el escariado: tipos de escariadores, proceso y tolerancias que se alcanzan.',
+    seguridad_taladrado:'Repasa la seguridad en el taladro: sujeción mecánica, EPI y prohibición de guantes.'
+  },
+  roscado:{
+    tipos_rosca:'Repasa los tipos de rosca: métrica, Whitworth, trapezoidal y sus aplicaciones.',
+    machuelos:'Repasa los machuelos: juego de tres (desbaste, semiacabado, acabado) y portamachuelos.',
+    terrajas:'Repasa las terrajas y portaterrajas para roscado exterior.',
+    proceso_roscado:'Repasa el proceso de roscado: agujero previo, lubricación, avance fraccionado.',
+    seguridad_roscado:'Repasa la seguridad en el roscado: fuerzas de apriete y rotura de machuelos.'
+  },
+  remachado:{
+    tipos_remache:'Repasa los tipos de remache: sólido, tubular, pop (ciego) y sus aplicaciones.',
+    proceso_remachado:'Repasa el proceso de remachado sólido y con remache pop.',
+    herramientas_remachado:'Repasa las herramientas de remachado: remachadora manual, tas y buterola.',
+    seguridad_remachado:'Repasa la seguridad en el remachado: protección ocular y sujeción de piezas.'
+  },
+  final:{
+    integracion:'Repasa la secuencia completa de mecanizado: trazado → serrado → limado → taladrado → roscado → remachado.',
+    calidad:'Repasa los criterios de calidad y verificación en cada proceso de mecanizado.',
+    seguridad:'Refuerza las normas de seguridad, EPI y orden en el taller para todas las operaciones.'
+  }
+};
+
+// ─── BANCO DE PREGUNTAS ───────────────────────────────────────
+// Bloques operacionales: 4b + 8m + 8a = 20 preguntas, se extraen 3b+4m+3a = 10
+// Final: 8b + 16m + 16a = 40 preguntas fijas, se extraen 20 (6b+8m+6a)
+const questionPools={
+
+// ══════════════════════════════════════════════════════════════
+// BLOQUE 1 · TRAZADO  (4b + 8m + 8a = 20)
+// ══════════════════════════════════════════════════════════════
+trazado:[
+  // ── BÁSICO (4) ──
+  {band:'b',tag:'utiles_trazado',level:'Básico',points:10,
+   q:'¿Para qué sirve el gramil en las operaciones de trazado?',
+   options:['Trazar líneas paralelas a una superficie de referencia a una altura determinada','Medir el diámetro de agujeros','Afilar las puntas de los trazadores','Comprobar la planitud de la pieza'],
+   correct:0,explanation:'El gramil permite trazar líneas horizontales a una altura precisa respecto a la superficie de referencia sobre la que apoya la pieza.'},
+
+  {band:'b',tag:'proceso_trazado',level:'Básico',points:10,
+   q:'¿Cuál es el propósito del graneteado antes de taladrar?',
+   options:['Marcar el centro del agujero para que la broca no resbale al iniciar el taladro','Abrir el agujero definitivo','Verificar la planitud de la pieza','Eliminar la capa de óxido superficial'],
+   correct:0,explanation:'El granete crea una pequeña marca cónica que guía el vértice de la broca, evitando que resbale al comenzar el taladrado.'},
+
+  {band:'b',tag:'utiles_trazado',level:'Básico',points:10,
+   q:'¿Qué es un trazador de punta en el taller de mecanizado?',
+   options:['Herramienta de acero endurecido con punta afilada para rayar líneas sobre la pieza','Un rotulador permanente para marcar el metal','Un instrumento de medida de ángulos','Un tipo de calibre para trazados curvos'],
+   correct:0,explanation:'El trazador es una varilla de acero con punta endurecida y afilada que raya la superficie del metal dejando una línea fina y precisa.'},
+
+  {band:'b',tag:'proceso_trazado',level:'Básico',points:10,
+   q:'¿Por qué se aplica azul de Prusia o pintura de trazado sobre la pieza antes de trazar?',
+   options:['Para que las líneas trazadas sean visibles y contrasten con la superficie metálica','Para proteger la pieza de la oxidación','Para lubricar el trazador y reducir el desgaste','Para endurecer la superficie antes del mecanizado'],
+   correct:0,explanation:'El azul de Prusia o minio crea un fondo de color que hace visible la línea rayada por el trazador, mejorando la precisión del trazado.'},
+
+  // ── MEDIO (8) ──
+  {band:'m',tag:'proceso_trazado',level:'Medio',points:15,
+   q:'¿Cuál es el orden correcto en el proceso de trazado de una pieza?',
+   options:['Limpiar la pieza → aplicar pintura de trazado → establecer referencias → trazar → granetelar','Granetelar → trazar → limpiar → aplicar pintura','Trazar directamente sobre el metal en bruto → granetelar','Medir la pieza → taladrar directamente sin trazar'],
+   correct:0,explanation:'El proceso correcto parte de una pieza limpia con pintura de contraste; primero se establecen las referencias (caras base) y se traza antes de granetelar.'},
+
+  {band:'m',tag:'utiles_trazado',level:'Medio',points:15,
+   q:'¿Qué diferencia hay entre el granete de trazar y el granete de centrar?',
+   options:['El de trazar tiene ángulo de 60° para marcar líneas; el de centrar tiene 90° para centrar brocas','Son idénticos con distinto nombre','El de centrar solo se usa en tornos CNC','El de trazar es más largo que el de centrar'],
+   correct:0,explanation:'El granete de trazar (60°) produce una marca fina para puntear líneas; el de centrar (90°) crea una huella más ancha que guía mejor el vértice de la broca.'},
+
+  {band:'m',tag:'precision_trazado',level:'Medio',points:15,
+   q:'¿Qué es una superficie de referencia en el trazado y por qué es fundamental elegirla correctamente?',
+   options:['La cara plana y escuadrada desde la que se toman todas las medidas; si está inclinada, todos los trazados heredarán el error','Cualquier cara visible de la pieza','La cara más rugosa de la pieza para mayor agarre','La cara de mayor área superficial'],
+   correct:0,explanation:'La superficie de referencia es la base de todas las medidas del trazado; un error en su selección o preparación se propaga a toda la geometría trazada.'},
+
+  {band:'m',tag:'utiles_trazado',level:'Medio',points:15,
+   q:'¿Para qué se usa el compás de puntas en el trazado?',
+   options:['Trazar arcos, circunferencias y transportar medidas entre puntos','Verificar la escuadra de las caras de la pieza','Medir profundidades de ranuras','Trazar líneas paralelas a largas distancias'],
+   correct:0,explanation:'El compás de puntas permite trazar arcos y circunferencias a radio exacto y transportar cotas entre distintos puntos de la pieza.'},
+
+  {band:'m',tag:'proceso_trazado',level:'Medio',points:15,
+   q:'Al trazar una línea paralela a 25 mm de la cara de referencia con gramil, ¿cómo se verifica que el gramil está bien ajustado?',
+   options:['Se comprueba la altura con calibre de profundidades o calibre pie de rey antes de trazar','Se traza directamente y se mide después con regla','Se ajusta a ojo comparando con un plano','Se usa el propio gramil como referencia sin verificar'],
+   correct:0,explanation:'Siempre se verifica la altura del gramil con un instrumento de medida (calibre) antes de trazar; la comprobación posterior ya no permite corregir sin repintar la pieza.'},
+
+  {band:'m',tag:'seguridad_trazado',level:'Medio',points:15,
+   q:'¿Qué riesgo principal presentan los trazadores y granetes durante su uso?',
+   options:['Pinchazos y cortes por la punta afilada; deben guardarse con la punta protegida','Riesgo eléctrico por corriente estática','Proyección de chispas en operaciones de trazado','Inhalación de vapores de la pintura de trazado'],
+   correct:0,explanation:'Las puntas endurecidas de trazadores y granetes pueden causar heridas punzantes graves; se guardan con protector de punta y se manejan con precaución.'},
+
+  {band:'m',tag:'precision_trazado',level:'Medio',points:15,
+   q:'¿Qué es la mesa o plato de trazado y por qué debe mantenerse limpio?',
+   options:['Superficie plana de referencia (hierro fundido o granito) sobre la que se apoya la pieza; cualquier viruta o suciedad introduce error en el trazado','Una mesa normal de trabajo con superficie metálica','Un soporte giratorio para piezas cilíndricas','Un tablero magnético para sujetar la pieza'],
+   correct:0,explanation:'El plato de trazado es la referencia plana absoluta; una partícula de viruta bajo la pieza la inclina y propaga el error a todos los trazados.'},
+
+  {band:'m',tag:'utiles_trazado',level:'Medio',points:15,
+   q:'¿Cómo se trazan líneas perpendiculares entre sí con herramientas de trazado manual?',
+   options:['Con escuadra de trazado apoyada en la cara de referencia de la pieza sobre el plato','Estimando visualmente la perpendicularidad','Con dos gramiles cruzados sin referencia de escuadra','Usando solo el compás de puntas'],
+   correct:0,explanation:'La escuadra de trazado, apoyada en la cara de referencia, garantiza que las líneas perpendiculares sean exactamente a 90° sin necesidad de medición angular.'},
+
+  // ── ALTO (8) ──
+  {band:'a',tag:'precision_trazado',level:'Alto',points:20,
+   q:'Al trazar un hexágono inscrito en una circunferencia de radio R con compás, ¿cuántos pasos de compás son necesarios?',
+   options:['6 pasos iguales al radio R sobre la circunferencia','4 pasos de R','8 pasos de R/2','3 pasos de 2R'],
+   correct:0,explanation:'El lado del hexágono regular es igual al radio de la circunferencia circunscrita; por tanto, 6 pasos de compás con apertura R dividen exactamente la circunferencia en 6 partes iguales.'},
+
+  {band:'a',tag:'proceso_trazado',level:'Alto',points:20,
+   q:'¿Cómo se traza el eje de simetría de una pieza rectangular para encontrar su centro geométrico?',
+   options:['Trazando las dos diagonales; su intersección es el centro. Alternativamente, bisectrices de los lados opuestos','Midiendo solo la longitud total y dividiéndola entre 2 sin trazar la perpendicular','Usando el gramil en una sola cara sin girar la pieza','No es posible encontrar el centro con herramientas manuales de trazado'],
+   correct:0,explanation:'Las diagonales de un rectángulo se cortan en el centro geométrico. También puede encontrarse bisecando cada lado y trazando las mediatrices perpendiculares.'},
+
+  {band:'a',tag:'utiles_trazado',level:'Alto',points:20,
+   q:'¿Qué ventaja ofrece el gramil de altura con reloj comparador respecto al gramil simple de tornillo?',
+   options:['Permite leer la altura con precisión de 0,01 mm directamente, eliminando el error de ajuste visual del tornillo','Es más barato que el gramil simple','Solo sirve para piezas de aluminio','Traza líneas más profundas sobre la pieza'],
+   correct:0,explanation:'El gramil con reloj comparador permite posicionar la punta con apreciación de 0,01 mm, garantizando trazados a cotas exactas sin depender de la habilidad visual del operario.'},
+
+  {band:'a',tag:'proceso_trazado',level:'Alto',points:20,
+   q:'Una pieza llega al taller con una cara inclinada 2° respecto a la nominal. ¿Cómo afecta esto al trazado si se usa esa cara como referencia?',
+   options:['Todos los trazados paralelos a esa cara heredarán el error de 2°; la pieza resultará incorrecta aunque el trazado parezca perfecto','No tiene efecto porque el gramil compensa la inclinación','Solo afecta a los trazados verticales, no a los horizontales','El error se compensa automáticamente al granetelar'],
+   correct:0,explanation:'La referencia errónea propaga el error angular a toda la geometría trazada; es obligatorio verificar la escuadra de las caras antes de iniciar cualquier trazado.'},
+
+  {band:'a',tag:'precision_trazado',level:'Alto',points:20,
+   q:'¿Por qué se realizan varios golpes de granete a lo largo de una línea trazada antes de mecanizar?',
+   options:['Para que la línea sea reconocible incluso después de que el mecanizado borre parcialmente la pintura; los puntos guían el corte','Para debilitar la zona de corte y facilitar el serrado','Para marcar la profundidad de corte en cada punto','El graneteado múltiple no es una práctica normalizada'],
+   correct:0,explanation:'Los puntos de granete a intervalos regulares convierten la línea pintada en una marca permanente; cuando la pintura desaparece por el mecanizado, los puntos siguen siendo visibles.'},
+
+  {band:'a',tag:'seguridad_trazado',level:'Alto',points:20,
+   q:'¿Qué consecuencia puede tener un error de trazado no detectado antes de iniciar el mecanizado?',
+   options:['La pieza resultante será incorrecta geométricamente y habrá que desecharla, con pérdida de material, tiempo y coste','El mecanizado corregirá automáticamente el error de trazado','Solo afecta al aspecto visual, no a las dimensiones','El error se detecta fácilmente durante el mecanizado y puede corregirse sobre la marcha'],
+   correct:0,explanation:'Un error de trazado no detectado se convierte en un error dimensional irreversible una vez mecanizado; verificar el trazado antes de cortar es una regla fundamental del taller.'},
+
+  {band:'a',tag:'utiles_trazado',level:'Alto',points:20,
+   q:'¿Cómo se verifica que el plato de trazado está en buen estado antes de su uso?',
+   options:['Con un comparador de reloj deslizándolo sobre la superficie; la variación debe ser inferior a la tolerancia de planitud del plato','Golpeándolo suavemente para comprobar que suena macizo','Limpiándolo con un trapo y comprobando visualmente que no tiene rayaduras','Pesándolo y comparando con el valor de fábrica'],
+   correct:0,explanation:'La planitud del plato se verifica con comparador de reloj; si la variación supera la tolerancia del plato (normalmente < 0,01 mm en grado 1), debe rectificarse o reemplazarse.'},
+
+  {band:'a',tag:'proceso_trazado',level:'Alto',points:20,
+   q:'Al trazar una pieza cilíndrica para marcar un agujero lateral, ¿qué accesorio se usa para mantenerla estable sobre el plato de trazado?',
+   options:['Prismas en V, que sujetan el cilindro impidiendo que ruede y manteniendo el eje horizontal','Tornillo de banco apretado al máximo','Cinta adhesiva sobre el plato','Platos magnéticos con imán de barra'],
+   correct:0,explanation:'Los prismas en V soportan el cilindro en dos líneas de contacto, centrándolo y evitando que ruede durante el trazado; son el accesorio estándar para piezas cilíndricas.'}
+],
+
+// ══════════════════════════════════════════════════════════════
+// BLOQUE 2 · SERRADO  (4b + 8m + 8a = 20)
+// ══════════════════════════════════════════════════════════════
+serrado:[
+  // ── BÁSICO (4) ──
+  {band:'b',tag:'utiles_serrado',level:'Básico',points:10,
+   q:'¿Cuántos dientes por pulgada (TPI) tiene habitualmente una hoja de sierra para metales de uso general?',
+   options:['18-24 TPI','4-6 TPI','32-48 TPI','8-10 TPI'],
+   correct:0,explanation:'Para uso general en metales, las hojas de 18-24 TPI ofrecen un buen equilibrio entre velocidad de corte y acabado superficial.'},
+
+  {band:'b',tag:'proceso_serrado',level:'Básico',points:10,
+   q:'¿En qué dirección deben apuntar los dientes de la hoja de sierra al montarla en el arco?',
+   options:['Hacia delante (hacia el extremo libre), cortando en el movimiento de avance (empuje)','Hacia atrás, cortando en el movimiento de retroceso','La dirección no influye en el resultado del corte','Alternando un diente hacia cada lado del arco'],
+   correct:0,explanation:'Los dientes apuntan hacia el frente para cortar al empujar; el retroceso es el movimiento muerto sin corte. Montarlos al revés hace ineficaz la herramienta.'},
+
+  {band:'b',tag:'utiles_serrado',level:'Básico',points:10,
+   q:'¿Para qué sirve el trisado (tronzado alterno) de los dientes de la hoja de sierra?',
+   options:['Para que el corte (kerf) sea ligeramente más ancho que el lomo de la hoja, evitando que se atasque','Para aumentar la dureza de los dientes','Para reducir el TPI y cortar más rápido','Para facilitar el montaje en el arco'],
+   correct:0,explanation:'El trisado desvía los dientes alternamente a ambos lados; el corte resultante es más ancho que el grueso de la hoja, reduciendo la fricción y evitando el atasco.'},
+
+  {band:'b',tag:'seguridad_serrado',level:'Básico',points:10,
+   q:'¿Cómo debe sujetarse la pieza al serrar manualmente?',
+   options:['Bien apretada en el tornillo de banco, con la línea de corte próxima a las mordazas para evitar vibraciones','Solo con la mano libre mientras se sierra','Con la línea de corte a 20 cm de las mordazas para mayor acceso','Sin sujetar, apoyada sobre la bancada'],
+   correct:0,explanation:'La pieza debe estar firmemente sujeta en el tornillo de banco con la línea de corte cerca de las mordazas; la vibración durante el serrado causa dientes rotos y acabados deficientes.'},
+
+  // ── MEDIO (8) ──
+  {band:'m',tag:'parametros_serrado',level:'Medio',points:15,
+   q:'¿Qué criterio determina el TPI adecuado para una hoja de sierra según el espesor del material?',
+   options:['Deben estar en contacto simultáneo al menos 2-3 dientes con la pieza; a mayor espesor, menor TPI','Siempre el mayor TPI disponible para mejor acabado','El TPI no influye en el resultado, solo en la velocidad','El TPI se selecciona por el color de la hoja, no por el espesor'],
+   correct:0,explanation:'La regla de 2-3 dientes en contacto simultáneo evita que el diente quede "entre huecos" (trabado) en materiales finos y que los dientes se arranquen en materiales gruesos.'},
+
+  {band:'m',tag:'proceso_serrado',level:'Medio',points:15,
+   q:'¿Cómo se inicia el corte correctamente con el arco de sierra manual para evitar que la hoja resbale?',
+   options:['Con el pulgar guiando la hoja en el primer movimiento, con presión suave y recorrido corto hasta que el corte esté iniciado','Empujando con fuerza máxima en el primer golpe para marcar la línea','Arrancando directamente con movimientos largos y rápidos','Aplicando aceite de corte en el primer movimiento'],
+   correct:0,explanation:'El pulgar actúa como guía en los primeros movimientos cortos y suaves; una vez el corte está iniciado (kerf establecido), se pasa a movimientos largos y completos.'},
+
+  {band:'m',tag:'utiles_serrado',level:'Medio',points:15,
+   q:'¿Qué hoja de sierra se usa para cortar tubos de pared delgada?',
+   options:['Hoja de 32 TPI para evitar el enganchado de dientes en la pared delgada','Hoja de 8 TPI para mayor velocidad','Hoja de 14 TPI de uso general','Hoja de 6 TPI para metales blandos'],
+   correct:0,explanation:'Las paredes delgadas requieren hojas de alto TPI (32) para que siempre haya varios dientes en contacto; con TPI bajo, el diente se engancha en el borde y se rompe.'},
+
+  {band:'m',tag:'proceso_serrado',level:'Medio',points:15,
+   q:'¿Qué presión debe aplicarse durante el movimiento de retroceso del arco de sierra?',
+   options:['Ninguna; el retroceso es un movimiento en vacío sin presión sobre la pieza','La misma que en el avance','Mayor presión para eliminar rebabas','Presión lateral para guiar la hoja'],
+   correct:0,explanation:'El corte solo se produce en el movimiento de avance (empuje); presionar en el retroceso desgasta los dientes innecesariamente y acorta la vida de la hoja.'},
+
+  {band:'m',tag:'seguridad_serrado',level:'Medio',points:15,
+   q:'¿Cuál es el riesgo principal cuando la hoja de sierra se rompe durante el corte?',
+   options:['Proyección de fragmentos de hoja a alta velocidad que pueden causar heridas en manos y cara','El arco de sierra golpea la bancada','La pieza sale despedida del tornillo de banco','La hoja se incrusta en la pieza sin riesgo para el operario'],
+   correct:0,explanation:'Una hoja que rompe puede proyectar fragmentos metálicos; es obligatorio usar gafas de seguridad y no acercar la cara al plano de corte durante el serrado.'},
+
+  {band:'m',tag:'parametros_serrado',level:'Medio',points:15,
+   q:'¿Cuántas pasadas de sierra son recomendables para cortar una barra de acero de Ø30 mm?',
+   options:['Cortar rotando la barra 90° cada pocos mm para mantener el kerf recto y refrigerar la hoja','Cortar de una sola pasada recta hasta el final','Hacer dos pasadas paralelas y luego romper el sobrante','No se recomienda serrar barras de Ø30 mm con arco manual'],
+   correct:0,explanation:'Rotar la barra periódicamente mantiene el kerf simétrico, reduce el calentamiento de la hoja y facilita la evacuación de viruta en la zona de corte.'},
+
+  {band:'m',tag:'utiles_serrado',level:'Medio',points:15,
+   q:'¿Cómo se verifica la tensión correcta de la hoja en el arco de sierra?',
+   options:['La hoja no debe doblarse lateralmente al presionar con el dedo; un sonido agudo al pellizcarla indica tensión correcta','La hoja debe ceder varios milímetros al presionar con el dedo','Solo se verifica visualmente que no haya curvatura','La tensión no afecta al resultado del corte'],
+   correct:0,explanation:'Una hoja bien tensada es rígida lateralmente (no cede al presionar) y emite un sonido agudo al pellizcarla. Sin tensión suficiente, la hoja se dobla y el corte sale desviado.'},
+
+  {band:'m',tag:'proceso_serrado',level:'Medio',points:15,
+   q:'¿Qué longitud de carrera se recomienda usar al serrar manualmente?',
+   options:['El máximo recorrido posible del arco (casi la longitud total de la hoja) para aprovechar todos los dientes','Solo los 5 cm centrales de la hoja','La mitad de la longitud de la hoja','El recorrido no importa si la hoja está bien tensada'],
+   correct:0,explanation:'Usar la longitud máxima distribuye el desgaste entre todos los dientes; los cortes cortos concentran el trabajo en la zona central y desgastan la hoja de forma irregular.'},
+
+  // ── ALTO (8) ──
+  {band:'a',tag:'proceso_serrado',level:'Alto',points:20,
+   q:'Al serrar un perfil en L de acero de 3 mm de espesor, ¿cómo debe orientarse la pieza en el tornillo de banco?',
+   options:['De forma que el corte sea siempre perpendicular a la pared más larga y se mantengan 2-3 dientes en contacto en el ala más delgada','Con el perfil en vertical para que el corte sea más rápido','En horizontal, independientemente del espesor','Solo puede cortarse con sierra de cinta, no con arco manual'],
+   correct:0,explanation:'La orientación debe garantizar que en la zona más delgada (3 mm) siempre haya 2-3 dientes en contacto simultáneo; de lo contrario los dientes se enganchan y rompen.'},
+
+  {band:'a',tag:'parametros_serrado',level:'Alto',points:20,
+   q:'¿Por qué una hoja bimetálica (HSS + acero de muelle) es preferible a una hoja de acero al carbono para uso general en taller?',
+   options:['El filo HSS resiste temperaturas altas sin perder el temple; el cuerpo flexible de acero de muelle absorbe las flexiones sin romper, alargando mucho la vida de la hoja','El acero al carbono es más caro y menos accesible','La hoja bimetálica es más barata en todos los casos','Solo la bimetálica puede cortar materiales no férreos'],
+   correct:0,explanation:'Las hojas bimetálicas combinan filos de HSS (duros y resistentes al calor) con cuerpo flexible (resistente a la fatiga por flexión), obteniendo una vida útil muy superior a las hojas monolíticas.'},
+
+  {band:'a',tag:'proceso_serrado',level:'Alto',points:20,
+   q:'¿Cómo se sabe que la hoja de sierra está llegando al final del corte para evitar un golpe brusco?',
+   options:['Reducir la presión y la velocidad progresivamente; sujetar o apoyar el trozo a separar para que no caiga bruscamente al terminar','Aumentar la presión al final para terminar rápido','El arco de sierra frena automáticamente al final','No hay que tomar precauciones especiales al final del corte'],
+   correct:0,explanation:'Al final del corte, si el trozo cae bruscamente, puede dañar la pieza, romper la hoja o causar lesiones; reducir presión y velocidad y sujetar el trozo es obligatorio.'},
+
+  {band:'a',tag:'utiles_serrado',level:'Alto',points:20,
+   q:'¿Qué es el "kerf" en el serrado y por qué debe tenerse en cuenta al trazar la línea de corte?',
+   options:['El ancho del corte realizado por la sierra (mayor que el espesor de la hoja por el trisado); la línea de corte debe quedar en el material de desecho, fuera del kerf','El filo trasero de los dientes de la hoja','El ángulo de inclinación de los dientes','El nombre del movimiento de avance en el serrado'],
+   correct:0,explanation:'El kerf es el material que la sierra elimina al cortar; si se sierra por el centro de la línea trazada, la pieza queda con 0,5 mm menos de lo previsto. La línea debe quedar en la cara de desecho.'},
+
+  {band:'a',tag:'seguridad_serrado',level:'Alto',points:20,
+   q:'¿Por qué está prohibido soplar con la boca para eliminar las virutas del kerf durante el serrado?',
+   options:['Las virutas metálicas proyectadas pueden impactar en los ojos; deben eliminarse con brocha o aire comprimido a baja presión','Solo está prohibido en materiales que producen polvo tóxico','El soplado hace que la hoja se caliente más','No existe ninguna prohibición al respecto'],
+   correct:0,explanation:'Las partículas metálicas proyectadas por el soplado oral pueden causar lesiones oculares graves; se usan brochas o aire comprimido a distancia con gafas puestas.'},
+
+  {band:'a',tag:'parametros_serrado',level:'Alto',points:20,
+   q:'Al serrar aluminio con arco de sierra, ¿qué problema específico aparece y cómo se soluciona?',
+   options:['El aluminio blando carga la picadura de los dientes (soldado de viruta); se evita con hojas de menor TPI (14-18) y aplicando cera o aceite de corte','El aluminio es demasiado duro para el arco de sierra manual','El aluminio no puede serrarse, solo cortarse con cizalla','Se usa hoja de mayor TPI para mayor precisión'],
+   correct:0,explanation:'La viruta de aluminio es blanda y se suelda en los huecos de los dientes (galleteo); hojas de menor TPI tienen huecos más grandes y la viruta sale más fácilmente; la lubricación con cera también ayuda.'},
+
+  {band:'a',tag:'proceso_serrado',level:'Alto',points:20,
+   q:'¿Cómo se realiza correctamente el corte de un tubo cilíndrico con arco de sierra?',
+   options:['Marcar el perímetro con plantilla o rollo de papel, iniciar el corte y rotar el tubo periódicamente para cortar de forma simétrica evitando que la hoja se desvíe','Cortar de una sola pasada desde arriba hasta abajo sin rotar','Aplastar el tubo en el tornillo de banco y serrar en plano','El tubo solo puede cortarse con sierra de tronzar, no con arco manual'],
+   correct:0,explanation:'Rotando el tubo durante el corte se mantiene la hoja perpendicular al eje; sin rotación, la hoja tiende a desviarse hacia la parte más delgada de la pared visible desde un solo lado.'},
+
+  {band:'a',tag:'utiles_serrado',level:'Alto',points:20,
+   q:'¿Qué indica la rotura frecuente de hojas de sierra en el mismo punto durante el corte?',
+   options:['La hoja tiene tensión excesiva o hay una entalla (punto de concentración de tensión) en ese punto; también puede deberse a que la pieza vibra','El material es demasiado duro para el arco manual','El operario empuja demasiado lento','La hoja tiene demasiados TPI para el espesor de la pieza'],
+   correct:0,explanation:'La rotura repetida en el mismo punto indica fatiga localizada por concentración de tensión (entalla previa, defecto de fabricación) o tensión excesiva en el montaje de la hoja.'}
+],
+
+// ══════════════════════════════════════════════════════════════
+// BLOQUE 3 · LIMADO  (4b + 8m + 8a = 20)
+// ══════════════════════════════════════════════════════════════
+limado:[
+  // ── BÁSICO (4) ──
+  {band:'b',tag:'tipos_lima',level:'Básico',points:10,
+   q:'¿Qué tipo de lima se usa para el desbaste inicial de gran cantidad de material?',
+   options:['Lima basta o de picadura gruesa','Lima extrafina para acabado','Lima de aguja para ranuras estrechas','Lima redonda para agujeros'],
+   correct:0,explanation:'La lima basta tiene dientes grandes y espaciados que arrancan mucho material rápidamente; se usa en la primera fase del limado cuando hay mucho exceso a eliminar.'},
+
+  {band:'b',tag:'proceso_limado',level:'Básico',points:10,
+   q:'¿Con qué parte de la lima se sujeta el mango?',
+   options:['Con la mano dominante, empuñando el mango firmemente','Con los dos dedos índice y pulgar únicamente','Con la mano no dominante para guiar','El mango se sujeta con un tornillo de banco especial'],
+   correct:0,explanation:'La mano dominante empuña el mango y aplica la fuerza de avance; la mano no dominante guía y aplica presión sobre el extremo (punta) de la lima.'},
+
+  {band:'b',tag:'tipos_lima',level:'Básico',points:10,
+   q:'¿Qué perfil de lima se usa para limar superficies cóncavas y agujeros?',
+   options:['Lima redonda (o media caña para superficies mixtas)','Lima plana','Lima triangular','Lima de cuchillo'],
+   correct:0,explanation:'La lima redonda permite trabajar superficies curvas cóncavas y ampliar agujeros; la media caña combina una cara plana y otra convexa para superficies mixtas.'},
+
+  {band:'b',tag:'seguridad_limado',level:'Básico',points:10,
+   q:'¿Por qué es obligatorio que la lima tenga mango antes de usarla?',
+   options:['La espiga sin mango puede clavarse en la palma de la mano si la lima se bloquea bruscamente','El mango es solo decorativo, no es obligatorio','Sin mango la lima corta menos eficientemente','El mango mejora el acabado superficial'],
+   correct:0,explanation:'Si la lima se detiene bruscamente (pieza trabada), la espiga cónica puede penetrar en la palma causando heridas graves; el mango es un EPI obligatorio en toda lima de taller.'},
+
+  // ── MEDIO (8) ──
+  {band:'m',tag:'proceso_limado',level:'Medio',points:15,
+   q:'¿Qué es el limado cruzado y para qué se usa?',
+   options:['Pasar la lima en dos direcciones a 45° entre sí; el cruzado de las marcas permite detectar altos y bajos de la superficie','Limar en una sola dirección con dos limas distintas','Usar dos limas simultáneamente','Limar el cruce entre dos superficies perpendiculares'],
+   correct:0,explanation:'El limado cruzado produce marcas en dos direcciones; las zonas sin marcar en la segunda pasada son bajos; las zonas sin marcar en la primera son altos: así se detecta la planitud.'},
+
+  {band:'m',tag:'tipos_lima',level:'Medio',points:15,
+   q:'¿Cuándo se usa una lima de aguja (o lima de relojero)?',
+   options:['Para trabajos de precisión en zonas estrechas o de difícil acceso: ranuras finas, matrices, moldes','Para el desbaste inicial de barras de acero','Para afilar brocas helicoidales','Para limar superficies grandes con rapidez'],
+   correct:0,explanation:'Las limas de aguja son delgadas, pequeñas y de picadura fina; se usan en trabajos de precisión donde las limas normales no caben o dañarían zonas adyacentes.'},
+
+  {band:'m',tag:'proceso_limado',level:'Medio',points:15,
+   q:'¿Cómo se verifica la planitud de una superficie recién limada?',
+   options:['Apoyando una regla de precisión de canto sobre la superficie y comprobando que no pasa luz entre la regla y la pieza en ningún punto','Solo con el tacto del dedo sobre la superficie','Pintando la superficie y limando hasta que la pintura desaparezca uniformemente','Pesando la pieza antes y después del limado'],
+   correct:0,explanation:'La regla de precisión de canto revela altos y bajos con gran sensibilidad: si pasa luz entre la regla y la superficie, hay una zona baja; si la regla bascula, hay una zona alta.'},
+
+  {band:'m',tag:'tipos_lima',level:'Medio',points:15,
+   q:'¿Qué diferencia hay entre picadura simple y picadura doble en una lima?',
+   options:['La picadura simple tiene dientes en una sola dirección; la doble tiene dos juegos de dientes cruzados, cortando más agresivamente y produciendo viruta más pequeña','La picadura doble produce mejor acabado superficial que la simple','La picadura simple solo se usa en metales blandos','Son términos equivalentes que describen el mismo tipo de lima'],
+   correct:0,explanation:'La picadura doble tiene dos series de dientes cruzados; los dientes activos son más numerosos y cortan viruta más pequeña, arrancando más material que la simple en igual pasada.'},
+
+  {band:'m',tag:'proceso_limado',level:'Medio',points:15,
+   q:'¿A qué altura debe sujetarse la pieza en el tornillo de banco para limar de forma eficiente?',
+   options:['A la altura del codo del operario, para que el movimiento de limado sea horizontal y con el brazo extendido','Lo más bajo posible para mayor estabilidad','Lo más alto posible para ver mejor la superficie','La altura no influye en la calidad del limado'],
+   correct:0,explanation:'La altura de codo permite el movimiento horizontal natural del brazo extendido; si la pieza está muy baja o alta, el limado resulta incómodo, fatiga antes y produce superficies cóncavas o convexas.'},
+
+  {band:'m',tag:'verificacion_limado',level:'Medio',points:15,
+   q:'¿Cómo se verifica la escuadra (ángulo de 90°) entre dos caras recién limadas?',
+   options:['Con una escuadra de precision apoyada en una cara y comprobando que no hay luz entre el brazo y la otra cara','Solo con el tacto','Con el calibre pie de rey midiendo las diagonales','Visualmente comparando con un ángulo de referencia'],
+   correct:0,explanation:'La escuadra de precisión revela cualquier desviación del ángulo recto: si hay luz en la zona superior, la cara está inclinada hacia dentro; si está en la inferior, hacia fuera.'},
+
+  {band:'m',tag:'seguridad_limado',level:'Medio',points:15,
+   q:'¿Cómo se limpia correctamente la lima para evitar el "cargado"?',
+   options:['Con un cepillo de púas de acero en dirección paralela a los dientes, expulsando la viruta atrapada','Con agua y jabón después de cada uso','Con una lima más gruesa pasada transversalmente','Golpeando la lima contra la bancada'],
+   correct:0,explanation:'El cepillo de púas de acero, pasado en la dirección de los dientes (no transversal), extrae la viruta incrustada sin dañar los filos. Golpear la lima puede partir la espiga.'},
+
+  {band:'m',tag:'proceso_limado',level:'Medio',points:15,
+   q:'¿Qué causa la aparición de "ondas" en la superficie al limar?',
+   options:['Presión irregular, movimiento no rectilíneo o que la lima bascula por mal apoyo de la mano guía','Exceso de velocidad en el movimiento de limado','Usar una lima demasiado fina para el material','El tornillo de banco apretado en exceso'],
+   correct:0,explanation:'Las ondas aparecen cuando la presión varía durante la pasada o la lima bascula; la mano guía debe mantener la lima perfectamente horizontal en todo el recorrido.'},
+
+  // ── ALTO (8) ──
+  {band:'a',tag:'proceso_limado',level:'Alto',points:20,
+   q:'¿Cómo se liman correctamente las esquinas interiores a 90° sin redondearlas?',
+   options:['Usando una lima de canto (safe edge) que no corta en uno de sus cantos, limando cada cara sin tocar la adyacente','Limando en diagonal a 45° en la esquina','Usando lima redonda en la esquina para acceder mejor','Es imposible conseguir esquinas interiores vivas con limado manual'],
+   correct:0,explanation:'La lima "safe edge" (canto seguro) tiene un canto sin dientes; se usa en la cara adyacente sin que ese canto ataque la otra cara, preservando el ángulo interior vivo.'},
+
+  {band:'a',tag:'verificacion_limado',level:'Alto',points:20,
+   q:'Al limar una superficie que debe quedar plana dentro de 0,05 mm, ¿qué método de verificación es más adecuado?',
+   options:['Plato de mármol con azul de Prusia: se entinta el plato, se apoya la pieza y se observa la distribución del color en la superficie','Solo regla de canto sin medición adicional','Calibre pie de rey midiendo en varios puntos','Solo comparador de reloj sin plato de referencia'],
+   correct:0,explanation:'El plato de mármol entintado revela los puntos altos (donde el color se transfiere) con resolución de pocas micras; es el método más sensible para verificar planitud de alta precisión.'},
+
+  {band:'a',tag:'tipos_lima',level:'Alto',points:20,
+   q:'¿Por qué no se usa la lima para limar aluminio sin precauciones previas?',
+   options:['El aluminio blando carga la picadura rápidamente (galleteo); se evita frotando tiza en la lima o usando una lima con picadura especial para aluminio','El aluminio es demasiado duro para la lima estándar','La lima de acero reacciona químicamente con el aluminio','El limado de aluminio no está permitido en ningún taller'],
+   correct:0,explanation:'El aluminio, blando y dúctil, se incrusta entre los dientes de la lima (galleteo) rápidamente; la tiza actúa como lubricante sólido que dificulta la adhesión de la viruta.'},
+
+  {band:'a',tag:'proceso_limado',level:'Alto',points:20,
+   q:'¿Cómo se lima una superficie cilíndrica exterior para reducir su diámetro uniformemente?',
+   options:['Con movimiento combinado: avance de la lima con ligera rotación de la pieza, verificando el diámetro frecuentemente con micrómetro','Limando solo un lado hasta la cota y girando 180°','Con movimientos longitudinales sin rotar la pieza','El diámetro de ejes solo puede reducirse en el torno, no con limado manual'],
+   correct:0,explanation:'El movimiento combinado lima-rotación-pieza produce un desgaste uniforme en el perímetro; limar un solo lado provoca ovalización.'},
+
+  {band:'a',tag:'verificacion_limado',level:'Alto',points:20,
+   q:'¿Cuándo se considera que una superficie está "a escuadra" con otra con suficiente precisión para uniones de taller?',
+   options:['Cuando la escuadra de precision apoyada en la cara de referencia no muestra luz apreciable entre el brazo y la cara verificada en ningún punto de la longitud','Cuando el ángulo medido con goniómetro da entre 89° y 91°','Cuando el operario aprecia la perpendicularidad visualmente','Cuando las dimensiones de las dos caras son iguales'],
+   correct:0,explanation:'Para trabajos de taller, la ausencia de luz entre la escuadra y la cara verifica la perpendicularidad dentro de las tolerancias prácticas; el goniómetro se usa cuando se exige mayor rigor.'},
+
+  {band:'a',tag:'seguridad_limado',level:'Alto',points:20,
+   q:'¿Qué riesgo presenta trabajar con una lima cuya espiga está suelta en el mango?',
+   options:['La lima puede separarse del mango al retirar la fuerza y la espiga clavarse en la palma o el brazo','Solo reduce la eficiencia del limado sin riesgo para el operario','Aumenta las vibraciones sin otros riesgos','No presenta ningún riesgo si se trabaja con cuidado'],
+   correct:0,explanation:'Una espiga suelta puede salir del mango sin previo aviso cuando se levanta la lima; la espiga cónica y afilada puede penetrar en la mano del operario causando heridas graves.'},
+
+  {band:'a',tag:'tipos_lima',level:'Alto',points:20,
+   q:'¿Cómo se afila o reacondiciona una lima que ha perdido su capacidad de corte?',
+   options:['Las limas no pueden afilarse; cuando están gastadas se desechan y reponen (los dientes son fresados, no son afilables manualmente)','Pasando otra lima más gruesa por la picadura','Calentando la lima y templándola de nuevo','Con una muela abrasiva de grano fino'],
+   correct:0,explanation:'La picadura de las limas se obtiene por fresado o por picado con cincel; una vez desgastados, los dientes no pueden reafilarse manualmente. Las limas gastadas se desechan.'},
+
+  {band:'a',tag:'proceso_limado',level:'Alto',points:20,
+   q:'¿Qué es el limado de acabado y en qué se diferencia del desbaste?',
+   options:['El acabado usa lima fina o extrafina con presión reducida y movimientos largos para conseguir Ra baja; el desbaste usa lima basta con más presión para eliminar material rápidamente','Son el mismo proceso con distinta denominación','El acabado se realiza siempre con movimiento transversal','El desbaste siempre requiere lima redonda'],
+   correct:0,explanation:'En el desbaste se prioriza la velocidad de eliminación de material; en el acabado se busca Ra baja y planitud; la selección de la lima (picadura) y la presión son los factores clave.'}
+],
+
+// ══════════════════════════════════════════════════════════════
+// BLOQUE 4 · TALADRADO Y ESCARIADO  (4b + 8m + 8a = 20)
+// ══════════════════════════════════════════════════════════════
+taladrado:[
+  // ── BÁSICO (4) ──
+  {band:'b',tag:'brocas',level:'Básico',points:10,
+   q:'¿Cuál es el ángulo de punta estándar de una broca helicoidal para uso general en acero?',
+   options:['118°','90°','60°','135°'],
+   correct:0,explanation:'El ángulo de punta de 118° es el estándar para aceros de uso general; 135° se usa para materiales duros y 90° para plásticos y madera.'},
+
+  {band:'b',tag:'proceso_taladrado',level:'Básico',points:10,
+   q:'¿Qué operación previa al taladrado evita que la broca resbale sobre la superficie?',
+   options:['Graneteado del centro del agujero','Pintura de la zona a taladrar','Calentamiento de la pieza','Aplicación de aceite de corte antes de iniciar'],
+   correct:0,explanation:'El granete crea una marca cónica que aloja el vértice de la broca en el inicio, evitando que resbale sobre la superficie plana.'},
+
+  {band:'b',tag:'escariado',level:'Básico',points:10,
+   q:'¿Para qué sirve el escariado después del taladrado?',
+   options:['Mejorar el diámetro, la redondez y el acabado superficial del agujero taladrado','Aumentar la profundidad del agujero','Crear una rosca en el interior del agujero','Eliminar la rebaba del filo de entrada del agujero'],
+   correct:0,explanation:'El escariador lleva el agujero a su cota exacta con tolerancia fina (H7) y acabado superficial preciso, imposibles de conseguir solo con la broca.'},
+
+  {band:'b',tag:'seguridad_taladrado',level:'Básico',points:10,
+   q:'¿Por qué está prohibido usar guantes de punto al trabajar en el taladro de columna?',
+   options:['El guante puede engancharse en la broca giratoria y arrastrar la mano hacia el filo en una fracción de segundo','Porque reducen la sensibilidad táctil del operario','Porque la normativa lo prohíbe sin causa técnica','Porque aumentan la humedad y oxidan la pieza'],
+   correct:0,explanation:'En máquinas rotativas, los guantes de punto pueden ser atrapados por la broca y provocar amputaciones en una fracción de segundo; están terminantemente prohibidos.'},
+
+  // ── MEDIO (8) ──
+  {band:'m',tag:'proceso_taladrado',level:'Medio',points:15,
+   q:'¿Cómo se calcula la velocidad de giro (rpm) para taladrar acero con broca de ø8 mm HSS (Vc = 20 m/min)?',
+   options:['n = (20 × 1000) / (π × 8) ≈ 796 rpm','n = 20 × 8 × π ≈ 503 rpm','n = 1000 / (20 × 8) ≈ 6 rpm','n = 20 / (π × 0,008) ≈ 796 rpm'],
+   correct:0,explanation:'Fórmula: n = (Vc × 1000) / (π × d) = (20 × 1000) / (3,14 × 8) ≈ 796 rpm.'},
+
+  {band:'m',tag:'brocas',level:'Medio',points:15,
+   q:'¿Cómo se identifica una broca desgastada durante el taladrado?',
+   options:['Mayor esfuerzo de avance, temperatura elevada (viruta azulada o quemada) y agujero de diámetro menor al nominal','Disminución del ruido de corte','Viruta larga continua en espiral sin cambio de color','El agujero resulta mayor de lo esperado'],
+   correct:0,explanation:'Una broca desgastada genera mayor rozamiento: necesita más fuerza, produce calor excesivo (viruta azul) y no mantiene el diámetro correcto.'},
+
+  {band:'m',tag:'escariado',level:'Medio',points:15,
+   q:'¿Cuánto material debe dejar el taladrado previo para el escariador (sobredimensión de escariado)?',
+   options:['0,1-0,3 mm en diámetro (0,05-0,15 mm por lado) para escariadores estándar','1-2 mm en diámetro para que el escariador trabaje eficientemente','El mismo diámetro nominal sin sobredimensión','0,5-1 mm en diámetro según el material'],
+   correct:0,explanation:'El escariador elimina muy poco material (0,05-0,15 mm por lado); si la sobredimensión es mayor, el escariador no puede corregir correctamente y se desgasta prematuramente.'},
+
+  {band:'m',tag:'proceso_taladrado',level:'Medio',points:15,
+   q:'¿Qué es la velocidad de avance en el taladrado y cómo afecta al resultado?',
+   options:['La penetración axial por revolución (mm/rev); avance excesivo rompe la broca; insuficiente aumenta el rozamiento sin producir viruta adecuada','La velocidad de giro del husillo en rpm','La fuerza aplicada sobre el portabrocas','La velocidad de desplazamiento lateral del husillo'],
+   correct:0,explanation:'El avance equilibrado produce viruta correcta y refrigera eficientemente; excesivo sobrecarga la broca hasta rotura; insuficiente produce rozamiento y calentamiento sin corte.'},
+
+  {band:'m',tag:'brocas',level:'Medio',points:15,
+   q:'¿Qué diferencia hay entre una broca HSS y una de carburo (metal duro) en cuanto a su uso?',
+   options:['La HSS es tenaz y resiste impactos (uso general); la de carburo es más dura y resistente al calor (materiales duros o producción en serie) pero más frágil','La de carburo es más barata y se usa para materiales blandos','Son intercambiables en todos los materiales','La HSS solo sirve para plásticos y madera'],
+   correct:0,explanation:'Las brocas HSS admiten reetilado y soportan impactos; las de carburo cortan materiales duros y mantienen el filo a mayor velocidad, pero se fracturan ante impactos o vibraciones.'},
+
+  {band:'m',tag:'escariado',level:'Medio',points:15,
+   q:'¿En qué dirección debe girarse el escariador a mano para extraerlo del agujero?',
+   options:['Siempre en el sentido de corte (mismo sentido que al introducirlo) y nunca en sentido contrario','En sentido contrario para no dañar el filo','Se puede girar en cualquier dirección para extraerlo','Solo se extrae tirando axialmente sin girar'],
+   correct:0,explanation:'Girar el escariador en sentido contrario daña los filos al atrapar viruta entre el diente y la pared del agujero; siempre se extrae girando en el mismo sentido que al introducirlo.'},
+
+  {band:'m',tag:'seguridad_taladrado',level:'Medio',points:15,
+   q:'¿Cómo debe sujetarse una pieza pequeña al taladrar en taladro de columna?',
+   options:['Con tornillo de banco de taladro o mordaza mecánica fijada a la mesa; nunca con la mano','Sujetándola con la mano izquierda mientras se taladra con la derecha','Apoyándola sobre la mesa sin fijar para que pueda ceder','Solo es necesario fijarla si el agujero es mayor de Ø10 mm'],
+   correct:0,explanation:'Una pieza no fijada puede girar bruscamente cuando la broca penetra; el giro de la pieza puede causar heridas graves. La sujeción mecánica es obligatoria siempre.'},
+
+  {band:'m',tag:'proceso_taladrado',level:'Medio',points:15,
+   q:'¿Qué refrigerante se usa para taladrar acero inoxidable y por qué es crítico?',
+   options:['Aceite de corte específico o taladrina; el inoxidable tiene baja conductividad térmica y tendencia a la acritud, deteriorando la broca en segundos sin refrigeración','Agua pura, porque el inoxidable no reacciona con ella','No se usa refrigeración; el inoxidable disipa bien el calor','Solo aire comprimido, porque el aceite mancha el inoxidable'],
+   correct:0,explanation:'El inoxidable acumula calor rápidamente (baja conductividad) y se endurece por acritud bajo el filo; sin refrigeración adecuada la broca se embota en pocos segundos.'},
+
+  // ── ALTO (8) ──
+  {band:'a',tag:'proceso_taladrado',level:'Alto',points:20,
+   q:'Al taladrar un agujero pasante en una pieza apoyada directamente sobre la mesa del taladro, ¿qué problema puede ocurrir al salir la broca?',
+   options:['La broca arranca una rebaba grande en la cara de salida y puede dañar la mesa; se evita interponiendo un bloque de madera o sacrificio bajo la pieza','No ocurre ningún problema especial','La broca se rompe al contactar con la mesa','El agujero queda con diámetro inferior al nominal'],
+   correct:0,explanation:'Al salir, la broca encuentra resistencia repentinamente reducida y arranca un triángulo de material en la cara de salida; un bloque de madera soporta la pieza y absorbe la salida de la broca.'},
+
+  {band:'a',tag:'brocas',level:'Alto',points:20,
+   q:'¿Cómo se reafia correctamente una broca helicoidal HSS desgastada en la esmeriladora?',
+   options:['Afilando el filo principal a 59° respecto al eje, manteniendo ángulo de incidencia positivo y sin quemar el filo (sin azulear)','Afilando solo la punta sin ángulo específico','Pasando la punta sobre la muela hasta que brille sin control de ángulo','Solo en máquina de afilado CNC; no es posible a mano'],
+   correct:0,explanation:'El ángulo de punta estándar es 118° (59° por filo). Se requiere refrigeración frecuente para no perder el temple HSS; el azulado del filo indica sobrecalentamiento y pérdida de dureza.'},
+
+  {band:'a',tag:'escariado',level:'Alto',points:20,
+   q:'¿Qué tolerancia de agujero se obtiene típicamente con escariado manual a mano en acero?',
+   options:['H7 (ajuste de transición/deslizante de alta precisión)','H11 (ajuste libre)','H14 (agujero de construcción ordinaria)','IT3 (precisión de instrumentos de medida)'],
+   correct:0,explanation:'El escariado manual logra H7 de forma consistente; H11 se consigue solo con taladrado; IT3 requiere rectificado o bruñido. H7 es el estándar para ajustes deslizantes y de transición.'},
+
+  {band:'a',tag:'proceso_taladrado',level:'Alto',points:20,
+   q:'¿Cómo se taladra un agujero de gran diámetro (ej. Ø25 mm) con taladro de columna cuando no se dispone de broca de ese diámetro?',
+   options:['Predrilado con broca de Ø5 mm (piloto) → Ø12 mm → Ø25 mm en tres pasadas progresivas','Con una sola broca de Ø25 mm a velocidad más baja','Solo es posible con fresa en fresadora, no con taladro','Con broca de punta plana de Ø25 mm a baja velocidad'],
+   correct:0,explanation:'El taladrado en varias pasadas reduce el esfuerzo en cada paso, centra correctamente el agujero (la broca pequeña no desvía) y evita la rotura por exceso de par en la primera pasada.'},
+
+  {band:'a',tag:'brocas',level:'Alto',points:20,
+   q:'¿Qué es el ángulo de incidencia de una broca y qué ocurre si es cero o negativo?',
+   options:['El ángulo entre el filo y la pared del agujero que permite el corte; si es cero o negativo el filo frota sin cortar, la broca se calienta y no avanza','El ángulo de la hélice de la broca que evacúa la viruta','El ángulo de punta de 118° total de la broca','El ángulo entre el eje de la broca y la superficie de la pieza'],
+   correct:0,explanation:'El ángulo de incidencia positivo hace que solo el filo contacte con el material; si es cero, el talón también roza, impidiendo el corte y generando calor excesivo.'},
+
+  {band:'a',tag:'escariado',level:'Alto',points:20,
+   q:'¿Por qué se lubrica el escariador durante el escariado aunque el material sea acero blando?',
+   options:['Para reducir el rozamiento entre los flancos del escariador y la pared, mejorar el acabado Ra y evacuar la viruta sin que se adhiera a los filos','Solo para evitar la oxidación del escariador','La lubricación no es necesaria en materiales blandos','Para aumentar la dureza superficial del agujero'],
+   correct:0,explanation:'Incluso en acero blando, sin lubricación el rozamiento aumenta la Ra, puede provocar adherencia de viruta en los filos (filo recrecido) y desgasta prematuramente el escariador.'},
+
+  {band:'a',tag:'seguridad_taladrado',level:'Alto',points:20,
+   q:'¿Qué medida de seguridad es imprescindible al taladrar chapa metálica fina con taladro de columna?',
+   options:['Fijar la chapa con mordaza y colocar un bloque de madera bajo ella; la chapa sin soporte vibra violentamente y puede girar en espiral al salir la broca','Solo colocar gafas de seguridad','Taladrar a la máxima velocidad para reducir el tiempo de exposición','No es necesaria ninguna precaución especial en chapas finas'],
+   correct:0,explanation:'La chapa fina sin soporte vibra (chatter) dificultando el corte y puede engancharse en la broca girando en espiral; la madera bajo la chapa y la mordaza son obligatorias.'},
+
+  {band:'a',tag:'proceso_taladrado',level:'Alto',points:20,
+   q:'¿Cómo se comprueba que el agujero taladrado es perpendicular a la superficie de la pieza?',
+   options:['Con una escuadra de precision apoyada en la superficie y verificando que una broca calibrada introducida en el agujero sea paralela a la escuadra, o midiendo con calibre en distintas orientaciones','Solo visualmente comparando con una línea vertical','Midiendo el diámetro con calibre; si es correcto, el agujero es perpendicular','Solo es posible verificarlo con máquina de medición por coordenadas'],
+   correct:0,explanation:'La perpendicularidad se comprueba verificando que el eje del agujero es paralelo a la escuadra en dos orientaciones a 90°; la desviación en una sola orientación es insuficiente.'}
+],
+
+// ══════════════════════════════════════════════════════════════
+// BLOQUE 5 · ROSCADO  (4b + 8m + 8a = 20)
+// ══════════════════════════════════════════════════════════════
+roscado:[
+  // ── BÁSICO (4) ──
+  {band:'b',tag:'tipos_rosca',level:'Básico',points:10,
+   q:'¿Qué es el paso de una rosca métrica?',
+   options:['La distancia axial entre dos filetes consecutivos, expresada en milímetros','El diámetro nominal del tornillo en milímetros','El ángulo del perfil de la rosca (60°)','El número de filetes por pulgada'],
+   correct:0,explanation:'El paso es la distancia que avanza el tornillo por cada vuelta completa; en la rosca métrica se expresa en milímetros (ej. M10 × 1,5 tiene paso 1,5 mm).'},
+
+  {band:'b',tag:'machuelos',level:'Básico',points:10,
+   q:'¿Para qué sirve el machuelo en el taller de mecanizado?',
+   options:['Cortar rosca interior (hembra) en un agujero taladrado previamente','Cortar rosca exterior en un vástago','Verificar el paso de la rosca','Limpiar la rosca de suciedad y óxido'],
+   correct:0,explanation:'El machuelo corta los filetes de rosca en el interior de un agujero; la terraja hace lo propio en el exterior de un vástago o espárrago.'},
+
+  {band:'b',tag:'terrajas',level:'Básico',points:10,
+   q:'¿Qué herramienta se usa para roscar el exterior de un vástago metálico?',
+   options:['Terraja y portaterraja','Machuelo y portamachuelos','Escariador y escariador a máquina','Granete y martillo'],
+   correct:0,explanation:'La terraja es la herramienta de corte para roscado exterior; el portaterraja la sujeta y transmite el par de giro del operario.'},
+
+  {band:'b',tag:'proceso_roscado',level:'Básico',points:10,
+   q:'¿Qué operación previa es imprescindible antes de roscar con machuelo?',
+   options:['Taladrar el agujero previo con el diámetro correcto para la rosca (diámetro de núcleo)','Granetelar el centro del futuro agujero roscado','Escariar el agujero a diámetro nominal','Aplicar azul de Prusia en la zona a roscar'],
+   correct:0,explanation:'El machuelo necesita un agujero previo de diámetro igual al diámetro de núcleo de la rosca; un agujero incorrecto romperá el machuelo o producirá una rosca defectuosa.'},
+
+  // ── MEDIO (8) ──
+  {band:'m',tag:'proceso_roscado',level:'Medio',points:15,
+   q:'¿Cómo se calcula el diámetro del agujero previo para roscar M10 × 1,5?',
+   options:['Diámetro previo = diámetro nominal − paso = 10 − 1,5 = 8,5 mm','Diámetro previo = diámetro nominal = 10 mm','Diámetro previo = diámetro nominal + paso = 11,5 mm','Diámetro previo = diámetro nominal / 2 = 5 mm'],
+   correct:0,explanation:'Fórmula aproximada: Ø previo = Ø nominal − paso. Para M10 × 1,5: 10 − 1,5 = 8,5 mm. La broca de 8,5 mm deja el material justo para que el machuelo corte los filetes.'},
+
+  {band:'m',tag:'machuelos',level:'Medio',points:15,
+   q:'¿Cuál es la función de cada machuelo en el juego de tres (desbaste, semiacabado y acabado)?',
+   options:['El desbaste elimina el grueso del material iniciando la rosca; el semiacabado la profundiza; el acabado la lleva a tolerancia y forma final','Los tres son iguales; se usan en cualquier orden','Solo se usa el de acabado en materiales blandos','El de desbaste tiene más dientes que el de acabado'],
+   correct:0,explanation:'El juego de tres reparte el esfuerzo: el primero actúa en la zona cónica larga y quita la mayor parte de material; el segundo profundiza; el tercero corrige geometría y tolerancia.'},
+
+  {band:'m',tag:'proceso_roscado',level:'Medio',points:15,
+   q:'¿Por qué se avanza media vuelta y se retrocede un cuarto al roscar con machuelo a mano?',
+   options:['El retroceso rompe la viruta evitando que se acumule y bloquee el machuelo; reduce el riesgo de rotura','Para comprobar que la rosca tiene el paso correcto','Para aplicar lubricante en el retroceso','El avance fraccionado no es necesario si el machuelo es nuevo'],
+   correct:0,explanation:'La viruta que se acumula sin romper puede bloquear el machuelo y girarlo hasta rotura; el retroceso de 1/4 de vuelta rompe la viruta y la evacúa de la zona de corte.'},
+
+  {band:'m',tag:'tipos_rosca',level:'Medio',points:15,
+   q:'¿En qué se diferencia la rosca métrica de la Whitworth en su perfil?',
+   options:['La métrica tiene perfil triangular de 60°; la Whitworth tiene perfil triangular de 55° con fondos y crestas redondeados','La métrica tiene 55° y la Whitworth 60°','Ambas tienen el mismo ángulo de perfil','La Whitworth es cuadrada; la métrica es triangular'],
+   correct:0,explanation:'La rosca métrica ISO tiene ángulo de 60° con fondos planos o ligeramente redondeados; la Whitworth británica tiene 55° y fondos y crestas redondeados.'},
+
+  {band:'m',tag:'terrajas',level:'Medio',points:15,
+   q:'¿Cómo se inicia correctamente el roscado exterior con terraja?',
+   options:['Con la terraja perpendicular al vástago, aplicando presión axial moderada las primeras vueltas y comprobando la escuadra con escuadra de precisión','Inclinando la terraja 10° para facilitar la entrada','Girando a la máxima velocidad posible para el primer filete','Sin comprobación de escuadra; la terraja se centra sola'],
+   correct:0,explanation:'La perpendicularidad en el inicio es crítica; una terraja no escuadrada produce una rosca inclinada que no ensamblará correctamente con la tuerca.'},
+
+  {band:'m',tag:'proceso_roscado',level:'Medio',points:15,
+   q:'¿Qué lubricante se usa para roscar acero con machuelo?',
+   options:['Aceite de corte o taladrina; en acero inoxidable, aceite específico sin cloro','Agua pura','Grasa de litio','Ninguno; el roscado en seco da mejor acabado'],
+   correct:0,explanation:'El aceite de corte reduce el rozamiento y la temperatura, mejora el acabado de los filetes y alarga la vida del machuelo. En inoxidable se usan aceites sin cloro para evitar corrosión intergranular.'},
+
+  {band:'m',tag:'seguridad_roscado',level:'Medio',points:15,
+   q:'¿Cuál es la causa más frecuente de rotura de machuelos en el taller?',
+   options:['Agujero previo demasiado pequeño, falta de lubricación, exceso de par o machuelo atascado por viruta acumulada','El machuelo es de mala calidad','La velocidad de giro es demasiado alta','El material de la pieza es demasiado blando'],
+   correct:0,explanation:'La mayoría de roturas se deben a la combinación de agujero pequeño (más material a cortar), falta de lubricación (mayor rozamiento) y no romper la viruta (acumulación que bloquea el machuelo).'},
+
+  {band:'m',tag:'tipos_rosca',level:'Medio',points:15,
+   q:'¿Qué es una rosca de paso fino y cuándo se usa frente a la de paso normal?',
+   options:['Tiene paso menor que la estándar; se usa en uniones sometidas a vibraciones porque autoaprieta mejor, y cuando se necesita mayor precisión de ajuste axial','El paso fino es siempre más resistente que el normal','Solo se usa en materiales blandos','El paso fino no existe en la norma métrica ISO'],
+   correct:0,explanation:'Las roscas de paso fino (ej. M10 × 1 frente a M10 × 1,5 estándar) son más resistentes al aflojamiento por vibración y permiten ajustes axiales más precisos.'},
+
+  // ── ALTO (8) ──
+  {band:'a',tag:'proceso_roscado',level:'Alto',points:20,
+   q:'¿Cómo se extrae un machuelo roto en el interior de un agujero?',
+   options:['Con extractor de machuelos (garras que encajan en los canales), disolvente penetrante, EDM (electroerosión) como último recurso, o destruyendo el machuelo con ácido nítrico si la pieza es de aluminio','Con broca de mayor diámetro perforando sobre el machuelo','Con calor (soplete) para dilatarlo y extraerlo','Golpeando con granete desde el exterior'],
+   correct:0,explanation:'El extractor de machuelos (gripper) es el primer recurso; si no funciona, la electroerosión puede erosionar el machuelo sin dañar la pieza; el ácido nítrico disuelve el acero del machuelo pero no el aluminio de la pieza.'},
+
+  {band:'a',tag:'tipos_rosca',level:'Alto',points:20,
+   q:'¿Para qué se usa la rosca trapezoidal (Tr) en mecanismos de transmisión de movimiento?',
+   options:['Por su perfil trapezoidal de 30° que transmite grandes fuerzas axiales con menor rozamiento que la triangular, y admite tuercas partidas para eliminar el juego','Por su mayor resistencia a la corrosión','Por ser más fácil de fabricar que la rosca métrica','Porque no necesita lubricación en servicio'],
+   correct:0,explanation:'La rosca Tr tiene flancos con menor ángulo que la triangular, lo que reduce el componente de fuerza radial y permite transmitir par axial eficientemente; usada en husillos de tornos, prensas y mordazas.'},
+
+  {band:'a',tag:'machuelos',level:'Alto',points:20,
+   q:'¿Cómo se rosca un agujero ciego con machuelo sin llegar al fondo y sin romper el machuelo?',
+   options:['Usar el juego completo de tres machuelos; al llegar a la profundidad marcada, retroceder sin forzar; el machuelo de acabado de rosca corta hasta 1-2 filetes del fondo','Roscar hasta que el machuelo no pueda avanzar más y aplicar entonces mayor par','Solo el machuelo de acabado puede llegar al fondo sin riesgo','Roscar sin retroceder para aprovechar al máximo la profundidad'],
+   correct:0,explanation:'En agujeros ciegos, el machuelo llega al fondo y la viruta no puede salir hacia adelante; si se fuerza, se rompe. Los machuelos de agujero ciego tienen cono más corto para llegar más al fondo; el retroceso frecuente es obligatorio.'},
+
+  {band:'a',tag:'terrajas',level:'Alto',points:20,
+   q:'¿Cómo se verifica que una rosca exterior roscada con terraja es correcta antes de intentar enroscar la tuerca?',
+   options:['Con un calibre pasa/no pasa para roscas exteriores; el calibre pasa (anillo "pasa") debe entrar sin forzar; el de no pasa no debe entrar','Enroscando directamente la tuerca; si entra es correcta','Midiendo el diámetro exterior con micrómetro y comparando con el nominal','Solo visualmente bajo luz intensa'],
+   correct:0,explanation:'Los calibres pasa/no pasa son el método normalizado de verificación de roscas; el micrómetro mide el diámetro exterior pero no verifica el perfil ni el paso.'},
+
+  {band:'a',tag:'proceso_roscado',level:'Alto',points:20,
+   q:'¿Por qué al roscar acero inoxidable con machuelo se recomienda avanzar menos por vuelta (1/4 en lugar de 1/2) antes de retroceder?',
+   options:['El inoxidable tiende a la acritud (se endurece bajo el filo); la viruta más corta y el retroceso más frecuente evitan el gripado del machuelo y la rotura','Porque el inoxidable tiene mayor paso de rosca','Para no dañar el recubrimiento de cromo del inoxidable','El roscado del inoxidable no requiere precauciones especiales'],
+   correct:0,explanation:'La acritud del inoxidable hace que la zona bajo el filo se endurezca rápidamente; virutas largas acumuladas favorecen el gripado; el avance fraccionado muy reducido minimiza este riesgo.'},
+
+  {band:'a',tag:'tipos_rosca',level:'Alto',points:20,
+   q:'¿Qué diferencia funcional hay entre una rosca a derechas y una a izquierdas?',
+   options:['La rosca a derechas aprieta al girar en sentido horario (la estándar); la izquierda aprieta al girar en sentido antihorario; se usa donde la rotación tiende a aflojar la rosca derecha','Son equivalentes; la designación es solo por convenio','La rosca izquierda es más resistente','Solo existe en roscas de bicicleta, no en aplicaciones generales'],
+   correct:0,explanation:'La rosca izquierda se usa cuando el elemento gira en sentido antihorario y tiende a aflojar una rosca estándar: ej. pedal izquierdo de bicicleta, fresas con mango roscado en ciertos tornos.'},
+
+  {band:'a',tag:'seguridad_roscado',level:'Alto',points:20,
+   q:'¿Qué consecuencia tiene roscar en un agujero sin el lubricante adecuado en material de aluminio?',
+   options:['El machuelo gripa al aluminio fundido adherido a los filos, puede arrancar el material de la pieza al intentar extraerlo y dejar el agujero inservible','Mejor acabado superficial por menor lubricación','El aluminio es tan blando que no requiere lubricante','El aluminio no reacciona con el machuelo de acero en ningún caso'],
+   correct:0,explanation:'El aluminio tiene tendencia a adherirse a los filos del machuelo (Built-Up Edge); sin lubricante, el material se suelda al machuelo en caliente y al extraerlo puede arrancar el filete de la pieza.'},
+
+  {band:'a',tag:'machuelos',level:'Alto',points:20,
+   q:'¿Cómo se distingue un machuelo de máquina de uno manual y cuándo se usa cada uno?',
+   options:['El de máquina tiene cono de entrada muy corto (1-2 filetes) para roscar cerca del fondo; el manual tiene cono largo (8-10 filetes) para mejor centrado a mano; el de máquina se usa en CNC y taladradoras con portamachuelos compensado','Son idénticos; la designación es solo comercial','El de máquina solo funciona en materiales duros','El manual tiene más canales que el de máquina'],
+   correct:0,explanation:'El cono de entrada largo del machuelo manual da al operario más recorrido para corregir la perpendicularidad; el de máquina con cono corto llega más al fondo pero requiere guía mecánica precisa.'}
+],
+
+// ══════════════════════════════════════════════════════════════
+// BLOQUE 6 · REMACHADO  (4b + 8m + 8a = 20)
+// ══════════════════════════════════════════════════════════════
+remachado:[
+  // ── BÁSICO (4) ──
+  {band:'b',tag:'tipos_remache',level:'Básico',points:10,
+   q:'¿Qué es un remache y para qué tipo de unión se usa?',
+   options:['Elemento de unión permanente de dos piezas mediante deformación plástica de su vástago; se usa cuando la unión no debe desmontarse','Un tipo de tornillo con tuerca autoblocante','Un pasador temporal desmontable','Un tipo de soldadura por puntos'],
+   correct:0,explanation:'El remache es una unión permanente no desmontable (o de difícil desmontaje); para uniones desmontables se usan tornillos.'},
+
+  {band:'b',tag:'tipos_remache',level:'Básico',points:10,
+   q:'¿Cómo se llama el remache que puede instalarse desde un solo lado de la unión sin acceso al lado opuesto?',
+   options:['Remache ciego o pop','Remache sólido de cabeza redonda','Remache tubular','Remache de expansión'],
+   correct:0,explanation:'El remache ciego (o pop) se instala con remachadora desde un solo lado; es imprescindible cuando el lado posterior de la unión no es accesible.'},
+
+  {band:'b',tag:'herramientas_remachado',level:'Básico',points:10,
+   q:'¿Qué herramienta se usa para remachar remaches sólidos en el taller?',
+   options:['Martillo de bola, tas (yunque) y buterola (botador)','Remachadora neumática únicamente','Sierra de arco y lima','Llave dinamométrica'],
+   correct:0,explanation:'El remachado sólido requiere: martillo para golpear el vástago, tas para contra-sujetar la cabeza y buterola para dar forma a la cabeza opuesta.'},
+
+  {band:'b',tag:'proceso_remachado',level:'Básico',points:10,
+   q:'¿Cuál debe ser el diámetro del agujero respecto al diámetro del remache?',
+   options:['Ligeramente mayor que el remache (0,1-0,2 mm) para que entre sin forzar pero sin holgura excesiva','Exactamente igual que el diámetro del remache','El doble del diámetro del remache','No importa el diámetro del agujero si el remache entra'],
+   correct:0,explanation:'El agujero debe ser ligeramente mayor (0,1-0,2 mm) para que el remache entre sin golpear y se rellene al deformar el vástago; si hay mucha holgura, la cabeza quedará excéntrica.'},
+
+  // ── MEDIO (8) ──
+  {band:'m',tag:'proceso_remachado',level:'Medio',points:15,
+   q:'¿Cuál es la longitud de vástago del remache sólido que debe sobresalir para formar una cabeza de cierre correcta?',
+   options:['1,5 veces el diámetro del remache (1,5d) para formar una cabeza de cierre de diámetro ≈ 1,5d y altura ≈ 0,5d','Igual al diámetro del remache (1d)','El doble del diámetro (2d)','Solo 0,5d para minimizar el material sobrante'],
+   correct:0,explanation:'La regla práctica es que sobresalgan 1,5d; al golpear, el material se expande lateralmente formando una cabeza de diámetro ~1,5d y altura ~0,5d que garantiza sujeción.'},
+
+  {band:'m',tag:'tipos_remache',level:'Medio',points:15,
+   q:'¿Cuáles son las ventajas del remache pop (ciego) frente al remache sólido?',
+   options:['Instalación desde un solo lado, rápida y sin necesidad de tas ni buterola; desventaja: menor resistencia a la carga axial','Mayor resistencia que el sólido en todas las direcciones','No necesita agujero previo','Se puede desmontar y reutilizar fácilmente'],
+   correct:0,explanation:'El remache pop es más rápido de instalar y no requiere acceso al lado posterior, pero su resistencia axial (tracción) es menor que la del remache sólido; se usa en chapas y estructuras ligeras.'},
+
+  {band:'m',tag:'herramientas_remachado',level:'Medio',points:15,
+   q:'¿Qué es la buterola (botador) y cómo se usa en el remachado sólido?',
+   options:['Herramienta cóncava que da la forma hemisférica a la cabeza de cierre del remache al golpear con el martillo sobre ella','Herramienta para extraer remaches rotos','Soporte plano que sujeta la cabeza original del remache','Instrumento de medida del diámetro del agujero'],
+   correct:0,explanation:'La buterola tiene una cavidad esférica en su extremo; al posicionarla sobre el vástago deformado y golpear con el martillo, da la forma hemisférica normalizada a la cabeza de cierre.'},
+
+  {band:'m',tag:'proceso_remachado',level:'Medio',points:15,
+   q:'¿Cuántos pasos tiene el proceso de instalación de un remache pop con remachadora manual?',
+   options:['Taladrar agujero → introducir el remache → insertar el mandril en la remachadora → apretar las palancas hasta que el mandril se rompa y el remache quede cerrado','Solo dos pasos: taladrar e introducir','Cuatro etapas con buterola y martillo intermedios','Solo un paso si se usa remachadora neumática'],
+   correct:0,explanation:'El remache pop se instala en una sola operación con la remachadora: al apretar las palancas, el mandril es traccionado, expande el cuerpo del remache y finalmente se rompe por la muesca de rotura.'},
+
+  {band:'m',tag:'tipos_remache',level:'Medio',points:15,
+   q:'¿Para qué se usa el remache tubular frente al sólido?',
+   options:['Para uniones que requieren el paso de un cable, pasador o eje por el interior del remache, o donde se necesita peso ligero','Siempre que se requiera mayor resistencia','Solo en materiales plásticos','Cuando no se dispone de remache sólido del diámetro adecuado'],
+   correct:0,explanation:'El remache tubular tiene un orificio central que permite el paso de elementos (cables, ejes), o simplifica la instalación al requerir menos fuerza de cierre gracias a la menor sección a deformar.'},
+
+  {band:'m',tag:'seguridad_remachado',level:'Medio',points:15,
+   q:'¿Qué EPI es imprescindible en operaciones de remachado?',
+   options:['Gafas de seguridad (proyección de fragmentos del mandril del remache pop o virutas de taladrado) y guantes anticorte','Solo guantes de cuero','Solo calzado de seguridad','Ninguno si se trabaja en superficie horizontal'],
+   correct:0,explanation:'Al romper el mandril del remache pop, el extremo puede proyectarse; en el remachado sólido, las chispas de golpes de martillo también son un riesgo. Las gafas son el EPI prioritario.'},
+
+  {band:'m',tag:'proceso_remachado',level:'Medio',points:15,
+   q:'¿Cómo se elimina un remache sólido cuando hay que desmontar la unión?',
+   options:['Taladrando el centro de la cabeza hasta debilitarla y golpeando el vástago con punzón para expulsarlo; la pieza puede reutilizarse pero el remache se destruye','Desenroscando el remache con llave de vaso','Calentando con soplete y retirando el remache con alicates','Serrando el vástago con arco de sierra'],
+   correct:0,explanation:'El remache sólido es una unión permanente; el desmontaje requiere destruirlo taladrado la cabeza (sin dañar la pieza) y expulsando el vástago restante con punzón.'},
+
+  {band:'m',tag:'herramientas_remachado',level:'Medio',points:15,
+   q:'¿Qué es el tas (yunque de remachar) y cómo se posiciona durante el remachado sólido?',
+   options:['Bloque de acero con cavidad esférica que contra-sujeta la cabeza original del remache mientras se trabaja el vástago del otro lado; se mantiene firme con la mano o en mordaza','Herramienta que golpea el vástago desde arriba','Un tipo de yunque plano universal','Instrumento para verificar la calidad del remache'],
+   correct:0,explanation:'El tas absorbe los golpes del martillo opuesto y mantiene la cabeza original sin deformarse; sin tas, la cabeza se aplana y la unión pierde resistencia.'},
+
+  // ── ALTO (8) ──
+  {band:'a',tag:'proceso_remachado',level:'Alto',points:20,
+   q:'¿Cómo se calcula el número mínimo de remaches necesarios para una unión a cizalladura conociendo la fuerza aplicada y la resistencia del remache?',
+   options:['n = F / (τ_admisible × A_sección); donde A es el área de la sección transversal del vástago; se aplica un factor de seguridad ≥ 2','n = F × d / (π × τ)','n siempre es par para equilibrar la unión','No es posible calcularlo sin software de elementos finitos'],
+   correct:0,explanation:'La cizalladura actúa sobre la sección del vástago; dividiendo la fuerza total entre la resistencia a cizalladura admisible de cada remache (τ × A) se obtiene el número mínimo; el factor de seguridad garantiza el margen.'},
+
+  {band:'a',tag:'tipos_remache',level:'Alto',points:20,
+   q:'¿Por qué los remaches en estructuras de aeronáutica son de aleación de aluminio y no de acero?',
+   options:['Para evitar el par galvánico con la estructura de aluminio, reducir el peso y asegurar que la resistencia mecánica del remache sea compatible con la deformación de la estructura','Porque el aluminio es más fácil de instalar con remachadora','Porque el acero no puede remacharse en frío','Porque el aluminio es más resistente que el acero en todos los casos'],
+   correct:0,explanation:'En estructuras de Al, los remaches de acero formarían un par galvánico acelerando la corrosión; los de Al son compatibles galvánicamente, más ligeros y suficientemente resistentes para las cargas de diseño.'},
+
+  {band:'a',tag:'herramientas_remachado',level:'Alto',points:20,
+   q:'¿Cuándo se usa una remachadora neumática o hidráulica frente a la manual?',
+   options:['En producción en serie o cuando el número de remaches es elevado (fatiga del operario con manual) o el diámetro del remache es grande (mayor fuerza necesaria)','Solo en materiales de alta resistencia','La neumática solo funciona con remaches de acero','En cualquier caso, es obligatorio usar neumática por normativa'],
+   correct:0,explanation:'La remachadora neumática/hidráulica aporta fuerza constante y reduce la fatiga del operario; para grandes series o remaches de gran diámetro, la manual es insuficiente y no garantiza la calidad de la cabeza de cierre.'},
+
+  {band:'a',tag:'proceso_remachado',level:'Alto',points:20,
+   q:'¿Qué defecto produce un remache pop instalado con una remachadora cuyo cabezal es de diámetro incorrecto (demasiado pequeño)?',
+   options:['La cabeza del remache no apoya completamente sobre la pieza, quedando solo el borde en contacto; la unión tiene menor resistencia y puede girar el remache','Mayor resistencia porque la presión se concentra en un área menor','El mandril no se rompe y el remache no cierra','No tiene efecto si el diámetro del agujero es correcto'],
+   correct:0,explanation:'La cabeza debe apoyar en toda su superficie sobre la pieza; un cabezal pequeño deja la periferia sin apoyo, reduce la resistencia a arranque y puede permitir el giro del remache bajo carga.'},
+
+  {band:'a',tag:'tipos_remache',level:'Alto',points:20,
+   q:'¿En qué situación se prefiere el remachado frente a la soldadura para unir chapas de carrocería?',
+   options:['Cuando los materiales son incompatibles para soldar (Al+acero), cuando se requiere unión desmontable o en reparaciones donde la zona es inaccesible para la soldadura','La soldadura siempre es preferible al remachado en carrocería','El remachado no se usa en carrocería de automóvil moderno','Cuando se requiere mayor resistencia que la soldadura MIG'],
+   correct:0,explanation:'En carrocerías multimaterial (Al+acero), la soldadura convencional no es posible; el remachado (SPR, remaches autoperforantes) permite la unión sin calor y sin problemas de distorsión térmica.'},
+
+  {band:'a',tag:'seguridad_remachado',level:'Alto',points:20,
+   q:'¿Qué riesgo específico presenta el remachado neumático frente al manual?',
+   options:['Mayor nivel de ruido (>85 dB) que requiere protección auditiva obligatoria, y mayor fuerza de reacción sobre la mano del operario','Menor precisión en la colocación del remache','Mayor riesgo de proyección del mandril','Solo puede usarse con remaches de acero inoxidable'],
+   correct:0,explanation:'Las remachadoras neumáticas operan con golpes rápidos y ruidosos (>85 dB); la exposición sin protección auditiva causa pérdida progresiva de audición. La fuerza de reacción también es mayor que en la manual.'},
+
+  {band:'a',tag:'proceso_remachado',level:'Alto',points:20,
+   q:'¿Cómo se verifica la calidad de una unión remachada tras su instalación?',
+   options:['Inspección visual de la cabeza de cierre (forma, tamaño, centrado), comprobación de que no gira ni se desplaza axialmente al aplicar fuerza, y en estructuras críticas, ensayo de ultrasonidos o END','Solo visualmente viendo que la cabeza tiene forma redonda','Midiendo el diámetro de la cabeza con calibre','La calidad se garantiza solo por el proceso; no es necesaria la verificación'],
+   correct:0,explanation:'La inspección visual detecta defectos evidentes; la resistencia a la extracción y rotación verifica la funcionalidad mecánica; los END (ultrasonidos, rayos X) se usan en uniones de seguridad crítica.'},
+
+  {band:'a',tag:'herramientas_remachado',level:'Alto',points:20,
+   q:'¿Qué es un remache autoperforante (SPR, Self-Piercing Rivet) y en qué aplicaciones de automoción destaca?',
+   options:['Remache que perfora las capas de material sin agujero previo mediante alta presión; se usa para unir Al con acero en carrocerías multimaterial sin necesidad de taladrar','Un remache con punta de carburo para materiales muy duros','Un remache tubular que se autoenrosca en el material','Un remache pop de instalación automática en cadena de producción'],
+   correct:0,explanation:'El SPR se introduce a alta velocidad con una prensa; perfora las capas superiores y se deforma en la inferior sin atravesarla completamente. Es la solución estándar para unir Al y acero en carrocería multimaterial sin corrosión galvánica.'}
+],
+
+// ══════════════════════════════════════════════════════════════
+// FINAL · 40 preguntas integradoras, se extraen 20 (6b+8m+6a)
+// ══════════════════════════════════════════════════════════════
+final:[
+  // ── BÁSICO (8) ──
+  {band:'b',tag:'integracion',level:'Básico',points:10,
+   q:'¿Cuál es el primer paso en cualquier operación de mecanizado manual de una pieza?',
+   options:['Trazar las líneas de trabajo sobre la pieza para guiar el mecanizado','Taladrar directamente según el plano','Limar las caras hasta obtener las dimensiones','Serrar el material al tamaño aproximado sin trazar'],
+   correct:0,explanation:'El trazado es siempre el primer paso; sin él no hay referencia para ninguna operación de mecanizado posterior.'},
+
+  {band:'b',tag:'integracion',level:'Básico',points:10,
+   q:'¿Qué operación sigue al serrado para eliminar las marcas del corte y llevar la pieza a cota?',
+   options:['Limado','Taladrado','Roscado','Graneteado'],
+   correct:0,explanation:'Tras el serrado, el limado elimina la rebaba y las marcas de sierra, llevando la superficie a la dimensión y acabado requeridos.'},
+
+  {band:'b',tag:'integracion',level:'Básico',points:10,
+   q:'¿Qué operación se realiza siempre antes de taladrar para evitar que la broca resbale?',
+   options:['Graneteado del centro del agujero','Limado de la superficie','Roscado previo del agujero','Escariado de la zona'],
+   correct:0,explanation:'El granete crea la guía cónica que centra el vértice de la broca al iniciar el taladro.'},
+
+  {band:'b',tag:'calidad',level:'Básico',points:10,
+   q:'¿Para qué sirve el escariado tras el taladrado?',
+   options:['Mejorar el diámetro, redondez y acabado del agujero hasta tolerancia H7','Aumentar la profundidad del agujero','Crear la rosca interior del agujero','Eliminar la rebaba exterior del taladro'],
+   correct:0,explanation:'El escariador corrige el diámetro, la redondez y el Ra del agujero, consiguiendo la tolerancia H7 imposible de obtener solo con la broca.'},
+
+  {band:'b',tag:'integracion',level:'Básico',points:10,
+   q:'¿Qué herramienta crea la rosca interior en un agujero taladrado?',
+   options:['Machuelo','Terraja','Escariador','Granete'],
+   correct:0,explanation:'El machuelo corta los filetes de la rosca interior; la terraja hace lo propio en roscas exteriores.'},
+
+  {band:'b',tag:'seguridad',level:'Básico',points:10,
+   q:'¿Qué EPI es común a todas las operaciones de mecanizado manual?',
+   options:['Gafas de seguridad','Guantes de cuero siempre','Mascarilla de gases','Calzado de plataforma'],
+   correct:0,explanation:'Las gafas de seguridad protegen los ojos de virutas, chispas y fragmentos proyectados en cualquier operación de mecanizado.'},
+
+  {band:'b',tag:'calidad',level:'Básico',points:10,
+   q:'¿Qué instrumento se usa para verificar la planitud de una superficie limada?',
+   options:['Regla de precisión de canto','Calibre pie de rey','Goniómetro','Rugosímetro'],
+   correct:0,explanation:'La regla de canto de precisión revela los altos y bajos de la superficie al verificar que no pasa luz entre la regla y la superficie.'},
+
+  {band:'b',tag:'integracion',level:'Básico',points:10,
+   q:'¿Qué tipo de unión permanente se realiza con remaches?',
+   options:['Unión permanente no desmontable mediante deformación plástica del vástago','Unión desmontable roscada','Unión por adhesivo estructural','Unión temporal por presión'],
+   correct:0,explanation:'El remachado produce una unión permanente; para desmontar hay que destruir el remache taladrado su cabeza.'},
+
+  // ── MEDIO (16) ──
+  {band:'m',tag:'integracion',level:'Medio',points:15,
+   q:'Un operario debe fabricar una pieza rectangular con un agujero roscado M8 en el centro. ¿Cuál es la secuencia correcta?',
+   options:['Serrar al tamaño → limar las caras → trazar el centro → granetelar → taladrar Ø6,7 mm → escariar si es necesario → roscar con machuelo M8','Taladrar directamente → trazar → roscar → limar','Roscar primero → limar → serrar → trazar','Trazar → roscar sin taladrar → limar → serrar'],
+   correct:0,explanation:'La secuencia lógica de mecanizado siempre va de lo general a lo particular: corte bruto → acabado de caras → trazado → operaciones de agujeros → roscado.'},
+
+  {band:'m',tag:'calidad',level:'Medio',points:15,
+   q:'¿Cómo afecta un agujero previo demasiado pequeño al proceso de roscado con machuelo?',
+   options:['El machuelo tiene más material que cortar, aumenta el par necesario y el riesgo de rotura del machuelo es muy alto','El machuelo produce una rosca de mayor resistencia','No tiene efecto si se aplica suficiente lubricante','El machuelo corrige automáticamente el diámetro del agujero'],
+   correct:0,explanation:'Un agujero pequeño sobrecarga los filos del machuelo; el par necesario supera el límite de rotura del machuelo, que se fractura y queda atrapado en la pieza.'},
+
+  {band:'m',tag:'integracion',level:'Medio',points:15,
+   q:'¿Qué operación de mecanizado produce la mayor cantidad de calor y por qué?',
+   options:['El taladrado a alta velocidad en materiales de baja conductividad (inoxidable, titanio) porque el calor no se disipa y se acumula en el filo','El limado porque hay mayor superficie de contacto','El roscado porque el machuelo trabaja en toda la longitud a la vez','El serrado porque el corte es continuo'],
+   correct:0,explanation:'El taladrado concentra el calor de corte en el filo de la broca; en materiales de baja conductividad (inoxidable) el calor no se evacúa y destruye el filo en segundos sin refrigeración.'},
+
+  {band:'m',tag:'calidad',level:'Medio',points:15,
+   q:'¿Qué verificación mínima debe realizarse tras completar una pieza mecanizada antes de entregarla?',
+   options:['Verificar todas las cotas con instrumentos adecuados, comprobar el acabado superficial, verificar la escuadra de las caras y comprobar la funcionalidad de roscas y agujeros','Solo medir las dimensiones principales con regla','Solo comprobar visualmente que no hay rebabas','No es necesaria verificación si el operario es experimentado'],
+   correct:0,explanation:'La verificación final es imprescindible: cotas dimensionales, tolerancias geométricas, acabado superficial y funcionalidad de elementos roscados; un defecto no detectado implica rechazo o fallo en servicio.'},
+
+  {band:'m',tag:'seguridad',level:'Medio',points:15,
+   q:'¿Qué medida de seguridad es común a todas las operaciones con máquinas rotativas (taladro)?',
+   options:['Sujeción mecánica de la pieza, prohibición de guantes de punto y uso obligatorio de gafas de seguridad','Solo gafas de seguridad sin otras medidas','Solo sujeción de la pieza sin protección visual','Las medidas de seguridad solo son obligatorias en producción industrial'],
+   correct:0,explanation:'En máquinas rotativas: sujeción mecánica (evita que la pieza gire y cause lesiones), prohibición de guantes de punto (riesgo de arrastre) y gafas (proyección de virutas) son las tres medidas básicas irrenunciables.'},
+
+  {band:'m',tag:'integracion',level:'Medio',points:15,
+   q:'¿Cuándo se elige el remachado frente al roscado para unir dos chapas?',
+   options:['Cuando la unión debe ser permanente y no se puede acceder al lado posterior para poner una tuerca, o cuando los materiales no admiten rosca resistente','Siempre que se quiera una unión desmontable','Cuando se requiere la mayor resistencia posible','Solo en chapas de aluminio, nunca en acero'],
+   correct:0,explanation:'El remache es permanente y solo requiere acceso frontal (remache pop); la rosca es desmontable pero necesita material suficiente y acceso para la tuerca o el machuelo.'},
+
+  {band:'m',tag:'calidad',level:'Medio',points:15,
+   q:'¿Por qué es importante verificar la escuadra de las caras de una pieza después del limado y antes de trazar los agujeros?',
+   options:['Porque un error de escuadra en las caras provoca que los agujeros trazados desde esas caras queden desviados respecto a la pieza real','La escuadra solo es importante en el montaje final','Si las dimensiones son correctas, la escuadra es irrelevante','La escuadra se verifica solo en trabajos de precisión especial'],
+   correct:0,explanation:'Las caras de referencia son la base de todos los trazados; si no están a 90° entre sí, cualquier agujero o trazado derivado de ellas heredará el error angular.'},
+
+  {band:'m',tag:'integracion',level:'Medio',points:15,
+   q:'¿Qué información del plano determina si hay que escariar el agujero después de taladrar?',
+   options:['La tolerancia del agujero: H7 (o más fino) requiere escariado; H11 o mayor puede obtenerse con taladrado','El diámetro nominal; agujeros mayores de 10 mm siempre se escarian','El material de la pieza; el acero siempre requiere escariado','El acabado superficial de la cara exterior de la pieza'],
+   correct:0,explanation:'La tolerancia es el criterio: H7 (±0,02 mm aprox.) requiere escariado; H11 (±0,2 mm) se obtiene con taladrado bien ejecutado. La tolerancia se lee directamente del plano.'},
+
+  {band:'m',tag:'calidad',level:'Medio',points:15,
+   q:'¿Qué defecto de la pieza final indica que el trazado inicial se realizó sin preparar correctamente la superficie de referencia?',
+   options:['Todos los agujeros y operaciones de mecanizado están desviados del mismo ángulo (error sistemático de inclinación)','Los agujeros tienen diámetro incorrecto','El acabado superficial no cumple el Ra requerido','La rosca no ensambla con la tuerca'],
+   correct:0,explanation:'Un error en la referencia de trazado es sistemático: afecta a todas las operaciones derivadas con el mismo error angular; es la señal más clara de un problema en la preparación de la pieza de referencia.'},
+
+  {band:'m',tag:'seguridad',level:'Medio',points:15,
+   q:'¿Por qué se debe limpiar el puesto de trabajo entre operaciones de mecanizado?',
+   options:['Las virutas en el suelo o la bancada son un riesgo de corte y caída; la suciedad puede rayar las piezas al apoyarlas y contaminar los instrumentos de medida','Solo por motivos estéticos y de imagen del taller','Solo es necesario al final de la jornada','Las virutas no suponen ningún riesgo si se llevan calzado de seguridad'],
+   correct:0,explanation:'Las virutas metálicas son cortantes (riesgo de herida), resbaladizas (riesgo de caída) y abrasivas (rayaduras en piezas e instrumentos). El orden continuo es una norma de seguridad, no solo de organización.'},
+
+  {band:'m',tag:'integracion',level:'Medio',points:15,
+   q:'¿En qué orden se realizan las operaciones en una pieza que requiere trazado, taladrado y roscado M6?',
+   options:['Trazado → graneteado → taladrado Ø5 mm → roscado M6 con machuelo','Roscado → taladrado → trazado','Taladrado → trazado → roscado','Graneteado → roscado → trazado → taladrado'],
+   correct:0,explanation:'El orden lógico es siempre: trazar (guía) → granetelar (centro broca) → taladrar con broca de núcleo → roscar con machuelo. Saltarse el orden genera errores de posición y dimensión.'},
+
+  {band:'m',tag:'calidad',level:'Medio',points:15,
+   q:'¿Cómo se comprueba que una rosca M8 recién tallada con machuelo es correcta?',
+   options:['Enroscando un tornillo M8 de referencia que debe entrar sin forzar pero sin holgura excesiva, o usando calibre pasa/no pasa de rosca','Midiendo el diámetro del agujero con calibre pie de rey','Solo verificando visualmente que los filetes son visibles','La rosca es correcta si el machuelo no se rompió durante el proceso'],
+   correct:0,explanation:'El calibre pasa/no pasa verifica el perfil completo de la rosca; el tornillo de referencia es la verificación funcional práctica; el calibre es el método normalizado.'},
+
+  // ── ALTO (16) ──
+  {band:'a',tag:'integracion',level:'Alto',points:20,
+   q:'Un operario sigue el proceso: serrado → limado → trazado → taladrado → roscado, pero los agujeros quedan desviados 1,5 mm respecto a la posición del plano. ¿Cuál es la causa más probable?',
+   options:['Las caras limadas no están a escuadra; el trazado se hizo sobre caras inclinadas que desplazan sistemáticamente todos los agujeros','La broca vibró durante el taladrado','El machuelo desplazó el agujero al roscar','El arco de sierra cortó con desviación'],
+   correct:0,explanation:'Un error de posición sistemático (todos los agujeros desviados en el mismo sentido) indica un error en la referencia de trazado, que proviene de caras no escuadradas tras el limado.'},
+
+  {band:'a',tag:'calidad',level:'Alto',points:20,
+   q:'Se requiere un agujero de Ø12H7 en acero F-114. ¿Cuál es la secuencia completa de operaciones de agujero?',
+   options:['Graneteado → taladrado Ø5 (piloto) → taladrado Ø11,8 mm → escariado Ø12H7 con lubricante','Taladrado Ø12 directamente → verificar con calibre','Taladrado Ø11 → limado interior → verificar','Graneteado → taladrado Ø12 → taladrado Ø12,1 → verificar'],
+   correct:0,explanation:'Para H7 se necesita escariado; el piloto centra la broca grande; la broca deja 0,1-0,2 mm (Ø11,8) para el escariador, que lleva el agujero a Ø12H7 con el acabado y la tolerancia requeridos.'},
+
+  {band:'a',tag:'integracion',level:'Alto',points:20,
+   q:'¿Por qué al fabricar una pieza con varias operaciones de mecanizado es importante terminar de limar todas las caras antes de trazar los agujeros?',
+   options:['Porque el limado puede alterar las dimensiones de las caras de referencia; si se traza antes de limar, las cotas de los agujeros quedarán incorrectas tras eliminar el exceso de material','El orden entre limado y trazado no afecta al resultado final','Es preferible trazar primero para ver si el material tiene suficiente sobredimensión','El trazado protege la superficie del limado posterior'],
+   correct:0,explanation:'Las cotas de trazado se toman desde las caras terminadas; si se traza sobre caras aún sobredimensionadas, el limado posterior desplaza las referencias y todos los agujeros quedan en posición incorrecta.'},
+
+  {band:'a',tag:'seguridad',level:'Alto',points:20,
+   q:'Un alumno usa guantes de cuero para sujetar la pieza mientras taladra en columna. ¿Es correcto?',
+   options:['No; en máquinas rotativas están prohibidos todos los guantes porque el movimiento de la tela puede ser atrapado por la broca; se usa la mordaza mecánica para sujetar','Sí; los guantes de cuero son obligatorios en taladradoras','Sí; los guantes de cuero no son captados por las brocas','Solo están prohibidos los guantes de punto, no los de cuero'],
+   correct:0,explanation:'Cualquier tipo de guante (punto, cuero, látex) puede ser atrapado por la broca giratoria en una fracción de segundo; la sujeción de la pieza se hace siempre mecánicamente (mordaza, tornillo), nunca con la mano.'},
+
+  {band:'a',tag:'calidad',level:'Alto',points:20,
+   q:'¿Cómo se diagnostica que una rosca interior está "pasada de rosca" (sobredimensionada)?',
+   options:['El calibre pasa/no pasa: el lado "no pasa" (anillo de rosca más ajustado) entra en la rosca, indicando que está por encima del límite superior de tolerancia','El tornillo entra con algo de resistencia','El calibre "pasa" no entra en la rosca','La rosca tiene aspecto visual brillante en los flancos'],
+   correct:0,explanation:'Si el calibre "no pasa" entra, la rosca está por encima del límite máximo (sobredimensionada); el tornillo entra con holgura excesiva y la unión perderá resistencia.'},
+
+  {band:'a',tag:'integracion',level:'Alto',points:20,
+   q:'¿Por qué se lima en dirección perpendicular al serrado en la primera pasada de desbaste?',
+   options:['Para eliminar rápidamente las marcas de sierra (marcas perpendiculares al filo de la sierra) y detectar los picos de material con el limado cruzado','Porque la lima corta mejor en perpendicular al serrado','Para no desgastar la lima con las marcas de sierra existentes','El sentido del limado respecto al serrado es irrelevante'],
+   correct:0,explanation:'El limado perpendicular al serrado elimina eficientemente las marcas de sierra y establece la primera serie de marcas de limado; el cruce posterior revela los altos y bajos.'},
+
+  {band:'a',tag:'calidad',level:'Alto',points:20,
+   q:'Una pieza tiene un agujero Ø10 taladrado que debe roscarse M10×1,5. Al roscar, el machuelo gira sin resistencia desde el principio. ¿Qué ha ocurrido?',
+   options:['El agujero se taladró con la broca de Ø10 (diámetro nominal) en lugar de la broca de núcleo Ø8,5 mm; no hay material para cortar filetes','El machuelo está desgastado','El lubricante es excesivo','El material es demasiado blando para la rosca M10'],
+   correct:0,explanation:'El agujero previo para M10×1,5 debe ser Ø8,5 mm (nominal − paso = 10 − 1,5); con Ø10 no hay material y los filetes no se forman; el machuelo gira sin cortar.'},
+
+  {band:'a',tag:'integracion',level:'Alto',points:20,
+   q:'¿Qué ventaja ofrece el remache pop frente al tornillo en la reparación de una pieza de carrocería de difícil acceso?',
+   options:['El remache pop solo requiere acceso frontal y se instala en segundos; el tornillo necesita acceso al reverso para la tuerca o material suficiente para una rosca resistente','El tornillo siempre es más resistente que el remache','El remache pop puede desmontarse fácilmente si es necesario','El tornillo no requiere agujero previo a diferencia del remache'],
+   correct:0,explanation:'En reparaciones de carrocería, muchas zonas son inaccesibles por el reverso; el remache pop resuelve esto de forma rápida y con resistencia suficiente para uniones de chapa.'},
+
+  {band:'a',tag:'calidad',level:'Alto',points:20,
+   q:'Tras limar una cara de acero, la verificación con plato de mármol entintado muestra contacto solo en las esquinas. ¿Qué defecto geométrico indica y cómo se corrige?',
+   options:['La superficie es convexa (abombada en el centro); se corrige limando preferentemente en el centro con lima fina y verificando frecuentemente con el plato','La superficie es cóncava; se lima en los bordes','La superficie está inclinada; se gira la pieza en el tornillo','El plato de mármol está incorrecto si solo toca en esquinas'],
+   correct:0,explanation:'Si solo tocan las esquinas, el centro no contacta con el plato: la superficie es convexa (abombada). Se lima el material de las zonas altas (esquinas y bordes que contactan) hasta obtener contacto uniforme.'},
+
+  // ── MEDIO adicionales (hasta 16m) ──
+  {band:'m',tag:'integracion',level:'Medio',points:15,
+   q:'¿Por qué se taladra siempre con el agujero de núcleo correcto antes de roscar y no directamente con el diámetro nominal?',
+   options:['El machuelo solo corta los flancos del filete, no el fondo; necesita material en el diámetro de núcleo para formar los filetes completos','Para que el machuelo entre más fácilmente en el agujero','Porque la broca de diámetro nominal no existe en todos los tamaños','El diámetro nominal es siempre mayor que el agujero de rosca'],
+   correct:0,explanation:'El machuelo corta los flancos del filete a partir del diámetro de núcleo; si el agujero tiene el diámetro nominal, no hay material y el machuelo gira sin formar rosca.'},
+
+  {band:'m',tag:'calidad',level:'Medio',points:15,
+   q:'¿Qué diferencia práctica hay entre usar lima bastarda y lima fina en la misma superficie?',
+   options:['La bastarda arranca más material dejando marcas más profundas (Ra alta); la fina arranca poco material dejando un acabado más liso (Ra baja)','La bastarda solo sirve para metales blandos','La fina es más larga que la bastarda','Son intercambiables para el mismo resultado'],
+   correct:0,explanation:'La picadura gruesa (bastarda) permite el desbaste rápido; la fina da el acabado; ambas son necesarias para llegar a las tolerancias y Ra requeridas en el menor tiempo posible.'},
+
+  {band:'m',tag:'seguridad',level:'Medio',points:15,
+   q:'¿Qué riesgo específico presenta la operación de roscado con machuelo respecto al resto de operaciones de mecanizado manual?',
+   options:['La rotura del machuelo dentro de la pieza, que puede inutilizarla completamente y es muy difícil de extraer','Mayor proyección de virutas que en el taladrado','Mayor nivel de ruido que en el serrado','No presenta riesgos específicos respecto a otras operaciones'],
+   correct:0,explanation:'El machuelo roto en el agujero es uno de los accidentes más costosos del taller: extraerlo sin dañar la pieza es muy difícil y a veces imposible; prevenir la rotura con lubricación y técnica correcta es prioritario.'},
+
+  {band:'m',tag:'integracion',level:'Medio',points:15,
+   q:'¿Cuándo se usa el remache pop en lugar del remache sólido en una reparación de carrocería?',
+   options:['Cuando no hay acceso al lado posterior de la chapa para colocar el tas y trabajar el vástago del remache sólido','Siempre que la reparación sea en acero, nunca en aluminio','Cuando la unión debe ser desmontable en el futuro','Solo en espesores de chapa superiores a 3 mm'],
+   correct:0,explanation:'El remache pop resuelve el problema de inaccesibilidad al lado posterior; el remache sólido ofrece mayor resistencia pero requiere acceso a ambas caras para el tas y la buterola.'},
+
+  // ── ALTO adicionales (hasta 16a) ──
+  {band:'a',tag:'integracion',level:'Alto',points:20,
+   q:'Un alumno realiza el trazado antes de limar las caras de referencia. ¿Qué error comete y cuál es la consecuencia?',
+   options:['Las caras de referencia aún tienen exceso de material; al limar después, las cotas trazadas cambian y los agujeros quedan en posición incorrecta','No comete ningún error; el orden es indiferente','El error solo afecta al aspecto visual, no a las dimensiones','El trazado protege las caras del limado posterior'],
+   correct:0,explanation:'Si se traza sobre caras sin terminar, el limado posterior elimina material y desplaza las marcas de trazado respecto a las caras terminadas; todos los agujeros y operaciones posteriores quedan mal posicionados.'},
+
+  {band:'a',tag:'calidad',level:'Alto',points:20,
+   q:'¿Cómo se diagnostica que un agujero taladrado no es perpendicular a la superficie antes de escariarlo?',
+   options:['Introduciendo una broca de referencia en el agujero y verificando con escuadra en dos orientaciones a 90°; si no es paralela a la escuadra, el agujero está inclinado','Midiendo el diámetro con calibre en distintos puntos','Solo es posible detectarlo con máquina de coordenadas','Visualmente si el agujero parece recto es suficiente'],
+   correct:0,explanation:'La verificación de perpendicularidad requiere comprobar en dos planos perpendiculares entre sí; un solo plano no detecta la inclinación en el plano perpendicular a la escuadra.'},
+
+  {band:'a',tag:'seguridad',level:'Alto',points:20,
+   q:'¿Por qué se debe apagar el taladro de columna antes de retirar la viruta enroscada en la broca?',
+   options:['La viruta enroscada en una broca giratoria puede atrapar los dedos o guantes y causar heridas graves en una fracción de segundo','Para que la viruta no se proyecte al retirarla','Porque la viruta caliente puede quemar los guantes','No es necesario parar si se usa una herramienta para retirar la viruta'],
+   correct:0,explanation:'La viruta larga en espiral actúa como un tornillo; si gira con la broca y se toca, atrapa los dedos con gran fuerza. Se retira siempre con la máquina parada y con un gancho, nunca con la mano.'},
+
+  {band:'a',tag:'integracion',level:'Alto',points:20,
+   q:'¿Qué secuencia completa de operaciones es necesaria para fabricar una pieza que requiere un agujero pasante Ø10H7 y una rosca M6 a 15 mm de distancia?',
+   options:['Serrar → limar caras → trazar ambos agujeros → granetelar → taladrar Ø5 piloto (ambos) → taladrar Ø9,8 mm → taladrar Ø5 mm M6 → escariar Ø10H7 → roscar M6','Roscar M6 → taladrar Ø10 → limar → trazar','Taladrar Ø10 y Ø5 → roscar → limar → trazar','Trazar → taladrar ambos → roscar → escariar → limar'],
+   correct:0,explanation:'La secuencia correcta va de lo general a lo particular: caras terminadas → trazado → agujeros piloto (centran las brocas grandes) → agujeros definitivos → escariado → roscado. Cambiar el orden produce errores de posición o imposibilita las operaciones.'},
+
+  {band:'a',tag:'calidad',level:'Alto',points:20,
+   q:'Al verificar con calibre pasa/no pasa una rosca M8 recién tallada, el lado "pasa" no entra. ¿Qué indica y cuál es la causa probable?',
+   options:['La rosca está sobredimensionada en pequeño o tiene defecto de perfil; causa probable: machuelo desgastado o agujero previo demasiado grande que deformó el perfil','La rosca es correcta; el calibre está mal','La rosca está sobredimensionada, lo que mejora su resistencia','El paso de la rosca es incorrecto respecto al calibre utilizado'],
+   correct:0,explanation:'Si el lado "pasa" no entra, la rosca está por debajo del límite mínimo (infradimensionada o con defecto de perfil); un machuelo desgastado no corta el perfil correcto o el agujero previo incorrecto deformó el proceso.'},
+
+  {band:'a',tag:'integracion',level:'Alto',points:20,
+   q:'¿Por qué el trazado es más crítico en piezas de una sola pieza (sin posibilidad de corrección) que en piezas fabricadas en serie?',
+   options:['En piezas únicas no hay posibilidad de corregir un error de trazado; un error significa el desecho de la pieza completa y del tiempo de mecanizado invertido','El trazado es igual de importante en todos los casos','En piezas en serie el trazado es más importante porque afecta a todas las unidades','El trazado solo es relevante en piezas mayores de 100 mm'],
+   correct:0,explanation:'En producción en serie, un error se detecta en la primera pieza y se corrige antes de fabricar el resto; en pieza única, el error supone la pérdida total de material y trabajo; la verificación del trazado es imprescindible antes de mecanizar.'},
+
+  {band:'a',tag:'seguridad',level:'Alto',points:20,
+   q:'¿Por qué es peligroso sujetar una pieza con la mano mientras se lima y qué consecuencia puede tener si la lima "agarra"?',
+   options:['La lima puede engancharse y girar bruscamente; la espiga sin mango o la cara lateral de la lima puede cortar gravemente la mano que sujeta','El riesgo es solo de que la pieza caiga al suelo','La lima no puede girar bruscamente en ningún caso','El riesgo solo existe con limas muy grandes (>300 mm)'],
+   correct:0,explanation:'Si la lima se bloquea repentinamente (viruta atrapada, esquina afilada), la inercia del movimiento hace que la mano continúe y contacte con el filo o la espiga; la pieza siempre debe ir en el tornillo.'}
+]
+};// fin questionPools
+
+// ════════════════════════════════════════════════════════════
+// MOTOR
+// ════════════════════════════════════════════════════════════
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+
+// Bloques normales: 3b + 4m + 3a = 10
+function buildSelectionSmall(pool){
+  const b=shuffle(pool.filter(q=>q.band==='b')).slice(0,3);
+  const m=shuffle(pool.filter(q=>q.band==='m')).slice(0,4);
+  const a=shuffle(pool.filter(q=>q.band==='a')).slice(0,3);
+  return [...b,...m,...a];
+}
+
+// Final: 6b + 8m + 6a = 20
+function buildSelectionFinal(pool){
+  const b=shuffle(pool.filter(q=>q.band==='b')).slice(0,6);
+  const m=shuffle(pool.filter(q=>q.band==='m')).slice(0,8);
+  const a=shuffle(pool.filter(q=>q.band==='a')).slice(0,6);
+  return [...b,...m,...a];
+}
+
+function passesUnlock(id){
+  const r=globalState.results[id];
+  if(!r||r.attempts===0)return false;
+  const total=r.lastTotal||10;
+  const basicTotal=r.lastBasicTotal||3;
+  return(r.bestScore/total)>=0.7||(r.lastBasicCorrect>=basicTotal);
+}
+
+function isQuizUnlocked(id){
+  const rule=unlockRules[id];
+  if(!rule)return true;
+  const idx=unlockOrder.indexOf(id);
+  for(let i=0;i<idx;i++){if(!passesUnlock(unlockOrder[i]))return false;}
+  return passesUnlock(rule.prev);
+}
+
+function attemptsLeft(id){
+  const r=globalState.results[id];
+  return maxAttemptsPerBlock-(r?r.attempts:0);
+}
+
+function defaultResult(isFinal){
+  return{bestScore:0,attempts:0,lastScore:0,lastTotal:isFinal?20:10,lastBasicCorrect:0,lastBasicTotal:isFinal?6:3,stars:0};
+}
+
+const profileKey=(name)=>`${storagePrefix}::${name}`;
+
+function hydrateResults(raw){
+  const out={};
+  unlockOrder.forEach(id=>{
+    const isFinal=id==='final';
+    out[id]=raw[id]?{...defaultResult(isFinal),...raw[id]}:defaultResult(isFinal);
+  });
+  return out;
+}
+
+function serializableState(){
+  return{name:student.name,points:globalState.points,stars:globalState.stars,bestStreak:globalState.bestStreak,
+    completedUnits:[...globalState.completedUnits],results:globalState.results,saveCount:globalState.saveCount};
+}
+
+function saveProfile(){
+  try{
+    globalState.saveCount++;
+    localStorage.setItem(profileKey(student.name),JSON.stringify(serializableState()));
+    document.getElementById('save-status').textContent=`✓ Guardado (${globalState.saveCount}× · ${new Date().toLocaleTimeString()})`;
+    document.getElementById('global-saves').textContent=globalState.saveCount;
+  }catch(e){document.getElementById('save-status').textContent='Error al guardar.';}
+}
+
+function loadProfileByName(name){
+  try{
+    const raw=localStorage.getItem(profileKey(name));
+    if(!raw)return false;
+    const data=JSON.parse(raw);
+    student.name=data.name||name;
+    globalState.points=data.points||0;globalState.stars=data.stars||0;
+    globalState.bestStreak=data.bestStreak||0;
+    globalState.completedUnits=new Set(data.completedUnits||[]);
+    globalState.results=hydrateResults(data.results||{});
+    globalState.saveCount=data.saveCount||0;
+    return true;
+  }catch(e){return false;}
+}
+
+function resetProfile(){
+  student.name='Sin nombre';
+  globalState.points=0;globalState.stars=0;globalState.bestStreak=0;
+  globalState.completedUnits=new Set();globalState.results={};globalState.saveCount=0;
+  unlockOrder.forEach(id=>{globalState.results[id]=defaultResult(id==='final');});
+}
+
+document.getElementById('save-student').addEventListener('click',()=>{
+  const v=document.getElementById('student-name').value.trim();
+  if(!v)return;
+  student.name=v;
+  document.getElementById('save-status').textContent=`Perfil: ${v}`;
+  document.getElementById('report-name').textContent=v;
+  saveProfile();refreshAll();
+});
+
+document.getElementById('resume-student').addEventListener('click',()=>{
+  const v=document.getElementById('student-name').value.trim();
+  if(!v){alert('Escribe primero el nombre del alumno.');return;}
+  if(loadProfileByName(v)){
+    document.getElementById('student-name').value=student.name;
+    document.getElementById('save-status').textContent=`✓ Perfil cargado: ${student.name}`;
+    document.getElementById('report-name').textContent=student.name;
+    updateGlobalPanel();updateReport();refreshAll();
+  }else{
+    document.getElementById('save-status').textContent='No se encontró perfil guardado.';
+  }
+});
+
+document.getElementById('clear-student').addEventListener('click',()=>{
+  if(!confirm('¿Reiniciar el perfil? Se perderá todo el progreso.'))return;
+  const name=document.getElementById('student-name').value.trim();
+  if(name)localStorage.removeItem(profileKey(name));
+  resetProfile();
+  document.getElementById('save-status').textContent='Perfil reiniciado.';
+  document.getElementById('report-name').textContent='Sin nombre';
+  updateGlobalPanel();updateReport();refreshAll();
+});
+
+function levelLabel(score,total){
+  const p=score/total;
+  if(p>=0.9)return['Experto','l-exp'];
+  if(p>=0.7)return['Avanzado','l-adv'];
+  if(p>=0.5)return['Medio','l-med'];
+  if(p>0)return['Básico','l-basic'];
+  return['Sin iniciar','l-init'];
+}
+
+function updateGlobalPanel(){
+  document.getElementById('global-points').textContent=globalState.points;
+  document.getElementById('global-stars').textContent=globalState.stars;
+  document.getElementById('global-streak').textContent=globalState.bestStreak;
+  document.getElementById('global-units').textContent=`${globalState.completedUnits.size}/6`;
+  document.getElementById('global-saves').textContent=globalState.saveCount;
+}
+
+const badgeLabels={trazado:'✏️ Trazado',serrado:'🪚 Serrado',limado:'📁 Limado',taladrado:'🔩 Taladrado',roscado:'🔀 Roscado',remachado:'🔨 Remachado',final:'🏁 Final RA3'};
+
+function unlockBadge(id){
+  const el=document.getElementById(`badge-${id}`);
+  if(!el)return;
+  const r=globalState.results[id];
+  const pct=r&&r.lastTotal?Math.round(r.bestScore/r.lastTotal*100):0;
+  el.classList.remove('badge-lock');el.classList.add('badge-unlock');
+  el.querySelector('h3').textContent=(pct>=80?'🏆 ':'✅ ')+(badgeLabels[id]||id).replace(/^[^\s]+\s/,'');
+}
+
+function updateReport(){
+  const tb=document.getElementById('report-table');
+  const names={trazado:'Trazado',serrado:'Serrado',limado:'Limado',taladrado:'Taladrado y Escariado',roscado:'Roscado',remachado:'Remachado',final:'Prueba Final RA3'};
+  tb.innerHTML='';
+  unlockOrder.forEach(id=>{
+    const r=globalState.results[id]||defaultResult(id==='final');
+    const total=r.lastTotal||(id==='final'?20:10);
+    const[lbl,cls]=levelLabel(r.bestScore,total);
+    const pct=r.attempts>0?Math.round(r.bestScore/total*100)+'%':'—';
+    const last=r.attempts>0?Math.round(r.lastScore/total*100)+'%':'—';
+    tb.innerHTML+=`<tr><td>${names[id]}</td><td>${r.attempts>0?r.bestScore+'/'+total+' ('+pct+')':'—'}</td>
+      <td>${r.attempts}/${maxAttemptsPerBlock}</td><td>${last}</td>
+      <td><span class="level-badge ${cls}">${lbl}</span></td></tr>`;
+  });
+  const diag=document.getElementById('global-diagnosis');
+  const attempted=unlockOrder.filter(id=>globalState.results[id]&&globalState.results[id].attempts>0);
+  if(attempted.length===0){diag.innerHTML='<strong>Diagnóstico global:</strong> Completa al menos un bloque para ver el diagnóstico.';return;}
+  const avg=attempted.reduce((s,id)=>{const r=globalState.results[id];const t=r.lastTotal||(id==='final'?20:10);return s+(r.bestScore/t);},0)/attempted.length;
+  let msg='';
+  if(avg>=0.9)msg='Rendimiento excelente. Dominas los procesos de mecanizado del RA3.';
+  else if(avg>=0.7)msg='Buen nivel. Repasa los procesos con feedback de repaso para consolidar.';
+  else if(avg>=0.5)msg='Nivel básico alcanzado. Revisa el material de los bloques con menor nota.';
+  else msg='Necesitas reforzar los contenidos. Revisa los apuntes de cada proceso y vuelve a intentarlo.';
+  diag.innerHTML=`<strong>Diagnóstico global (promedio ${Math.round(avg*100)}%):</strong> ${msg}`;
+}
+
+function buildReview(id,tagErrors){
+  const msgs=reviewMessages[id];
+  if(!msgs||tagErrors.length===0)return'';
+  const lines=[...new Set(tagErrors)].map(t=>msgs[t]||null).filter(Boolean);
+  if(lines.length===0)return'';
+  return'<strong>📚 Repasa:</strong><br>'+lines.map(l=>`• ${l}`).join('<br>');
+}
+
+function buildGateSummary(id,score,total,basicCorrect,basicTotal,stars,tagErrors){
+  const pct=Math.round(score/total*100);
+  const passes=passesUnlock(id);
+  const left=attemptsLeft(id);
+  let html='';
+  if(passes){
+    const nextIdx=unlockOrder.indexOf(id)+1;
+    const nextId=unlockOrder[nextIdx];
+    const nextName=nextId?unitMeta[nextId][0]:'';
+    html+=`<p>✅ <strong>Bloque superado</strong> · ${pct}% · ${stars}⭐</p>`;
+    if(nextName)html+=`<p style="margin-top:6px">🔓 <em>${nextName}</em> desbloqueada.</p>`;
+  }else{
+    html+=`<p>❌ <strong>No superado</strong> · ${pct}% · Intentos restantes: ${left}</p>`;
+    html+=`<p style="margin-top:4px">${left>0?(unlockRules[id]?.label||''):'Has agotado los intentos en este bloque.'}</p>`;
+  }
+  const rev=buildReview(id,tagErrors);
+  if(rev)html+=`<div class="review-box show" style="margin-top:10px">${rev}</div>`;
+  return{html,passes};
+}
+
+function renderQuizSections(){
+  const container=document.getElementById('quizzes');
+  container.innerHTML='';
+  unlockOrder.forEach(id=>{
+    const[title,desc]=unitMeta[id];
+    const isFinal=id==='final';
+    const totalLabel=isFinal?20:10;
+    const sec=document.createElement('section');
+    sec.className='section';sec.id=id;
+    sec.innerHTML=`<div class="section-head"><div>
+      <div class="bloque-chip">${isFinal?'Prueba Final':('Bloque '+(unitIds.indexOf(id)+1))}</div>
+      <h2>${title}</h2><p class="muted">${desc}</p></div></div>
+    <div class="quiz-layout">
+      <div class="status-box" id="status-${id}">
+        <h3>Progreso</h3>
+        <div class="progress-bar-wrap"><div class="progress-bar-fill" id="pb-${id}" style="width:0%"></div></div>
+        <div class="stat-row"><span>Pregunta</span><span id="qnum-${id}">0/${totalLabel}</span></div>
+        <div class="stat-row"><span>Correctas</span><span id="score-${id}">0</span></div>
+        <div class="stat-row"><span>Racha</span><span id="streak-${id}">0</span></div>
+        <div class="stat-row"><span>Puntos</span><span id="pts-${id}">0</span></div>
+        <div class="stat-row"><span>Intentos</span><span id="att-${id}">0/${maxAttemptsPerBlock}</span></div>
+        <button class="reset-btn" id="reset-${id}">↺ Nuevo intento</button>
+      </div>
+      <div class="quiz-box" id="qbox-${id}"></div>
+    </div>`;
+    container.appendChild(sec);
+  });
+}
+
+function createQuiz(id){
+  const box=document.getElementById(`qbox-${id}`);
+  if(!box)return;
+  const isFinal=id==='final';
+  if(!globalState.results[id])globalState.results[id]=defaultResult(isFinal);
+
+  function render(){
+    const unlocked=isQuizUnlocked(id);
+    const left=attemptsLeft(id);
+    if(!unlocked){
+      box.innerHTML=`<div class="lock-screen"><div class="lock-icon">🔒</div>
+        <p><strong>Bloque bloqueado</strong><br>${unlockRules[id]?.label||'Supera el bloque anterior.'}</p></div>`;
+      return;
+    }
+    if(left<=0&&!passesUnlock(id)){
+      box.innerHTML=`<div class="lock-screen"><div class="lock-icon">⛔</div>
+        <p><strong>Sin intentos disponibles</strong><br>Has agotado los ${maxAttemptsPerBlock} intentos. Habla con tu profesor.</p></div>`;
+      return;
+    }
+
+    const pool=isFinal?buildSelectionFinal(questionPools.final):buildSelectionSmall(questionPools[id]);
+    const total=pool.length;
+    const basicTotal=pool.filter(q=>q.band==='b').length;
+    let qi=0,score=0,pts=0,streak=0,bestStreak=0,basicCorrect=0;
+    const tagErrors=[];
+
+    function updateStatus(){
+      document.getElementById(`pb-${id}`).style.width=`${Math.round(qi/total*100)}%`;
+      document.getElementById(`qnum-${id}`).textContent=`${qi}/${total}`;
+      document.getElementById(`score-${id}`).textContent=score;
+      document.getElementById(`streak-${id}`).textContent=streak;
+      document.getElementById(`pts-${id}`).textContent=pts;
+      document.getElementById(`att-${id}`).textContent=`${globalState.results[id].attempts}/${maxAttemptsPerBlock}`;
+    }
+
+    function showQ(){
+      if(qi>=total){finish();return;}
+      const q=pool[qi];
+      const corrOpt=q.options[0];
+      const shuffled=shuffle([...q.options]);
+      const corrIdx=shuffled.indexOf(corrOpt);
+      const tagClass={b:'tag-b',m:'tag-m',a:'tag-a'}[q.band]||'tag-b';
+      box.innerHTML=`
+        <span class="level-tag ${tagClass}">${q.level}</span>
+        <p class="q-text">${q.q}</p>
+        <div class="options" id="opts-${id}">
+          ${shuffled.map((o,i)=>`<button class="opt-btn" data-idx="${i}">${o}</button>`).join('')}
+        </div>
+        <div class="reward" id="reward-${id}"></div>
+        <div class="feedback" id="fb-${id}"></div>
+        <button class="next-btn" id="next-${id}" style="display:none">${qi+1<total?'Siguiente →':'Ver resultado'}</button>`;
+
+      document.querySelectorAll(`#opts-${id} .opt-btn`).forEach(btn=>{
+        btn.addEventListener('click',()=>{
+          if(btn.disabled)return;
+          document.querySelectorAll(`#opts-${id} .opt-btn`).forEach(b=>b.disabled=true);
+          const chosen=parseInt(btn.dataset.idx);
+          const ok=chosen===corrIdx;
+          btn.classList.add(ok?'correct':'wrong');
+          if(!ok)document.querySelectorAll(`#opts-${id} .opt-btn`)[corrIdx].classList.add('correct');
+          const fb=document.getElementById(`fb-${id}`);
+          fb.textContent=(ok?'✓ Correcto: ':'✗ Incorrecto: ')+q.explanation;
+          fb.className=`feedback show ${ok?'ok':'ko'}`;
+          if(ok){score++;pts+=q.points;streak++;if(streak>bestStreak)bestStreak=streak;if(q.band==='b')basicCorrect++;
+            document.getElementById(`reward-${id}`).textContent=streak>=5?'🔥 ¡Racha!':streak>=3?'⚡':'';
+          }else{streak=0;tagErrors.push(q.tag);document.getElementById(`reward-${id}`).textContent='';}
+          qi++;updateStatus();
+          document.getElementById(`next-${id}`).style.display='block';
+        });
+      });
+      document.getElementById(`next-${id}`).addEventListener('click',()=>{if(qi>=total)finish();else showQ();});
+    }
+
+    function finish(){
+      const r=globalState.results[id];
+      r.attempts++;r.lastScore=score;r.lastTotal=total;
+      r.lastBasicCorrect=basicCorrect;r.lastBasicTotal=basicTotal;
+      if(score>r.bestScore)r.bestScore=score;
+      const stars=score/total>=0.9?3:score/total>=0.7?2:score/total>=0.5?1:0;
+      if(stars>r.stars)r.stars=stars;
+      globalState.points+=pts;globalState.stars+=stars;
+      if(bestStreak>globalState.bestStreak)globalState.bestStreak=bestStreak;
+      if(passesUnlock(id)){globalState.completedUnits.add(id);unlockBadge(id);}
+      updateGlobalPanel();updateReport();saveProfile();
+      const{html,passes}=buildGateSummary(id,score,total,basicCorrect,basicTotal,stars,tagErrors);
+      box.innerHTML=`
+        <div style="text-align:center;margin-bottom:20px">
+          <div style="font-size:2.5rem;margin-bottom:8px">${stars===3?'🏆':stars===2?'🥈':stars===1?'🥉':'📋'}</div>
+          <h3 style="font-size:1.3rem;margin-bottom:6px">${score}/${total} correctas</h3>
+          <p class="muted">${pts} puntos · ${Math.round(score/total*100)}%</p>
+        </div>
+        <div class="gate-note show ${passes?'pass':'fail'}">${html}</div>`;
+      if(passes){
+        const nextIdx=unlockOrder.indexOf(id)+1;
+        if(nextIdx<unlockOrder.length)createQuiz(unlockOrder[nextIdx]);
+      }
+    }
+
+    updateStatus();showQ();
+  }
+
+  document.getElementById(`reset-${id}`).addEventListener('click',()=>{
+    if(attemptsLeft(id)<=0){alert('Sin intentos disponibles.');return;}
+    render();
+  });
+  render();
+}
+
+function refreshAll(){
+  unlockOrder.forEach(id=>createQuiz(id));
+  unlockOrder.forEach(id=>{if(passesUnlock(id))unlockBadge(id);});
+}
+
+// INIT
+unlockOrder.forEach(id=>{if(!globalState.results[id])globalState.results[id]=defaultResult(id==='final');});
+renderQuizSections();
+refreshAll();
+updateGlobalPanel();
+updateReport();
+</script>
+</body>
+</html>
